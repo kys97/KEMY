@@ -3,50 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Unity.VisualScripting.Member;
+using static UnityEngine.Rendering.DebugUI;
 
 public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField]
-    public RectTransform lever;
-    RectTransform rectTransform;
+    //Joystick
+    [SerializeField] public RectTransform Lever;
+    [SerializeField, Range(10f, 150f)] private float LeverRange;
+    private RectTransform RectTransform;
+    private Vector2 InputDir, ClampedDir;
 
-    [SerializeField, Range(10f, 150f)]
-    private float leverRange;
+    
+    //Player
+    private Move CharacterMove;
 
-    private Vector2 InputDir, clampedDir;
 
     void Start()
     {
-        //lever = gameObject.GetComponentInChildren<RectTransform>();
-        rectTransform = GetComponent<RectTransform>();
+        RectTransform = GetComponent<RectTransform>();
+        CharacterMove = GameObject.FindWithTag("Player").GetComponent<Move>();
 
-        //lever.anchorMin = new Vector2(1, 0);
-        //lever.anchorMax = new Vector2(1, 0);
-
-        rectTransform.anchorMin = new Vector2(1, 0);
-        rectTransform.anchorMax = new Vector2(1, 0);
+        RectTransform.anchorMin = new Vector2(1, 0);
+        RectTransform.anchorMax = new Vector2(1, 0);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        InputDir = eventData.position + new Vector2(-1080, 0) - rectTransform.anchoredPosition;
-        clampedDir = InputDir.magnitude < leverRange ? InputDir : InputDir.normalized * leverRange;
+        //JoyStick
+        InputDir = eventData.position + new Vector2(-1080, 0) - RectTransform.anchoredPosition;
+        ClampedDir = InputDir.magnitude < LeverRange ? InputDir : InputDir.normalized * LeverRange;
+        Lever.anchoredPosition = ClampedDir;
 
-        lever.anchoredPosition = clampedDir;
+        CharacterMove.IsMove = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        InputDir = eventData.position + new Vector2(-1080, 0) - rectTransform.anchoredPosition;
-        clampedDir = InputDir.magnitude < leverRange ? InputDir : InputDir.normalized * leverRange;
+        //JoyStick
+        InputDir = eventData.position + new Vector2(-1080, 0) - RectTransform.anchoredPosition;
+        ClampedDir = InputDir.magnitude < LeverRange ? InputDir : InputDir.normalized * LeverRange;
+        Lever.anchoredPosition = ClampedDir;
 
-        lever.anchoredPosition = clampedDir;
-
+        CharacterMove.SetMove(InputDir.normalized);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        //JoyStick
+        Lever.anchoredPosition = Vector2.zero;
 
-        lever.anchoredPosition = Vector2.zero;
+        CharacterMove.IsMove = false;
     }
 }
