@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/OODGame.meta
 guid: 0088175141be8814a84f65deaf98dd45
 folderAsset: yes
 DefaultImporter:
+========
+guid: 476a7f41b1d2bc74d88f56a224e71842
+PrefabImporter:
+>>>>>>>> Kamp:Assets/Battle Arena - Cartoon Assets/Prefabs/Barrel02 (1).prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
