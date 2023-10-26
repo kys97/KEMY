@@ -9,7 +9,7 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 {
     //Joystick
     [SerializeField] public RectTransform Lever;
-    [SerializeField, Range(10f, 150f)] private float LeverRange;
+    [SerializeField, Range(0f, 130f)] private float LeverRange;
     private RectTransform RectTransform;
     private Vector2 InputDir, ClampedDir;
 
@@ -23,14 +23,16 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         RectTransform = GetComponent<RectTransform>();
         CharacterMove = GameObject.FindWithTag("Player").GetComponent<Move>();
 
-        RectTransform.anchorMin = new Vector2(1, 0);
-        RectTransform.anchorMax = new Vector2(1, 0);
+        //조이스틱 우측 하단
+        //RectTransform.anchorMin = new Vector2(1, 0);
+        //RectTransform.anchorMax = new Vector2(1, 0);
+        //+ new Vector2(-1080, 0)
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         //JoyStick
-        InputDir = eventData.position + new Vector2(-1080, 0) - RectTransform.anchoredPosition;
+        InputDir = eventData.position - RectTransform.anchoredPosition;
         ClampedDir = InputDir.magnitude < LeverRange ? InputDir : InputDir.normalized * LeverRange;
         Lever.anchoredPosition = ClampedDir;
 
@@ -40,11 +42,11 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnDrag(PointerEventData eventData)
     {
         //JoyStick
-        InputDir = eventData.position + new Vector2(-1080, 0) - RectTransform.anchoredPosition;
+        InputDir = eventData.position - RectTransform.anchoredPosition;
         ClampedDir = InputDir.magnitude < LeverRange ? InputDir : InputDir.normalized * LeverRange;
         Lever.anchoredPosition = ClampedDir;
 
-        CharacterMove.SetMove(InputDir.normalized);
+        CharacterMove.SetMove(ClampedDir.normalized);
     }
 
     public void OnEndDrag(PointerEventData eventData)

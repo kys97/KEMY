@@ -23,4 +23,12 @@ public class Define
     {
         Count
     }
+
+    public enum game_state
+    {
+        Ready,
+        Start,
+        Play,
+        End
+    }
 }
