@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WH_GameManager : MonoBehaviour
 {
-    private static WH_GameManager instance;
     public static WH_GameManager Instance
     {
         get
@@ -21,11 +20,7 @@ public class WH_GameManager : MonoBehaviour
             return instance;
         }
     }
-
-    [SerializeField] private Define.game_state GameState;
-
-
-
+    private static WH_GameManager instance;
     private void Awake()
     {
         if (instance == null)
@@ -39,6 +34,23 @@ public class WH_GameManager : MonoBehaviour
 
         GameState = Define.game_state.Ready;
     }
+
+
+
+    public Define.game_state GetGameState() { return GameState; }
+    private Define.game_state GameState;
+
+    public void GameStart()
+    {
+        GameState = Define.game_state.Start;
+    }
+    public void GameEnd()
+    {
+        GameState = Define.game_state.End;
+        //게임 결과
+    }
+    
+
 
     // Start is called before the first frame update
     void Start()

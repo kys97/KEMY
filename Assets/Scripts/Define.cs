@@ -28,7 +28,6 @@ public class Define
     {
         Ready,
         Start,
-        Play,
         End
     }
 }
