@@ -1,26 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class WH_GameManager : MonoBehaviour
+public class OODGameManager : MonoBehaviour
 {
-    public static WH_GameManager Instance
+    public static OODGameManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<WH_GameManager>();
+                instance = FindObjectOfType<OODGameManager>();
                 if (instance == null)
                 {
-                    GameObject singletonObject = new GameObject(typeof(WH_GameManager).Name);
-                    instance = singletonObject.AddComponent<WH_GameManager>();
+                    GameObject singletonObject = new GameObject(typeof(OODGameManager).Name);
+                    instance = singletonObject.AddComponent<OODGameManager>();
                 }
             }
             return instance;
         }
     }
-    private static WH_GameManager instance;
+    private static OODGameManager instance;
     private void Awake()
     {
         if (instance == null)
@@ -36,7 +37,6 @@ public class WH_GameManager : MonoBehaviour
     }
 
 
-
     public Define.game_state GetGameState() { return GameState; }
     private Define.game_state GameState;
 
@@ -49,18 +49,46 @@ public class WH_GameManager : MonoBehaviour
         GameState = Define.game_state.End;
         //게임 결과
     }
-    
+
+
+    [SerializeField] private int StartCountDownNum;
+    private TMP_Text TopicText, CountDownText;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        TopicText = GameObject.Find("Topic").GetComponent<TMP_Text>();
+        CountDownText = GameObject.Find("CountNum").GetComponent<TMP_Text>();
+
         Init();
     }
 
+    
+
     private void Init()
     {
-        
+        //주제 화면에 띄우기
+
+        //카운트 다운 코루틴
+        StartCoroutine(StartCountdown());
+    }
+
+    private IEnumerator StartCountdown()
+    {
+        int cnt = StartCountDownNum;
+
+        while (cnt > 0)
+        {
+            CountDownText.text = cnt.ToString();
+            yield return new WaitForSeconds(1f); 
+            cnt--;
+        }
+
+        //TODO : UI Manager 사용
+        GameObject.Find("CountPanel").gameObject.active = false;
+        GameStart();
+        yield return null;
     }
 
     // Update is called once per frame
