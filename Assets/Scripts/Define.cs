@@ -30,4 +30,11 @@ public class Define
         Start,
         End
     }
+
+    public enum topic
+    {
+        Animal,
+        Plant,
+        Count
+    }
 }
