@@ -14,8 +14,12 @@ public class Define
     public enum ui
     {
         //Login,
+        Main,
         Home,
-        //Kamp,
+        Kamp,
+        Inventory,
+        CountPanel,
+        WordHuntingGame,
         Count
     }
 
