@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Define;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class UIManager : MonoBehaviour
     public void Init()
     {
         UILoad();
-        for(int i = 0; i < UILevels.Count; i++)
+        for(int i = 0; i < (int)ui_level.Count; i++)
         {
-            UILevels.Add(GameObject.Find("UI Level"+i.ToString()));
+            UILevels.Add(GameObject.FindWithTag(((ui_level)i).ToString()));
         }
     }
 
@@ -22,13 +23,13 @@ public class UIManager : MonoBehaviour
     {
         UILayout = new Dictionary<string, GameObject>();
 
-        for (int i = 0; i < (int)Define.ui.Count; i++)
+        for (int i = 0; i < (int)ui.Count; i++)
         {
-            UILayout.Add(((Define.ui)i).ToString(), Resources.Load<GameObject>("UI/" + ((Define.ui)i).ToString()));
+            UILayout.Add(((ui)i).ToString(), Resources.Load<GameObject>("UI/" + ((ui)i).ToString()));
         }
     }
 
-    public void UIsetting(Define.ui_level level, Define.ui ui)
+    public void UIsetting(ui_level level, ui ui)
     {
         //Prev UI Destroy
         Transform[] childList = UILevels[(int)level].GetComponentsInChildren<Transform>();
@@ -42,7 +43,14 @@ public class UIManager : MonoBehaviour
         }
 
         //New UI Load
+        GameManager.Instance.TopUI = ui;
         Instantiate(UILayout[ui.ToString()], UILayout[ui.ToString()].transform.position, Quaternion.identity).transform.SetParent(UILevels[(int)level].transform, false);
+    }
+
+    public void UIdelete(ui_level level)
+    {
+        if (GameObject.FindWithTag(level.ToString()).transform.childCount > 0)
+            Destroy(GameObject.FindWithTag(level.ToString()).transform.GetChild(0).gameObject);
     }
 
     public void Goto_Main()
@@ -53,5 +61,10 @@ public class UIManager : MonoBehaviour
     public void Goto_KampScene()
     {
         SceneManager.LoadScene("Kamp");
+    }
+
+    public void Goto_WHGame()
+    {
+        SceneManager.LoadScene("WHGame");
     }
 }

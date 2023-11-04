@@ -14,13 +14,31 @@ public class Define
     public enum ui
     {
         //Login,
+        Main,
         Home,
-        //Kamp,
+        Kamp,
+        Inventory,
+        CountPanel,
+        WordHuntingGame,
         Count
     }
 
     public enum sprites
     {
+        Count
+    }
+
+    public enum game_state
+    {
+        Ready,
+        Start,
+        End
+    }
+
+    public enum topic
+    {
+        Animal,
+        Plant,
         Count
     }
 }
