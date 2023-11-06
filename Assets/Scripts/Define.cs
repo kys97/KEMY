@@ -41,4 +41,30 @@ public class Define
         Plant,
         Count
     }
+
+    public enum item_type
+    {
+        Hair,
+        Top,
+        Bottom,
+        Shoes,
+        Count
+    }
+
+    public enum hair_item
+    {
+        Count
+    }
+    public enum top_item
+    {
+        Count
+    }
+    public enum bottom_item
+    {
+        Count
+    }
+    public enum shoes_item
+    {
+        Count
+    }
 }

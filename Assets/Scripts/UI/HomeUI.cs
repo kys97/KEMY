@@ -30,7 +30,7 @@ public class HomeUI : MonoBehaviour
         //transform.GetChild(2).GetComponent<TMP_Text>().text = (User NickName);
 
         //Inven Btn Setting
-        transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Inventory));
+        transform.GetChild(3).GetComponent<Button>().onClick.AddListener(OpenInvenBtn);
 
         //Shop Btn Setting
         //transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Shop));
@@ -40,5 +40,11 @@ public class HomeUI : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void OpenInvenBtn()
+    {
+        //올라오는 효과
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Inventory);
     }
 }

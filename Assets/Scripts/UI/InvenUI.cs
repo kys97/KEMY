@@ -1,19 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InvenUI : MonoBehaviour
 {
-    Vector3 CameraPos = new Vector3(0, 7, -20), CameraRot = new Vector3(30, 0, 0);
 
     void Start()
     {
-        
+        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(CloseInven);
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void CloseInven()
+    {
+        //내려가는 효과
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home);
     }
 }
