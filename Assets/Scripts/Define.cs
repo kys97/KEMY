@@ -53,10 +53,29 @@ public class Define
 
     public enum hair_item
     {
+        hair1,
+        hair2,
+        hair3,
+        hair4,
+        hair5,
+        hair6,
+        hair7,
+        hair8,
+        hair9,
+        hair10,
+        hair11,
         Count
     }
     public enum top_item
     {
+        top1,
+        top2,
+        top3,
+        top4,
+        top5,
+        top6,
+        top7,
+        top8,
         Count
     }
     public enum bottom_item

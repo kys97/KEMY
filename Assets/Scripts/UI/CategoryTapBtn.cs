@@ -3,72 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Define;
 
 public class CategoryTapBtn : UIEventTrigger
 {
-    [SerializeField] Define.item_type type;
+    [SerializeField] item_type type;
 
     GameObject skin_prefab;
     Transform parent;
 
     void Start()
     {
+        init();
+
         parent = GameObject.Find("Content").gameObject.transform;
+        skin_prefab = Resources.Load<GameObject>("Prefabs/Item").gameObject;
 
         //Init - Hair Set
-        if (type != Define.item_type.Hair) return;
-
-        for (int i = 0; i < (int)Define.hair_item.Count; i++)
+        if (type != item_type.Hair) return;
+        for (int i = 0; i < (int)hair_item.Count; i++)
         {
-            GameObject skin_temp = Instantiate(skin_prefab);
-            skin_temp.transform.parent = parent;
-            ItemSelectBtn temp;
-            temp = skin_temp.AddComponent<ItemSelectBtn>();
-            temp.type = Define.item_type.Hair;
+            //if (GameManager.Instance.Data.avatar_cloth.hair.Contains(((hair_item)(i)).ToString())) //인벤에 데이터 있는지 확인
+            //{
+                GameObject skin_temp = Instantiate(skin_prefab);
+                skin_temp.transform.parent = parent;
 
-            //TODO
+                ItemSelectBtn temp;
+                temp = skin_temp.GetComponent<ItemSelectBtn>();
+                temp.type = item_type.Hair;
+                temp.SetUI = ((hair_item)(i)).ToString();
+
+                //TODO
+            //}
         }
     }
 
     protected override void OnPointerDown(PointerEventData data)
     {
         int cnt = 0;
-        Transform[] skin_transforms = parent.transform.GetComponentsInChildren<Transform>();
+        GameObject[] skin_transforms = GameObject.FindGameObjectsWithTag("Item");
 
         //Max Count Set
         switch (type)
         {
-            case Define.item_type.Hair: cnt = (int)Define.hair_item.Count + 1; break;
-            case Define.item_type.Top: cnt = (int)Define.top_item.Count + 1; break;
-            case Define.item_type.Bottom: cnt = (int)Define.bottom_item.Count + 1; break;
-            case Define.item_type.Shoes: cnt = (int)Define.shoes_item.Count + 1; break;
+            case item_type.Hair: cnt = (int)hair_item.Count; break;
+            case item_type.Top: cnt = (int)top_item.Count; break;
+            case item_type.Bottom: cnt = (int)bottom_item.Count; break;
+            case item_type.Shoes: cnt = (int)shoes_item.Count; break;
         }
 
 
         //None Item Set
-        skin_transforms[0].GetComponent<ItemSelectBtn>().type = type;
+        //skin_transforms[0].GetComponent<ItemSelectBtn>().type = type;
 
 
         //Item Image Set
-        for (int i = 1; i < cnt; i++)
+        for (int i = 0; i < cnt; i++)
         {
             ItemSelectBtn temp;
-
-            switch (type)
-            {
-                case Define.item_type.Hair: 
-                    skin_transforms[i].GetChild(0).GetComponent<Image>().sprite = GameManager.Instance.Resourcesmanager.Item[((Define.hair_item)(i - 1)).ToString()]; 
-                    break;
-                case Define.item_type.Top:
-                    skin_transforms[i].GetChild(0).GetComponent<Image>().sprite = GameManager.Instance.Resourcesmanager.Item[((Define.top_item)(i - 1)).ToString()]; 
-                    break;
-                case Define.item_type.Bottom:
-                    skin_transforms[i].GetChild(0).GetComponent<Image>().sprite = GameManager.Instance.Resourcesmanager.Item[((Define.bottom_item)(i - 1)).ToString()];
-                    break;
-                case Define.item_type.Shoes: 
-                    skin_transforms[i].GetChild(0).GetComponent<Image>().sprite = GameManager.Instance.Resourcesmanager.Item[((Define.shoes_item)(i - 1)).ToString()];
-                    break;
-            }
             
             if (i < skin_transforms.Length)
             {
@@ -78,10 +70,18 @@ public class CategoryTapBtn : UIEventTrigger
             {
                 GameObject skin_temp = Instantiate(skin_prefab);
                 skin_temp.transform.parent = parent;
-                temp = skin_temp.AddComponent<ItemSelectBtn>();
+                temp = skin_temp.GetComponent<ItemSelectBtn>();
             }
 
             temp.type = type;
+
+            switch (type)
+            {
+                case item_type.Hair: temp.SetUI = ((hair_item)(i)).ToString(); break;
+                case item_type.Top: temp.SetUI = ((top_item)(i)).ToString(); break;
+                case item_type.Bottom: temp.SetUI = ((bottom_item)(i)).ToString(); break;
+                case item_type.Shoes: temp.SetUI = ((shoes_item)(i)).ToString(); break;
+            }
         }
 
         if (cnt < skin_transforms.Length)

@@ -7,17 +7,42 @@ using UnityEngine.UI;
 public class ItemSelectBtn : UIEventTrigger
 {
     public Define.item_type type;
+    protected string item_name;
 
-    private ScrollRect Scroll;
+    [SerializeField] Image item_image;
+    [SerializeField] ScrollRect Scroll;
+
+    public string SetUI
+    {
+        set
+        {
+            if (item_image == null)
+                item_image = transform.GetChild(0).GetComponent<Image>();
+            item_name = value;
+
+            if (value.Equals(""))
+            {
+                //None Item Set
+            }
+            else
+            {
+                item_image.sprite = GameManager.Instance.Resourcesmanager.Item[value];
+            }
+        }
+    }
 
     void Start()
     {
+        init();
+
         Scroll = transform.parent.parent.parent.GetComponent<ScrollRect>();
+        item_image = transform.GetChild(0).GetComponent<Image>();
     }
 
-    public void SetUI()
+    protected override void OnPointerClick(PointerEventData data)
     {
-        //TODO
+        //아바타 옷 바꾸기
+        Debug.Log(item_name);
     }
 
 

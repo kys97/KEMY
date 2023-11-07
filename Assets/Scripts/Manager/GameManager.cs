@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     [HideInInspector] public UIManager UImanager;
     [HideInInspector] public ResourcesManager Resourcesmanager;
+    [HideInInspector] public DataClass Data;
+
     public Define.ui TopUI;
 
     private static GameManager instance = null;
@@ -31,6 +33,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        Data = new DataClass();
+
+        //데이터 불러오기
     }
 
 
