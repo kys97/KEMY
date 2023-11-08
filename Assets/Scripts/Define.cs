@@ -11,11 +11,20 @@ public class Define
         Lev3 = 2,
         Count
     }
+
+    public enum scene
+    {
+        Kamp,
+        WordHunting,
+        HangulRun
+    }
+
     public enum ui
     {
         //Login,
         Main,
         Home,
+        Game,
         Kamp,
         Inventory,
         CountPanel,
@@ -25,6 +34,12 @@ public class Define
 
     public enum sprites
     {
+        home,
+        home_select,
+        book,
+        book_select,
+        chat,
+        chat_select,
         Count
     }
 
