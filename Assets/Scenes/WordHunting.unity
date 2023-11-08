@@ -3359,6 +3359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 839612935}
+  - component: {fileID: 839612936}
   m_Layer: 0
   m_Name: WordHunting_GameManager
   m_TagString: Untagged
@@ -3381,6 +3382,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &839612936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839612934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd18e7eff0849a4fa3c467dbd05ca8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartCountDownNum: 3
+  GameTopic: 0
+  SpawnInterval: 0
 --- !u!1 &849975089
 GameObject:
   m_ObjectHideFlags: 0
@@ -11102,7 +11118,7 @@ PrefabInstance:
     - target: {fileID: 5484107478065625367, guid: 97e616b2cfe924c45b90bfe19356a929,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e616b2cfe924c45b90bfe19356a929, type: 3}
