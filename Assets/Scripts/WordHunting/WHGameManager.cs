@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class OODGameManager : MonoBehaviour
+public class WHGameManager : MonoBehaviour
 {
-    public static OODGameManager Instance
+    public static WHGameManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<OODGameManager>();
+                instance = FindObjectOfType<WHGameManager>();
                 if (instance == null)
                 {
-                    GameObject singletonObject = new GameObject(typeof(OODGameManager).Name);
-                    instance = singletonObject.AddComponent<OODGameManager>();
+                    GameObject singletonObject = new GameObject(typeof(WHGameManager).Name);
+                    instance = singletonObject.AddComponent<WHGameManager>();
                 }
             }
             return instance;
         }
     }
-    private static OODGameManager instance;
+    private static WHGameManager instance;
     private void Awake()
     {
         if (instance == null)

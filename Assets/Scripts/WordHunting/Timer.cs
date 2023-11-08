@@ -18,14 +18,14 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(OODGameManager.Instance.GetGameState() == Define.game_state.Start)
+        if(WHGameManager.Instance.GetGameState() == Define.game_state.Start)
         {
             time += Time.deltaTime;
             TimerSlider.value = TimerSlider.maxValue - time;
 
             if (TimerSlider.value <= 0)
             {
-                OODGameManager.Instance.GameEnd();
+                WHGameManager.Instance.GameEnd();
             }
         }
     }

@@ -24,7 +24,6 @@ public class MainUI : MonoBehaviour
         transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(GameBtnClick);
     }
 
-    // Update is called once per frame
     void Update()
     {
         

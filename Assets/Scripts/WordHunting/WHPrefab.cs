@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OODPrefab : MonoBehaviour
+public class WHPrefab : MonoBehaviour
 {
     private Define.topic topic;
 
@@ -21,7 +21,7 @@ public class OODPrefab : MonoBehaviour
     {
         if(collision.gameObject.tag == "Character")
         {
-            collision.gameObject.GetComponent<OODPlayer>().GetScore(topic);
+            collision.gameObject.GetComponent<WHPlayer>().GetScore(topic);
             Destroy(gameObject);
         }
     }

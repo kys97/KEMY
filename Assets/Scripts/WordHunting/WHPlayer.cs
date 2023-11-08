@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OODPlayer : MonoBehaviour
+public class WHPlayer : MonoBehaviour
 {
     [SerializeField]
     private int Score = 0;
@@ -21,7 +21,7 @@ public class OODPlayer : MonoBehaviour
 
     public void GetScore(Define.topic obj_topic)
     {
-        if(obj_topic == OODGameManager.Instance.GameTopic)
+        if(obj_topic == WHGameManager.Instance.GameTopic)
         {
             Score += 100;
         }
