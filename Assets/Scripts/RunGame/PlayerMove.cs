@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float moveSpeed = 3;
-    public float leftRightSpeed = 4;
+    public float moveSpeed = 10;
+    public float leftRightSpeed = 15;
     void Update()
     {
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
