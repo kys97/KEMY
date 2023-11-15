@@ -44,29 +44,59 @@ public class Define
 
     public enum item_type
     {
-        Hair,
-        Top,
-        Bottom,
-        Shoes,
+        Skin,
+        Face,
+        //Head,
+        //Body,
         Count
     }
 
-    public enum hair_item
+    public enum skin
     {
-        hair1,
-        hair2,
-        hair3,
-        hair4,
-        hair5,
-        hair6,
-        hair7,
-        hair8,
-        hair9,
-        hair10,
-        hair11,
+        Cat00,
+        Cat01,
+        Cat02,
+        Cat03,
+        Cat04,
+        Cat05,
+        Cat06,
+        Cat07,
+        Cat08,
+        Cat09,
         Count
     }
-    public enum top_item
+    public enum face
+    {
+        Face00,
+        Face01,
+        Face02,
+        Face03,
+        Face04,
+        Face05,
+        Face06,
+        Face07,
+        Face08,
+        Face09,
+        Face10,
+        Face11,
+        Face12,
+        Face13,
+        Face14,
+        Face15,
+        Face16,
+        Face17,
+        Face18,
+        Face19,
+        Face20,
+        Face21,
+        Face22,
+        Face23,
+        Face24,
+        Face25,
+        Face26,
+        Count
+    }
+    public enum head
     {
         top1,
         top2,
@@ -78,12 +108,16 @@ public class Define
         top8,
         Count
     }
-    public enum bottom_item
+    public enum body
     {
-        Count
-    }
-    public enum shoes_item
-    {
+        top1,
+        top2,
+        top3,
+        top4,
+        top5,
+        top6,
+        top7,
+        top8,
         Count
     }
 }

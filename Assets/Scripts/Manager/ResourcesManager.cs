@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class ResourcesManager : MonoBehaviour
 {
     public Dictionary<string, Sprite> Sprites;
-    [SerializeField] public Dictionary<string, Sprite> Item;//Cloth
+    public Dictionary<string, Sprite> ItemImage;//Character, Face, Acessary
+    public Dictionary<string, Material> ItemMaterials;//Material
 
     public void Init()
     {
@@ -17,31 +19,39 @@ public class ResourcesManager : MonoBehaviour
     {
         Sprites = new Dictionary<string, Sprite>();
 
-        for(int i=0; i < (int)Define.sprites.Count; i++)
+        for(int i=0; i < (int)sprites.Count; i++)
         {
-            Sprites.Add(((Define.sprites)i).ToString(), Resources.Load<Sprite>("Sprites/" + ((Define.sprites)i).ToString()));
+            Sprites.Add(((sprites)i).ToString(), Resources.Load<Sprite>("Sprites/" + ((sprites)i).ToString()));
         }
     }
 
     private void ItemLoad()
     {
-        Item = new Dictionary<string, Sprite>();
+        ItemImage = new Dictionary<string, Sprite>();
+        ItemMaterials = new Dictionary<string, Material>();
 
-        for (int i = 0; i < (int)Define.hair_item.Count; i++)
+        for (int i = 0; i < (int)skin.Count; i++)
         {
-            Item.Add(((Define.hair_item)i).ToString(), Resources.Load<Sprite>("Sprites/Item/" + ((Define.hair_item)i).ToString()));
+            ItemImage.Add(((skin)i).ToString(), Resources.Load<Sprite>("Sprites/Skin/" + ((skin)i).ToString()));
+            ItemMaterials.Add(((skin)i).ToString(), Resources.Load<Material>("Materials/Skin/" + ((skin)i).ToString()));
         }
-        for (int i = 0; i < (int)Define.top_item.Count; i++)
+        for (int i = 0; i < (int)face.Count; i++)
         {
-            Item.Add(((Define.top_item)i).ToString(), Resources.Load<Sprite>("Sprites/Item/" + ((Define.top_item)i).ToString()));
+            ItemImage.Add(((face)i).ToString(), Resources.Load<Sprite>("Sprites/Face/" + ((face)i).ToString()));
+            ItemMaterials.Add(((face)i).ToString(), Resources.Load<Material>("Materials/Face/" + ((face)i).ToString()));
         }
-        for (int i = 0; i < (int)Define.bottom_item.Count; i++)
+        /*
+        for (int i = 0; i < (int)head.Count; i++)
         {
-            Item.Add(((Define.bottom_item)i).ToString(), Resources.Load<Sprite>("Sprites/Item/" + ((Define.bottom_item)i).ToString()));
+            ItemImage.Add(((head)i).ToString(), Resources.Load<Sprite>("Sprites/Head/" + ((head)i).ToString()));
+            ItemMaterials.Add(((head)i).ToString(), Resources.Load<Material>("Materials/Head/" + ((head)i).ToString()));
         }
-        for (int i = 0; i < (int)Define.shoes_item.Count; i++)
+        for (int i = 0; i < (int)body.Count; i++)
         {
-            Item.Add(((Define.shoes_item)i).ToString(), Resources.Load<Sprite>("Sprites/Item/" + ((Define.shoes_item)i).ToString()));
+            ItemImage.Add(((body)i).ToString(), Resources.Load<Sprite>("Sprites/Body/" + ((body)i).ToString()));
+            ItemMaterials.Add(((body)i).ToString(), Resources.Load<Material>("Materials/Body/" + ((body)i).ToString()));
         }
+        */
     }
+
 }

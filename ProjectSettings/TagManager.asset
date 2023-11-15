@@ -9,6 +9,8 @@ TagManager:
   - Lev1
   - Lev2
   - Lev3
+  - Item
+  - Skin
   layers:
   - Default
   - TransparentFX

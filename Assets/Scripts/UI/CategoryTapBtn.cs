@@ -20,8 +20,8 @@ public class CategoryTapBtn : UIEventTrigger
         skin_prefab = Resources.Load<GameObject>("Prefabs/Item").gameObject;
 
         //Init - Hair Set
-        if (type != item_type.Hair) return;
-        for (int i = 0; i < (int)hair_item.Count; i++)
+        if (type != item_type.Skin) return;
+        for (int i = 0; i < (int)skin.Count; i++)
         {
             //if (GameManager.Instance.Data.avatar_cloth.hair.Contains(((hair_item)(i)).ToString())) //인벤에 데이터 있는지 확인
             //{
@@ -30,8 +30,8 @@ public class CategoryTapBtn : UIEventTrigger
 
                 ItemSelectBtn temp;
                 temp = skin_temp.GetComponent<ItemSelectBtn>();
-                temp.type = item_type.Hair;
-                temp.SetUI = ((hair_item)(i)).ToString();
+                temp.type = item_type.Skin;
+                temp.SetUI = ((skin)(i)).ToString();
 
                 //TODO
             //}
@@ -46,10 +46,10 @@ public class CategoryTapBtn : UIEventTrigger
         //Max Count Set
         switch (type)
         {
-            case item_type.Hair: cnt = (int)hair_item.Count; break;
-            case item_type.Top: cnt = (int)top_item.Count; break;
-            case item_type.Bottom: cnt = (int)bottom_item.Count; break;
-            case item_type.Shoes: cnt = (int)shoes_item.Count; break;
+            case item_type.Skin: cnt = (int)skin.Count; break;
+            case item_type.Face: cnt = (int)face.Count; break;
+            //case item_type.Head: cnt = (int)head.Count; break;
+            //case item_type.Body: cnt = (int)body.Count; break;
         }
 
 
@@ -77,10 +77,10 @@ public class CategoryTapBtn : UIEventTrigger
 
             switch (type)
             {
-                case item_type.Hair: temp.SetUI = ((hair_item)(i)).ToString(); break;
-                case item_type.Top: temp.SetUI = ((top_item)(i)).ToString(); break;
-                case item_type.Bottom: temp.SetUI = ((bottom_item)(i)).ToString(); break;
-                case item_type.Shoes: temp.SetUI = ((shoes_item)(i)).ToString(); break;
+                case item_type.Skin: temp.SetUI = ((skin)(i)).ToString(); break;
+                case item_type.Face: temp.SetUI = ((face)(i)).ToString(); break;
+                //case item_type.Head: temp.SetUI = ((head)(i)).ToString(); break;
+                //case item_type.Body: temp.SetUI = ((body)(i)).ToString(); break;
             }
         }
 
