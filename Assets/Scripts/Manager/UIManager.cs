@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static Define;
 
 public class UIManager : MonoBehaviour
@@ -66,5 +67,29 @@ public class UIManager : MonoBehaviour
     public void Goto_WHGame()
     {
         SceneManager.LoadScene("WHGame");
+    }
+
+    public void BottomOutUI(GameObject UI)
+    {
+        StopCoroutine(BottomOut());
+        StartCoroutine(BottomOut());
+    }
+
+    public void RightInUI(GameObject UI)
+    {
+        StopCoroutine(RightIn());
+        StartCoroutine(RightIn());
+    }
+
+    IEnumerator BottomOut()
+    {
+        //
+        yield return null;
+    }
+
+    IEnumerator RightIn()
+    {
+        //
+        yield return null;
     }
 }
