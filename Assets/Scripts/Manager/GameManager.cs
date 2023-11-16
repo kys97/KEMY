@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class GameManager : MonoBehaviour
 {
     [HideInInspector] public UIManager UImanager;
     [HideInInspector] public ResourcesManager Resourcesmanager;
     [HideInInspector] public DataClass Data;
+
+    JsonManager jsonmanager;
+
 
     public Define.ui TopUI;
 
@@ -35,13 +39,25 @@ public class GameManager : MonoBehaviour
         }
 
         Data = new DataClass();
+        jsonmanager = new JsonManager();
 
+        Load();
+
+        Init();
         //데이터 불러오기
     }
 
+    public void Save()
+    {
+        jsonmanager.SaveJson(Data);
+    }
 
-    
-    void Start()
+    public void Load()
+    {
+        Data = jsonmanager.LoadSaveData();
+    }
+
+    void Init()
     {
         UImanager = GetComponent<UIManager>();
         Resourcesmanager = GetComponent<ResourcesManager>();
@@ -55,7 +71,19 @@ public class GameManager : MonoBehaviour
 
         //Home화면
         UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Main);
+
         //아바타 Setting
+        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
+        GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/Cat"), parent);
+        Material[] skin = player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
+        skin[0] = Resourcesmanager.ItemMaterials[Data.avatar_info.skin];
+        skin[1] = Resourcesmanager.ItemMaterials[Data.avatar_info.face];
+        player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = skin;
+    }
+
+    void Start()
+    {
+        
     }
 
     void Update()

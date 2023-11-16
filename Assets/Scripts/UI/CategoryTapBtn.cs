@@ -19,12 +19,12 @@ public class CategoryTapBtn : UIEventTrigger
         parent = GameObject.Find("Content").gameObject.transform;
         skin_prefab = Resources.Load<GameObject>("Prefabs/Item").gameObject;
 
-        //Init - Hair Set
+        //Init - Skin Set
         if (type != item_type.Skin) return;
         for (int i = 0; i < (int)skin.Count; i++)
         {
-            //if (GameManager.Instance.Data.avatar_cloth.hair.Contains(((hair_item)(i)).ToString())) //인벤에 데이터 있는지 확인
-            //{
+            if (GameManager.Instance.Data.inven.skin.Contains(((skin)(i)).ToString())) //인벤에 데이터 있는지 확인
+            {
                 GameObject skin_temp = Instantiate(skin_prefab);
                 skin_temp.transform.parent = parent;
 
@@ -32,9 +32,7 @@ public class CategoryTapBtn : UIEventTrigger
                 temp = skin_temp.GetComponent<ItemSelectBtn>();
                 temp.type = item_type.Skin;
                 temp.SetUI = ((skin)(i)).ToString();
-
-                //TODO
-            //}
+            }
         }
     }
 
@@ -51,11 +49,6 @@ public class CategoryTapBtn : UIEventTrigger
             //case item_type.Head: cnt = (int)head.Count; break;
             //case item_type.Body: cnt = (int)body.Count; break;
         }
-
-
-        //None Item Set
-        //skin_transforms[0].GetComponent<ItemSelectBtn>().type = type;
-
 
         //Item Image Set
         for (int i = 0; i < cnt; i++)
