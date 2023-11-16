@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public FirebaseController firebase;
+
     public Button signInBtn;
     public Button signOutBtn;
     public TextMeshProUGUI userIDLabel;
+
+    public TMP_InputField usernameInput;
+    public TMP_InputField messageInput;
 
     void Start()
     {
@@ -33,8 +38,10 @@ public class UIController : MonoBehaviour
         }
     }
 
-    void Update()
+    public void SendChat()
     {
-        
+        string username = usernameInput.text;
+        string message = messageInput.text;
+        firebase.SendChatMessage(username, message);
     }
 }
