@@ -769,17 +769,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 55
-    m_Right: 55
-    m_Top: 25
-    m_Bottom: 25
+    m_Left: 45
+    m_Right: 45
+    m_Top: 30
+    m_Bottom: 30
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 200}
-  m_Spacing: {x: 57, y: 57}
+  m_CellSize: {x: 300, y: 300}
+  m_Spacing: {x: 45, y: 45}
   m_Constraint: 1
-  m_ConstraintCount: 4
+  m_ConstraintCount: 3
 --- !u!114 &54923643092802114
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class Define
         Home,
         Kamp,
         Inventory,
+        Shop,
         CountPanel,
         WordHuntingGame,
         Count

@@ -5,53 +5,90 @@ using UnityEngine;
 [SerializeField]
 public class DataClass
 {
+    public MyInfo info;
     public Inventory inven;
-    public AvatarCloth avatar_cloth;
+    public AvatarInfo avatar_info;
+
+    public DataClass(MyInfo info, Inventory inven, AvatarInfo avatar_info)
+    {
+        this.info = info;
+        this.inven = inven;
+        this.avatar_info = avatar_info;
+    }
+
+    public DataClass()
+    {
+        info = new MyInfo();
+        inven = new Inventory();
+        avatar_info = new AvatarInfo();
+    }
+}
+
+public class MyInfo
+{
+    public int coin;
+    public int heart;
+
+    public MyInfo(int coin, int heart)
+    {
+        this.coin = coin;
+        this.heart = heart;
+    }
+
+    public MyInfo() 
+    {
+        coin = 0;
+        heart = 0;
+    }
 }
 
 public class Inventory
 {
-    public List<string> hair_item;
-    public List<string> top_item;
-    public List<string> bottom_item;
-    public List<string> shoes_item;
+    public List<string> skin;
+    public List<string> face;
+    //public List<string> head_item;
+    //public List<string> body_item;
     
-    public Inventory(List<string> hair_item, List<string> top_item, List<string> bottom_item, List<string> shoes_item)
+    public Inventory(List<string> skin, List<string> face/*, List<string> head_item, List<string> body_item*/)
     {
-        this.hair_item = hair_item;
-        this.top_item = top_item;
-        this.bottom_item = bottom_item;
-        this.shoes_item = shoes_item;
+        this.skin = skin;
+        this.face = face;
+        //this.head_item = head_item;
+        //this.body_item = body_item;
     }
 
     public Inventory()
     {
-        hair_item = new List<string>();
-        top_item = new List<string>();
-        bottom_item = new List<string>();
-        shoes_item = new List<string>();
+        skin = new List<string>();
+        face = new List<string>();
+        //head_item = new List<string>();
+        //body_item = new List<string>();
+
+        //기본 아이템
+        skin.Add("Cat00");
+        face.Add("Face00");
     }
 }
-public class AvatarCloth
+public class AvatarInfo
 {
-    public string hair;
-    public string top;
-    public string bottom;
-    public string shoes;
+    public string skin;
+    public string face;
+    //public string head_item;
+    //public string body_item;
 
-    public AvatarCloth(string hair, string top, string bottom, string shoes)
+    public AvatarInfo(string skin, string face/*, string head_item, string body_item*/)
     {
-        this.hair = hair;
-        this.top = top;
-        this.bottom = bottom;
-        this.shoes = shoes;
+        this.skin = skin;
+        this.face = face;
+        //this.head_item = head_item;
+        //this.body_item = body_item;
     }
 
-    public AvatarCloth()
+    public AvatarInfo()
     {
-        hair = "";
-        top = "";
-        bottom = "";
-        shoes = "";
+        skin = "Cat00";
+        face = "Face00";
+        //head_item = "";
+        //body_item = "";
     }
 }

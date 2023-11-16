@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static Define;
 
 public class UIManager : MonoBehaviour
@@ -66,5 +68,55 @@ public class UIManager : MonoBehaviour
     public void Goto_WHGame()
     {
         SceneManager.LoadScene("WHGame");
+    }
+
+
+    public void BottomInUI(GameObject UI)
+    {
+        StopCoroutine("BottomIn");
+        StartCoroutine(BottomIn(UI));
+    }
+    public void BottomOutUI(GameObject UI)
+    {
+        StopCoroutine("BottomOut");
+        StartCoroutine(BottomOut(UI));
+    }
+    public void RightInUI(GameObject UI)
+    {
+        StopCoroutine("RightIn");
+        StartCoroutine(RightIn(UI));
+    }
+
+
+    IEnumerator BottomIn(GameObject ui)
+    {
+        for(int i=0; i < 10; i++)
+        {
+            
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return null;
+    }
+    IEnumerator BottomOut(GameObject ui)
+    {
+        RectTransform transform = ui.GetComponent<RectTransform>();
+        float goal = transform.anchoredPosition.y - 190; //Bottom Size
+
+        while (transform.anchoredPosition.y > goal) 
+        {
+            transform.anchoredPosition += new Vector2(0, goal) * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        yield return null;
+    }
+
+    IEnumerator RightIn(GameObject ui)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return new WaitForSeconds(0.1f);
     }
 }
