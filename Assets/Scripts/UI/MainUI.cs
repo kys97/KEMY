@@ -11,12 +11,10 @@ public class MainUI : MonoBehaviour
         GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home);
 
         //Coint Text Setting
-        //Read Coin Data
-        //transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().text = (Coin Data);
+        transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().text = GameManager.Instance.Data.info.coin.ToString();
 
         //Heart Text Setting
-        //Read Heart Data
-        //transform.GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = (Heart Data);
+        transform.GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = GameManager.Instance.Data.info.heart.ToString();
 
         //Bottom Setting
         transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home));

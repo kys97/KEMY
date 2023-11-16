@@ -5,19 +5,40 @@ using UnityEngine;
 [SerializeField]
 public class DataClass
 {
+    public MyInfo info;
     public Inventory inven;
     public AvatarInfo avatar_info;
 
-    public DataClass(Inventory inven, AvatarInfo avatar_info)
+    public DataClass(MyInfo info, Inventory inven, AvatarInfo avatar_info)
     {
+        this.info = info;
         this.inven = inven;
         this.avatar_info = avatar_info;
     }
 
     public DataClass()
     {
+        info = new MyInfo();
         inven = new Inventory();
         avatar_info = new AvatarInfo();
+    }
+}
+
+public class MyInfo
+{
+    public int coin;
+    public int heart;
+
+    public MyInfo(int coin, int heart)
+    {
+        this.coin = coin;
+        this.heart = heart;
+    }
+
+    public MyInfo() 
+    {
+        coin = 0;
+        heart = 0;
     }
 }
 

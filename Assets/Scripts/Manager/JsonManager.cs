@@ -11,7 +11,7 @@ public class JsonManager
         string jsonText;
 
     #if UNITY_EDITOR_WIN
-        string DataPath = Application.dataPath + "/Data/GameData.json";
+        string DataPath = Application.dataPath + "/GameData.json";
     #endif
 
     #if UNITY_ANDROID
@@ -30,7 +30,7 @@ public class JsonManager
         DataClass gameData;
 
     #if UNITY_EDITOR_WIN
-        string DataPath = Application.dataPath + "/Data/GameData.json";
+        string DataPath = Application.dataPath + "/GameData.json";
     #endif
 
     #if UNITY_ANDROID
