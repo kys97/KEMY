@@ -15,6 +15,9 @@ public class UIController : MonoBehaviour
     public TMP_InputField usernameInput;
     public TMP_InputField messageInput;
 
+    public MessageBox messageBoxPrefab;
+    public Transform messageContentTrans;
+
     void Start()
     {
         // 처음 켰을 때 아직 로그인이 안된 상태를 가정
@@ -43,5 +46,10 @@ public class UIController : MonoBehaviour
         string username = usernameInput.text;
         string message = messageInput.text;
         firebase.SendChatMessage(username, message);
+    }
+    public void AddChatMessage(string username, string message)
+    {
+        MessageBox mBox = Instantiate<MessageBox>(messageBoxPrefab, messageContentTrans);
+        mBox.SetMessage(username, message);
     }
 }

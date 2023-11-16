@@ -1882,6 +1882,9 @@ MonoBehaviour:
   userIDLabel: {fileID: 346570260}
   usernameInput: {fileID: 1210706105}
   messageInput: {fileID: 1860708923}
+  messageBoxPrefab: {fileID: 5951328213780905942, guid: b31eef1ce707d314d92c93a0b9ecd476,
+    type: 3}
+  messageContentTrans: {fileID: 506098216}
 --- !u!1 &1134161205
 GameObject:
   m_ObjectHideFlags: 0

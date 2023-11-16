@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6254450551460634708}
   - component: {fileID: 6254450551460634710}
   - component: {fileID: 6254450551460634709}
+  - component: {fileID: 5951328213780905942}
   m_Layer: 5
   m_Name: MessageBox
   m_TagString: Untagged
@@ -78,6 +79,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5951328213780905942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6254450551460634707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38934665c3cabf9488bb248803ff0d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameLabel: {fileID: 6254450552834042637}
+  messageLabel: {fileID: 6254450552439139545}
 --- !u!1 &6254450552439139543
 GameObject:
   m_ObjectHideFlags: 0

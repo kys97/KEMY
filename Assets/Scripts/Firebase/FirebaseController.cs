@@ -33,7 +33,11 @@ public class FirebaseController : MonoBehaviour
     {
         auth = FirebaseAuth.DefaultInstance;
         auth.StateChanged += AuthStateChanged;
+
+        DatabaseReference chatDB = FirebaseDatabase.DefaultInstance.GetReference("ChatMessage");
+        chatDB.LimitToLast(1).ValueChanged += ReceiveMessage;
     }
+
     // firebase 상태 변경 시
     private void AuthStateChanged(object sender, EventArgs e)
     {
@@ -111,9 +115,10 @@ public class FirebaseController : MonoBehaviour
         DatabaseReference chatDB = FirebaseDatabase.DefaultInstance.GetReference("ChatMessage");
         string key = chatDB.Push().Key;
 
-        Dictionary<string, string> msgDic = new Dictionary<string, string>();
+        Dictionary<string, object> msgDic = new Dictionary<string, object>();
         msgDic.Add("username", username);
         msgDic.Add("message", message);
+        msgDic.Add("timestamp", ServerValue.Timestamp);
 
         Dictionary<string, object> updateMsg = new Dictionary<string, object>();
         updateMsg.Add(key, msgDic);
@@ -126,5 +131,18 @@ public class FirebaseController : MonoBehaviour
             }
         }
         );
+    }
+    public void ReceiveMessage(object sender, ValueChangedEventArgs e)
+    {
+        DataSnapshot snapshot = e.Snapshot;
+        Debug.Log("ChildrenCount : " + snapshot.ChildrenCount);
+        foreach (var message in snapshot.Children)
+        {
+            Debug.Log(message.Key + " " + message.Child("username").Value.ToString() +
+                " " + message.Child("message").Value.ToString());
+            string userName = message.Child("username").Value.ToString();
+            string msg = message.Child("message").Value.ToString();
+            uiController.AddChatMessage(userName, msg);
+        }
     }
 }
