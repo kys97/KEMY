@@ -33,12 +33,18 @@ public class HomeUI : MonoBehaviour
         transform.GetChild(3).GetComponent<Button>().onClick.AddListener(OpenInvenBtn);
 
         //Shop Btn Setting
-        //transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Shop));
+        transform.GetChild(4).GetComponent<Button>().onClick.AddListener(OpenShopBtn);
     }
 
     void OpenInvenBtn()
     {
         //올라오는 효과
         GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Inventory);
+    }
+
+    void OpenShopBtn()
+    {
+        //올라오는 효과
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Shop);
     }
 }
