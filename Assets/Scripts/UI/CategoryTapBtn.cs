@@ -23,8 +23,8 @@ public class CategoryTapBtn : UIEventTrigger
         if (type != item_type.Skin) return;
         for (int i = 0; i < (int)skin.Count; i++)
         {
-            if (GameManager.Instance.Data.inven.skin.Contains(((skin)(i)).ToString())) //인벤에 데이터 있는지 확인
-            {
+            //if (GameManager.Instance.Data.inven.skin.Contains(((skin)(i)).ToString())) //인벤에 데이터 있는지 확인
+            //{
                 GameObject skin_temp = Instantiate(skin_prefab);
                 skin_temp.transform.parent = parent;
 
@@ -32,7 +32,7 @@ public class CategoryTapBtn : UIEventTrigger
                 temp = skin_temp.GetComponent<ItemSelectBtn>();
                 temp.type = item_type.Skin;
                 temp.SetUI = ((skin)(i)).ToString();
-            }
+            //}
         }
     }
 
