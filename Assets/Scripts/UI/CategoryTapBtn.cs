@@ -23,8 +23,8 @@ public class CategoryTapBtn : UIEventTrigger
         if (type != item_type.Skin) return;
         for (int i = 0; i < (int)skin.Count; i++)
         {
-            //if (GameManager.Instance.Data.inven.skin.Contains(((skin)(i)).ToString())) //인벤에 데이터 있는지 확인
-            //{
+            if (GameManager.Instance.Data.inven.skin.Contains(((skin)(i)).ToString())) //인벤에 데이터 있는지 확인
+            {
                 GameObject skin_temp = Instantiate(skin_prefab);
                 skin_temp.transform.parent = parent;
 
@@ -32,7 +32,7 @@ public class CategoryTapBtn : UIEventTrigger
                 temp = skin_temp.GetComponent<ItemSelectBtn>();
                 temp.type = item_type.Skin;
                 temp.SetUI = ((skin)(i)).ToString();
-            //}
+            }
         }
     }
 
@@ -46,34 +46,38 @@ public class CategoryTapBtn : UIEventTrigger
         {
             case item_type.Skin: cnt = (int)skin.Count; break;
             case item_type.Face: cnt = (int)face.Count; break;
-            //case item_type.Head: cnt = (int)head.Count; break;
+            //case item_type.Etc: cnt = (int)head.Count; break;
             //case item_type.Body: cnt = (int)body.Count; break;
         }
 
         //Item Image Set
         for (int i = 0; i < cnt; i++)
         {
-            ItemSelectBtn temp;
-            
-            if (i < skin_transforms.Length)
+            if ((type == item_type.Face && GameManager.Instance.Data.inven.face.Contains(((face)(i)).ToString()))
+                || (type == item_type.Skin && GameManager.Instance.Data.inven.skin.Contains(((skin)(i)).ToString()))) //인벤에 데이터 있는지 확인
             {
-                temp = skin_transforms[i].GetComponent<ItemSelectBtn>();
-            }
-            else
-            {
-                GameObject skin_temp = Instantiate(skin_prefab);
-                skin_temp.transform.parent = parent;
-                temp = skin_temp.GetComponent<ItemSelectBtn>();
-            }
+                ItemSelectBtn temp;
 
-            temp.type = type;
+                if (i < skin_transforms.Length)
+                {
+                    temp = skin_transforms[i].GetComponent<ItemSelectBtn>();
+                }
+                else
+                {
+                    GameObject skin_temp = Instantiate(skin_prefab);
+                    skin_temp.transform.parent = parent;
+                    temp = skin_temp.GetComponent<ItemSelectBtn>();
+                }
 
-            switch (type)
-            {
-                case item_type.Skin: temp.SetUI = ((skin)(i)).ToString(); break;
-                case item_type.Face: temp.SetUI = ((face)(i)).ToString(); break;
-                //case item_type.Head: temp.SetUI = ((head)(i)).ToString(); break;
-                //case item_type.Body: temp.SetUI = ((body)(i)).ToString(); break;
+                temp.type = type;
+
+                switch (type)
+                {
+                    case item_type.Skin: temp.SetUI = ((skin)(i)).ToString(); break;
+                    case item_type.Face: temp.SetUI = ((face)(i)).ToString(); break;
+                    //case item_type.Head: temp.SetUI = ((head)(i)).ToString(); break;
+                    //case item_type.Body: temp.SetUI = ((body)(i)).ToString(); break;
+                }
             }
         }
 

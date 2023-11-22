@@ -168,6 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 476137981}
+  - component: {fileID: 476137982}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Character
@@ -184,12 +185,27 @@ Transform:
   m_GameObject: {fileID: 476137980}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &476137982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476137980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cc8f51ba289304d86c33526f48fa82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HomeSize: 3
+  InvenSize: 2
+  SizeSpeed: 1
 --- !u!1 &503934330
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +329,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 2.17, y: 8.17, z: -3.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -597,7 +613,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -622,7 +638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
-  m_LocalPosition: {x: 0, y: 5, z: -13}
+  m_LocalPosition: {x: 0, y: 1, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -641,12 +657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47069e54ccbcff14e8073c1d1000c2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HomePos: {x: 0, y: 5, z: -13}
-  HomeRot: {x: 8, y: 0, z: 0}
-  InvenPos: {x: 0, y: 5, z: -20}
-  InvenRot: {x: 23, y: 0, z: 0}
+  HomePos: {x: 0, y: 4.5, z: -12}
+  InvenPos: {x: 0, y: 1, z: -14}
   MoveSpeed: 10
-  RotateSpeed: 0.5
 --- !u!1 &1662861144
 GameObject:
   m_ObjectHideFlags: 0

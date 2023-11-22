@@ -44,7 +44,8 @@ public class HomeUI : MonoBehaviour
 
     void OpenShopBtn()
     {
-        //올라오는 효과
+        GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(false);
+        GameObject.FindGameObjectWithTag("Bottom").SetActive(false);
         GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Shop);
     }
 }
