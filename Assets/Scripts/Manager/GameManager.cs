@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public UIManager UImanager;
     [HideInInspector] public ResourcesManager Resourcesmanager;
     [HideInInspector] public DataClass Data;
+    [HideInInspector] public Dictionary<string, ItemWeight> ItemWeightDic;
 
     JsonManager jsonmanager;
-
 
     public Define.ui TopUI;
 
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         Data = new DataClass();
         jsonmanager = new JsonManager();
+        ItemWeightDic = new CsvManager().ReadCsv();
 
         Load();
 

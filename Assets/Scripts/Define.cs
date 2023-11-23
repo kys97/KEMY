@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Define
 {
+    public enum scene
+    {
+        Main,
+        Kamp,
+        Quiz,
+        RunningGame,
+        Count
+    }
     public enum ui_level
     {
         Lev1 = 0,
@@ -17,6 +25,7 @@ public class Define
         Main,
         Home,
         Kamp,
+        Game,
         Inventory,
         Shop,
         CountPanel,
@@ -26,6 +35,15 @@ public class Define
 
     public enum sprites
     {
+        cracked1,
+        cracked2,
+        cracked3,
+        home,
+        home_select,
+        chat,
+        chat_select,
+        book,
+        book_select,
         Count
     }
 
@@ -47,8 +65,8 @@ public class Define
     {
         Skin,
         Face,
-        //Head,
-        //Body,
+        //Deco,
+        //Wall,
         Count
     }
 

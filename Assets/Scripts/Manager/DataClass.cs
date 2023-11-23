@@ -69,6 +69,7 @@ public class Inventory
         face.Add("Face00");
     }
 }
+
 public class AvatarInfo
 {
     public string skin;

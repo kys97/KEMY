@@ -19,7 +19,7 @@ public class MainUI : MonoBehaviour
         //Bottom Setting
         transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home));
         //transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Chat));
-        //transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.StudyGame));
+        transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Game));
     }
 
     // Update is called once per frame

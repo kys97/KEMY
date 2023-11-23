@@ -9,17 +9,17 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private Dictionary<string,int> RandomItem;
 
     private int tot;
-    private Image ItemEggImage, ItemImage;
+    private Image EggImage, ItemImage;
 
     void Start()
     {
+        //Shop Panel
         transform.GetChild(0).GetChild(0).GetComponent<Button>().onClick.AddListener(CloseShop);
-        ItemEggImage = transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
+        EggImage = transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
         transform.GetChild(0).GetChild(2).GetComponent<Button>().onClick.AddListener(ItemEggOpen);
 
+        //Item Result Panel
         ItemImage = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
-
-        
     }
 
     void CloseShop()
@@ -32,7 +32,11 @@ public class ShopUI : MonoBehaviour
     void ItemEggOpen()
     {
         //Item 확률 계산
-        int rand = Random.Range(0, tot);
+        int rand = Random.Range(0, GameManager.Instance.Resourcesmanager.ItemImage.Count);
 
+        //Item 결과 이미지 
+
+        //Inven에 저장
+        
     }
 }

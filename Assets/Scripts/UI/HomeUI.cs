@@ -8,22 +8,13 @@ public class HomeUI : MonoBehaviour
 {
     void Start()
     {
-        //Kamp Btn Setting
-        //Read Kamp Join Data
-        /*
-        if((Kamp Join Data))
-        {
-            transform.GetChild(0).gameObject.active = false;
-            //transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
-            transform.GetChild(1).GetComponent<Button>().onClick.AddListener(GameManager.Instance.UImanager.Goto_KampScene);
-        }
-        else
-        {
-            //transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-            transform.GetChild(0).GetComponent<Button>().onClick.AddListener(GameManager.Instance.UImanager.Goto_KampScene);
-            transform.GetChild(1).gameObject.active = false;
-        }
-        */
+        //Bottom Btn Image Setting
+        GameObject.FindGameObjectWithTag("Bottom").transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Instance.Resourcesmanager.Sprites[Define.sprites.home_select.ToString()];
+        GameObject.FindGameObjectWithTag("Bottom").transform.GetChild(1).GetComponent<Image>().sprite = GameManager.Instance.Resourcesmanager.Sprites[Define.sprites.chat.ToString()];
+        GameObject.FindGameObjectWithTag("Bottom").transform.GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.Resourcesmanager.Sprites[Define.sprites.book.ToString()];
+
+        //Avatar Setting
+        GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(true);
 
         //User Name(=NickName) Setting
         //Read User NickName
