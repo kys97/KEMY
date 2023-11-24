@@ -24,11 +24,6 @@ public class MainUI : MonoBehaviour
         transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Game));
     }
 
-    void Update()
-    {
-        
-    }
-
     public void UpdateCoin()
     {
         coin_txt.text = GameManager.Instance.Data.info.coin.ToString();
