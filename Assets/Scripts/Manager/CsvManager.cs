@@ -8,19 +8,21 @@ public class CsvManager
 {
     private string path = "ItemWeight";
 
-    public Dictionary<string, ItemWeight> ReadCsv()
+    public List<ItemWeight> ReadCsv()
     {
-        Dictionary<string, ItemWeight> weight_dic = new Dictionary<string, ItemWeight>();
+        List<ItemWeight> weight_dic = new List<ItemWeight>();
         TextAsset csv = Resources.Load<TextAsset>(path);
         StringReader reader = new StringReader(csv.text);
 
-        while(reader.Peek() > -1)
+        reader.ReadLine();
+        while (reader.Peek() > -1)
         {
             string line = reader.ReadLine();
 
             var data = line.Split(',');
-            var temp = new ItemWeight { type = (Define.item_type)Enum.Parse(typeof(Define.item_type), data[1]), weight = int.Parse(data[2]) };
-            weight_dic.Add(data[0], temp);
+            var temp = new ItemWeight { name = data[0], type = (Define.item_type)Enum.Parse(typeof(Define.item_type), data[1]), weight = int.Parse(data[2]) };
+            GameManager.Instance.TotWeight += int.Parse(data[2]);
+            weight_dic.Add(temp);
         }
 
         return weight_dic;
@@ -30,5 +32,6 @@ public class CsvManager
 public struct ItemWeight
 {
     public Define.item_type type;
+    public string name;
     public int weight;
 }

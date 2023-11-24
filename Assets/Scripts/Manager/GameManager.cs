@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public UIManager UImanager;
     [HideInInspector] public ResourcesManager Resourcesmanager;
     [HideInInspector] public DataClass Data;
-    [HideInInspector] public Dictionary<string, ItemWeight> ItemWeightDic;
+    [HideInInspector] public List<ItemWeight> ItemWeightDic;
+    [HideInInspector] public int TotWeight = 0;
 
     JsonManager jsonmanager;
 
@@ -37,15 +38,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        Data = new DataClass();
-        jsonmanager = new JsonManager();
-        ItemWeightDic = new CsvManager().ReadCsv();
-
-        Load();
-
-        Init();
-        //데이터 불러오기
     }
 
     public void Save()
@@ -84,7 +76,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        Data = new DataClass();
+        jsonmanager = new JsonManager();
+        ItemWeightDic = new CsvManager().ReadCsv();
+
+        Load();
+
+        Init();
+        //데이터 불러오기
     }
 
     void Update()

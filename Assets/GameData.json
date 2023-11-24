@@ -1,0 +1,19 @@
+{
+    "info": {
+        "coin": 0,
+        "heart": 0
+    },
+    "inven": {
+        "skin": [
+            "Cat00"
+        ],
+        "face": [
+            "Face00",
+            "Face22"
+        ]
+    },
+    "avatar_info": {
+        "skin": "Cat00",
+        "face": "Face22"
+    }
+}

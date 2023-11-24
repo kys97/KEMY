@@ -5,18 +5,15 @@ using System.Text;
 using UnityEngine;
 
 public class JsonManager
-{
+{ 
     public void SaveJson(DataClass savedata) // 데이터를 저장하는 함수
     {
         string jsonText;
-
-    #if UNITY_EDITOR_WIN
+#if UNITY_EDITOR_WIN
         string DataPath = Application.dataPath + "/GameData.json";
-    #endif
-
-    #if UNITY_ANDROID
+#elif UNITY_ANDROID
         string DataPath = Application.persistentDataPath + "/GameData.json";
-    #endif
+#endif
 
         jsonText = JsonUtility.ToJson(savedata, true);
         FileStream fileStream = new FileStream(DataPath, FileMode.Create);
@@ -29,13 +26,11 @@ public class JsonManager
     {
         DataClass gameData;
 
-    #if UNITY_EDITOR_WIN
+#if UNITY_EDITOR_WIN
         string DataPath = Application.dataPath + "/GameData.json";
-    #endif
-
-    #if UNITY_ANDROID
+#elif UNITY_ANDROID
         string DataPath = Application.persistentDataPath + "/GameData.json";
-    #endif
+#endif
 
         if (!Directory.Exists(DataPath))
         {

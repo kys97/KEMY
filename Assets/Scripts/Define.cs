@@ -63,6 +63,7 @@ public class Define
 
     public enum item_type
     {
+        none,
         Skin,
         Face,
         //Deco,

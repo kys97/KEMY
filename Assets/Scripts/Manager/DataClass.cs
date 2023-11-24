@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[SerializeField]
+[System.Serializable]
 public class DataClass
 {
     public MyInfo info;
@@ -24,7 +25,9 @@ public class DataClass
     }
 }
 
-public class MyInfo
+#region MyInfo
+
+[System.Serializable] public class MyInfo
 {
     public int coin;
     public int heart;
@@ -42,6 +45,7 @@ public class MyInfo
     }
 }
 
+[System.Serializable]
 public class Inventory
 {
     public List<string> skin;
@@ -70,6 +74,7 @@ public class Inventory
     }
 }
 
+[System.Serializable]
 public class AvatarInfo
 {
     public string skin;
@@ -93,3 +98,4 @@ public class AvatarInfo
         //body_item = "";
     }
 }
+#endregion
