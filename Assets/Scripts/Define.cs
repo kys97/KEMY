@@ -35,6 +35,7 @@ public class Define
 
     public enum sprites
     {
+        item_egg,
         cracked1,
         cracked2,
         cracked3,

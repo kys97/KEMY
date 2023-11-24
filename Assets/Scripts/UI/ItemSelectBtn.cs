@@ -7,7 +7,7 @@ using static Define;
 
 public class ItemSelectBtn : UIEventTrigger
 {
-    public Define.item_type type;
+    public item_type type;
     protected string item_name;
 
     [SerializeField] Image item_image;

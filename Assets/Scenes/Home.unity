@@ -559,6 +559,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UImanager: {fileID: 0}
   Resourcesmanager: {fileID: 0}
+  Data:
+    info:
+      coin: 0
+      heart: 0
+    inven:
+      skin:
+      - Cat00
+      face:
+      - Face00
+    avatar_info:
+      skin: Cat00
+      face: Face00
+  TotWeight: 0
   TopUI: 0
 --- !u!1 &963194225
 GameObject:

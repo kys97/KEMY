@@ -5,15 +5,19 @@
     },
     "inven": {
         "skin": [
-            "Cat00"
+            "Cat00",
+            "Cat06"
         ],
         "face": [
             "Face00",
-            "Face22"
+            "Face22",
+            "Face25",
+            "Face07",
+            "Face01"
         ]
     },
     "avatar_info": {
-        "skin": "Cat00",
-        "face": "Face22"
+        "skin": "Cat06",
+        "face": "Face01"
     }
 }
