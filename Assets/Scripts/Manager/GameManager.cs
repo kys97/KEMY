@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public UIManager UImanager;
     [HideInInspector] public ResourcesManager Resourcesmanager;
     [HideInInspector] public DataClass Data;
+    
     [HideInInspector] public List<ItemWeight> ItemWeightDic;
     [HideInInspector] public int TotWeight = 0;
 
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         Data = new DataClass();
         jsonmanager = new JsonManager();
-        ItemWeightDic = new CsvManager().ReadCsv();
+        ItemWeightDic = new CsvManager().Read_ItemWeight_Csv();
 
         Load();
 

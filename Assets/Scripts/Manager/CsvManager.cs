@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class CsvManager
 {
-    private string path = "ItemWeight";
+    private string ItemFile = "ItemWeight";
+    private string QuizFile = "QuizList";
 
-    public List<ItemWeight> ReadCsv()
+
+    public List<ItemWeight> Read_ItemWeight_Csv()
     {
         List<ItemWeight> weight_dic = new List<ItemWeight>();
-        TextAsset csv = Resources.Load<TextAsset>(path);
+        TextAsset csv = Resources.Load<TextAsset>(ItemFile);
         StringReader reader = new StringReader(csv.text);
 
         reader.ReadLine();
@@ -27,8 +29,35 @@ public class CsvManager
 
         return weight_dic;
     }
+
+    public List<Quiz> Read_Quiz_Csv()
+    {
+        List<Quiz> weight_dic = new List<Quiz>();
+        TextAsset csv = Resources.Load<TextAsset>(QuizFile);
+        StringReader reader = new StringReader(csv.text);
+
+        reader.ReadLine();
+        while (reader.Peek() > -1)
+        {
+            string line = reader.ReadLine();
+
+            var data = line.Split(',');
+            var temp = new Quiz { Korean = data[0], Pronunce = data[1], English = data[2], Rate = float.Parse(data[3]) };
+            weight_dic.Add(temp);
+        }
+
+        return weight_dic;
+    }
 }
 
+
+public struct Quiz
+{
+    public string Korean;
+    public string Pronunce;
+    public string English;
+    public float Rate;
+}
 public struct ItemWeight
 {
     public Define.item_type type;
