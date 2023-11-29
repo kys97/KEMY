@@ -55,6 +55,7 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         QuizList = new CsvManager().Read_Quiz_Csv();
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizReady);
 
         Init();
     }

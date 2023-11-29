@@ -28,8 +28,9 @@ public class Define
         Game,
         Inventory,
         Shop,
-        CountPanel,
-        WordHuntingGame,
+        QuizReady,
+        QuizStart,
+        QuizResult,
         Count
     }
 
