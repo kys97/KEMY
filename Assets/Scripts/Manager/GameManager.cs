@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     JsonManager jsonmanager;
 
-
+    #region 캐릭터 및 아바타 변수
     [SerializeField] int HomeAvatarSize = 3;//3
     [SerializeField] int InvenAvatarSize = 2;//2
     [SerializeField] int QuizReadyAvatarSize = 2;
@@ -30,13 +30,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] float CameraMoveSpeed = 10;//10
 
 
-    private Define.ui top_ui; 
+    [SerializeField]private Define.ui top_ui; 
     public Define.ui TopUI
     {
         set
         {
             top_ui = value;
-
+            Debug.Log(top_ui.ToString());
             switch (value)
             {
                 case Define.ui.Home : HomeCoroutine(); break;
@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
     #region 화면 이동 코루틴
     #region Home Coroutine
     void HomeCoroutine()
@@ -126,6 +128,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region Singleton
     private static GameManager instance = null;
     public static GameManager Instance
     {
@@ -150,7 +153,9 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    #endregion
 
+    #region Data
     public void Save()
     {
         jsonmanager.SaveJson(Data);
@@ -160,8 +165,9 @@ public class GameManager : MonoBehaviour
     {
         Data = jsonmanager.LoadSaveData();
     }
+    #endregion
 
-    void Init()
+    public void Init()
     {
         UImanager = GetComponent<UIManager>();
         Resourcesmanager = GetComponent<ResourcesManager>();
@@ -173,19 +179,35 @@ public class GameManager : MonoBehaviour
         //로그인 화면 Load
         //UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Login);
 
+        //Home화면
+        UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Main);
+
         //아바타 Setting
+        MyAvatar();
+    }
+
+    public void MyAvatar()
+    {
         Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
-        parent.localScale = Vector3.one * HomeAvatarSize;
+        Debug.Log(top_ui);
+        switch (top_ui)
+        {
+            case Define.ui.Home: 
+                parent.localScale = Vector3.one * HomeAvatarSize;
+                Camera.main.transform.position = HomeCameraPos;
+                break;
+            case Define.ui.QuizReady:
+                parent.localScale = Vector3.one * QuizReadyAvatarSize;
+                Camera.main.transform.position = QuizReadyCameraPos;
+                break;
+            default: break;
+        }
+        
         GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/Cat"), parent);
         Material[] skin = player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
         skin[0] = Resourcesmanager.ItemMaterials[Data.avatar_info.skin];
         skin[1] = Resourcesmanager.ItemMaterials[Data.avatar_info.face];
         player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = skin;
-
-        //Home화면
-        Camera.main.transform.position = HomeCameraPos;
-        UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Main);
-
     }
 
     void Start()
@@ -197,6 +219,8 @@ public class GameManager : MonoBehaviour
         Load();
 
         Init();
+
+        UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home);
         //데이터 불러오기
     }
 

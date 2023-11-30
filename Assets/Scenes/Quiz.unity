@@ -576,6 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e81a14f7f9d4b4485c5ed1b8230a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxLevel: 3
   QuizTotalCount: 10
   SolveCount: 0
   SolveTime: 5

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class QuizManager : MonoBehaviour
 {
     [Header("Quiz Setting")]
+    public int MaxLevel;
     public int QuizTotalCount;
     public int SolveCount;
     public float SolveTime;
@@ -57,7 +58,6 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         QuizList = new CsvManager().Read_Quiz_Csv();
-        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizReady);
 
         Init();
     }
@@ -69,9 +69,14 @@ public class QuizManager : MonoBehaviour
 
     private void Init()
     {
+        //변수 셋팅
         SolveCount = 0;
         Score = 0;
 
         //화면 셋팅
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizReady);
+
+        //아바타 셋팅
+        GameManager.Instance.MyAvatar();
     }
 }

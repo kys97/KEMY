@@ -8,7 +8,7 @@ using static Define;
 
 public class GameBtn : UIEventTrigger
 {
-    [SerializeField] private Define.scene scece_type;
+    [SerializeField] private scene scece_type;
     private ScrollRect Scroll;
 
     void Start()
@@ -22,12 +22,11 @@ public class GameBtn : UIEventTrigger
     {
         switch (scece_type)
         {
-            case Define.scene.Quiz:
-                GameManager.Instance.UImanager.UIdelete(ui_level.Lev2);
-                GameManager.Instance.UImanager.UIsetting(ui_level.Lev1, ui.QuizReady);
+            case scene.Quiz:
+                SceneManager.LoadScene(scene.Quiz.ToString());
                 break;
-            case Define.scene.RunningGame:
-                SceneManager.LoadScene(Define.scene.RunningGame.ToString());
+            case scene.RunningGame:
+                SceneManager.LoadScene(scene.RunningGame.ToString());
                 break;
         }
     }

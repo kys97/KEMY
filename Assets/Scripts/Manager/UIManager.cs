@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,12 +11,15 @@ public class UIManager : MonoBehaviour
 {
     List<GameObject> UILevels = new List<GameObject>();
 
-    Dictionary<string, GameObject> UILayout;
+    Dictionary<string, GameObject> UILayout = null;
 
     public void Init()
     {
-        UILoad();
-        for(int i = 0; i < (int)ui_level.Count; i++)
+        if(UILayout == null)
+            UILoad();
+
+        UILevels.Clear();
+        for (int i = 0; i < (int)ui_level.Count; i++)
         {
             UILevels.Add(GameObject.FindWithTag(((ui_level)i).ToString()));
         }
@@ -33,6 +37,11 @@ public class UIManager : MonoBehaviour
 
     public void UIsetting(ui_level level, ui ui)
     {
+        if (UILevels[(int)level].IsDestroyed())
+        {
+            Init();
+        }
+
         //Prev UI Destroy
         Transform[] childList = UILevels[(int)level].GetComponentsInChildren<Transform>();
         if (childList != null)
@@ -47,6 +56,7 @@ public class UIManager : MonoBehaviour
         //New UI Load
         GameManager.Instance.TopUI = ui;
         Instantiate(UILayout[ui.ToString()], UILayout[ui.ToString()].transform.position, Quaternion.identity).transform.SetParent(UILevels[(int)level].transform, false);
+        
     }
 
     public void UIdelete(ui_level level)
@@ -63,5 +73,13 @@ public class UIManager : MonoBehaviour
     public void Goto_KampScene()
     {
         SceneManager.LoadScene("Kamp");
+    }
+
+    public void Quiz_to_Main()
+    {
+        SceneManager.LoadScene("Home");
+        GameManager.Instance.Init();
+        UIsetting(ui_level.Lev2, ui.Game);
+        GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(false);
     }
 }

@@ -481,8 +481,8 @@ GameObject:
   m_Component:
   - component: {fileID: 839612935}
   - component: {fileID: 839612938}
-  - component: {fileID: 839612937}
-  - component: {fileID: 839612936}
+  - component: {fileID: 839612940}
+  - component: {fileID: 839612939}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -505,30 +505,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &839612936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839612934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f05f8250c57715940b4afc67a38cbbac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &839612937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839612934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 406ecd15c36e2ea4ab1fd20eb788c62a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &839612938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,10 +534,40 @@ MonoBehaviour:
   TotWeight: 0
   HomeAvatarSize: 3
   InvenAvatarSize: 2
+  QuizReadyAvatarSize: 2
+  QuizGameAvatarSize: 1.5
+  QuizEndAvatarSize: 1
   AvatarSizeSpeed: 1
   HomeCameraPos: {x: 0, y: 4.5, z: -12}
   InvenCameraPos: {x: 0, y: 1, z: -14}
+  QuizReadyCameraPos: {x: 0, y: 1.7, z: -10}
+  QuizGameCameraPos: {x: 0, y: 3.15, z: -10}
+  QuizEndCameraPos: {x: 0, y: 1.2, z: -10}
   CameraMoveSpeed: 10
+--- !u!114 &839612939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839612934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f05f8250c57715940b4afc67a38cbbac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &839612940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839612934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406ecd15c36e2ea4ab1fd20eb788c62a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

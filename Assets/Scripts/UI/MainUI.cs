@@ -10,8 +10,6 @@ public class MainUI : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home);
-
         //Coint Text Setting
         coin_txt = transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
         coin_txt.text = GameManager.Instance.Data.info.coin.ToString();
