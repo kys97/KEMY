@@ -64,9 +64,4 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene("Kamp");
     }
-
-    public void Goto_WHGame()
-    {
-        SceneManager.LoadScene("WHGame");
-    }
 }

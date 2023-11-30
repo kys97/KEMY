@@ -13,8 +13,8 @@ public class QuizManager : MonoBehaviour
     public int SolveCount;
     public float SolveTime;
     public int Level;
-
     public List<Quiz> QuizList;
+
 
     [Header("Quiz Data")]
     public int Score;
@@ -27,6 +27,7 @@ public class QuizManager : MonoBehaviour
         public string Select;
         public string Answer;
     }
+
 
     private static QuizManager instance = null;
     public static QuizManager Instance
@@ -51,6 +52,7 @@ public class QuizManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 
     void Start()
     {

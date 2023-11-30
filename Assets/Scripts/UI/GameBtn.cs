@@ -23,7 +23,8 @@ public class GameBtn : UIEventTrigger
         switch (scece_type)
         {
             case Define.scene.Quiz:
-                SceneManager.LoadScene(Define.scene.Quiz.ToString());
+                GameManager.Instance.UImanager.UIdelete(ui_level.Lev2);
+                GameManager.Instance.UImanager.UIsetting(ui_level.Lev1, ui.QuizReady);
                 break;
             case Define.scene.RunningGame:
                 SceneManager.LoadScene(Define.scene.RunningGame.ToString());

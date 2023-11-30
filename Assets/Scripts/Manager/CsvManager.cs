@@ -41,7 +41,7 @@ public class CsvManager
         {
             string line = reader.ReadLine();
 
-            var data = line.Split(',');
+            var data = line.Split('/');
             var temp = new Quiz { Korean = data[0], Pronunce = data[1], English = data[2], Rate = float.Parse(data[3]) };
             weight_dic.Add(temp);
         }

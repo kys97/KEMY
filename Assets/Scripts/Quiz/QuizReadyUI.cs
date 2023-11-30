@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class QuizReadyUI : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
