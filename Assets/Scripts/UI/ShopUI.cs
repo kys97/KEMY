@@ -5,46 +5,40 @@ using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
-    [SerializeField] private Dictionary<string,int> RandomItem;
+    public static string ItemResultName;
+
 
     [SerializeField] float shakeDistance; // 흔들리는 거리
     [SerializeField] float shakeDuration; // 흔들리는 시간
-
-    private int tot;
-    private Image EggImage, ItemImage;
+    private Image EggImage;
     private Vector3 originalPosition;
+
 
     void Start()
     {
-        //Shop Panel
-        transform.GetChild(0).GetChild(0).GetComponent<Button>().onClick.AddListener(CloseShop);
-        EggImage = transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
-        transform.GetChild(0).GetChild(2).GetComponent<Button>().onClick.AddListener(EggOpen);
+        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(CloseShop);
+        EggImage = transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        transform.GetChild(2).GetComponent<Button>().onClick.AddListener(EggOpen);
 
+        //Egg Shaking
         originalPosition = EggImage.rectTransform.anchoredPosition;
-
-        //Item Result Panel
-        ItemImage = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
-        transform.GetChild(1).GetChild(2).GetComponent<Button>().onClick.AddListener(EggClose);
     }
 
     void CloseShop()
     {
-        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home);
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Home);
         GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(true);
-        GameObject.FindGameObjectWithTag("Lev1").transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-    }
-
-    void EggClose()
-    {
-        //Panel Set
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.SetActive(false);
     }
 
     void EggOpen()
     {
-        StartCoroutine("EggOpenCoroutine");
+        if (GameManager.Instance.Data.info.coin < 100)
+            Debug.Log("돈업슴");
+        else
+        {
+            GameManager.Instance.Data.info.coin -= 100;
+            StartCoroutine("EggOpenCoroutine");
+        }
     }
 
     IEnumerator EggOpenCoroutine()
@@ -82,31 +76,38 @@ public class ShopUI : MonoBehaviour
     void SetRandomItem()
     {
         StopCoroutine("EggOpenCoroutine");
-        
-        ItemWeight random_item = GetRandomItem();
 
-        //Image Set
-        ItemImage.sprite = GameManager.Instance.Resourcesmanager.ItemImage[random_item.name];
-        
-        
-        //Inven에 저장
+        ItemWeight random_item = GetRandomItem();
+        ItemResultName = random_item.name;
+
+        //Inven에 있는지 확인 후 저장
         switch (random_item.type)
         {
             case Define.item_type.none:
-                GameManager.Instance.Data.info.heart += 10;
-                GameObject.FindGameObjectWithTag("Lev1").transform.GetChild(0).GetComponent<MainUI>().UpdateCoin();
+                GameManager.Instance.Data.info.heart += 20;
                 break;
             case Define.item_type.Skin:
-                GameManager.Instance.Data.inven.skin.Add(random_item.name);
+                if (!GameManager.Instance.Data.inven.skin.Contains(random_item.name))
+                    GameManager.Instance.Data.inven.skin.Add(random_item.name);
+                else
+                {
+                    GameManager.Instance.Data.info.coin += 10;
+                    GameManager.Instance.Data.info.heart += 5;
+                }
                 break;
             case Define.item_type.Face:
-                GameManager.Instance.Data.inven.face.Add(random_item.name);
+                if (!GameManager.Instance.Data.inven.face.Contains(random_item.name))
+                    GameManager.Instance.Data.inven.face.Add(random_item.name);
+                else
+                {
+                    GameManager.Instance.Data.info.coin += 10;
+                    GameManager.Instance.Data.info.heart += 5;
+                }
                 break;
         }
 
         //Panel Set
-        transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(true);
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.ShopResult);
         EggImage.sprite = GameManager.Instance.Resourcesmanager.Sprites[Define.sprites.item_egg.ToString()];
 
         //데이터 파일 저장

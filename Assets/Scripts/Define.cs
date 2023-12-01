@@ -22,12 +22,13 @@ public class Define
     public enum ui
     {
         //Login,
-        Main,
         Home,
-        Kamp,
+        Chat,
         Game,
+        Kamp,
         Inventory,
         Shop,
+        ShopResult,
         QuizReady,
         QuizStart,
         QuizResult,

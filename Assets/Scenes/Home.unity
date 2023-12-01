@@ -544,6 +544,7 @@ MonoBehaviour:
   QuizGameCameraPos: {x: 0, y: 3.15, z: -10}
   QuizEndCameraPos: {x: 0, y: 1.2, z: -10}
   CameraMoveSpeed: 10
+  top_ui: 0
 --- !u!114 &839612939
 MonoBehaviour:
   m_ObjectHideFlags: 0

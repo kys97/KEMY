@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]private Define.ui top_ui; 
     public Define.ui TopUI
     {
+        get
+        {
+            return top_ui;
+        }
         set
         {
             top_ui = value;
@@ -180,7 +184,7 @@ public class GameManager : MonoBehaviour
         //UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Login);
 
         //Home화면
-        UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Main);
+        UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Home);
 
         //아바타 Setting
         MyAvatar();
@@ -220,7 +224,6 @@ public class GameManager : MonoBehaviour
 
         Init();
 
-        UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home);
         //데이터 불러오기
     }
 

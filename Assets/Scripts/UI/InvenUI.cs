@@ -7,11 +7,6 @@ public class InvenUI : MonoBehaviour
 {
     void Start()
     {
-        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(CloseInven);
-    }
-
-    void CloseInven()
-    {
-        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.Home);
+        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(()=> GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Home));
     }
 }

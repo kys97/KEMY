@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -63,6 +64,16 @@ public class UIManager : MonoBehaviour
     {
         if (GameObject.FindWithTag(level.ToString()).transform.childCount > 0)
             Destroy(GameObject.FindWithTag(level.ToString()).transform.GetChild(0).gameObject);
+
+        switch(level)
+        {
+            case ui_level.Lev2:
+                GameManager.Instance.TopUI = (ui)Enum.Parse(typeof(ui), GameObject.FindGameObjectWithTag("Lev1").transform.GetChild(0).name.Replace("(Clone)",""));
+                break;
+            case ui_level.Lev3:
+                GameManager.Instance.TopUI = (ui)Enum.Parse(typeof(ui), GameObject.FindGameObjectWithTag("Lev2").transform.GetChild(0).name.Replace("(Clone)", ""));
+                break;
+        }
     }
 
     public void Goto_Main()
