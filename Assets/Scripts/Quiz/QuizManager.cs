@@ -72,11 +72,5 @@ public class QuizManager : MonoBehaviour
         //변수 셋팅
         SolveCount = 0;
         Score = 0;
-
-        //화면 셋팅
-        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizReady);
-
-        //아바타 셋팅
-        GameManager.Instance.MyAvatar();
     }
 }

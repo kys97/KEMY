@@ -13,7 +13,7 @@ public class QuizReadyUI : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(true);
 
-        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(GameManager.Instance.UImanager.Quiz_to_Main);
+        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(GameManager.Instance.UImanager.Goto_Home);
 
         Level_txt = transform.GetChild(1).GetComponent<TMP_Text>();
 

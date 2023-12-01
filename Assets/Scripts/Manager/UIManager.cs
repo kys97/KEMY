@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using static Define;
 
 public class UIManager : MonoBehaviour
@@ -19,6 +15,11 @@ public class UIManager : MonoBehaviour
         if(UILayout == null)
             UILoad();
 
+        UILevelLoad();
+    }
+
+    public void UILevelLoad()
+    {
         UILevels.Clear();
         for (int i = 0; i < (int)ui_level.Count; i++)
         {
@@ -38,9 +39,9 @@ public class UIManager : MonoBehaviour
 
     public void UIsetting(ui_level level, ui ui)
     {
-        if (UILevels[(int)level].IsDestroyed())
+        if (UILevels[(int)level] == null)
         {
-            Init();
+            UILevelLoad();
         }
 
         //Prev UI Destroy
@@ -76,21 +77,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void Goto_Main()
-    {
-        SceneManager.LoadScene("Main");
-    }
-
     public void Goto_KampScene()
     {
         SceneManager.LoadScene("Kamp");
     }
 
-    public void Quiz_to_Main()
+    public void Goto_Home()
     {
         SceneManager.LoadScene("Home");
-        GameManager.Instance.Init();
-        UIsetting(ui_level.Lev2, ui.Game);
-        GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void Goto_Quiz()
+    {
+        GameManager.Instance.SetPastUI();
+        SceneManager.LoadScene("Quiz");
     }
 }
