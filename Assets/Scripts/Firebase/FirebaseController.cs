@@ -35,7 +35,7 @@ public class FirebaseController : MonoBehaviour
         auth.StateChanged += AuthStateChanged;
 
         DatabaseReference chatDB = FirebaseDatabase.DefaultInstance.GetReference("ChatMessage");
-        chatDB.LimitToLast(1).ValueChanged += ReceiveMessage;
+        chatDB.OrderByChild("timestamp").LimitToLast(1).ValueChanged += ReceiveMessage;
     }
 
     // firebase 상태 변경 시
@@ -132,6 +132,7 @@ public class FirebaseController : MonoBehaviour
         }
         );
     }
+    List<String> receivedKeyList = new List<String>();
     public void ReceiveMessage(object sender, ValueChangedEventArgs e)
     {
         DataSnapshot snapshot = e.Snapshot;
@@ -140,9 +141,14 @@ public class FirebaseController : MonoBehaviour
         {
             Debug.Log(message.Key + " " + message.Child("username").Value.ToString() +
                 " " + message.Child("message").Value.ToString());
-            string userName = message.Child("username").Value.ToString();
-            string msg = message.Child("message").Value.ToString();
-            uiController.AddChatMessage(userName, msg);
+
+            if (!receivedKeyList.Contains(message.Key))
+            {
+                string userName = message.Child("username").Value.ToString();
+                string msg = message.Child("message").Value.ToString();
+                uiController.AddChatMessage(userName, msg);
+                receivedKeyList.Add(message.Key);
+            }
         }
     }
 }
