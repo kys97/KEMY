@@ -43,6 +43,7 @@ public class QuizReadyUI : MonoBehaviour
 
     void SetTextColor(string color)
     {
+        //TODO
         //Level_txt.color = 
     }
 

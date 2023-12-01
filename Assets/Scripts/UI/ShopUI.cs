@@ -77,6 +77,7 @@ public class ShopUI : MonoBehaviour
     {
         StopCoroutine("EggOpenCoroutine");
 
+        //TODO : 이미 소유한 아이템의 경우 돈과 하트 추가 이미지 설정
         ItemWeight random_item = GetRandomItem();
         ItemResultName = random_item.name;
 
