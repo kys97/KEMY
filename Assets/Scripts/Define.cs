@@ -27,7 +27,7 @@ public class Define
         ShopResult,
         QuizReady,
         QuizStart,
-        QuizResult,
+        QuizFinish,
         Count
     }
 

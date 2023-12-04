@@ -26,31 +26,35 @@ public class GameManager : MonoBehaviour
         set
         {
             top_ui = value;
-            Debug.Log(top_ui.ToString());
+
             switch (value)
             {
                 case ui.Home: HomeCoroutine(); break;
                 case ui.Inventory: InvenCoroutine(); break;
                 case ui.QuizReady: QuizReadyCharacterSet(); break;
                 case ui.QuizStart: QuizStartCharacterSet(); break;
-                case ui.QuizResult: QuizEndCharacterSet(); break;
+                case ui.QuizFinish: QuizFinishCharacterSet(); break;
             }
         }
     }
 
     #region 캐릭터 및 아바타 변수
+    [Space(10)]
     [SerializeField] int HomeAvatarSize = 3;//3
     [SerializeField] int InvenAvatarSize = 2;//2
     [SerializeField] int QuizReadyAvatarSize = 2;
     [SerializeField] float QuizGameAvatarSize = 1.5f;
-    [SerializeField] int QuizEndAvatarSize = 1;
+    [SerializeField] int QuizFinishAvatarSize = 1;
     [SerializeField] float AvatarSizeSpeed = 1;//1
-
+    [Space(10)]
+    [SerializeField] Vector3 OriginAvatarPos = new Vector3 (0, 0, -1);
+    [SerializeField] Vector3 QuizFinishAvatarPos = new Vector3 (-0.85f, 0, -1);
+    [Space(10)]
     [SerializeField] Vector3 HomeCameraPos = new Vector3(0, 4.5f, -12);//0, 4.5, -12
     [SerializeField] Vector3 InvenCameraPos = new Vector3(0, 1, -14);//0, 1, -14
     [SerializeField] Vector3 QuizReadyCameraPos = new Vector3(0, 1.7f, -10);
     [SerializeField] Vector3 QuizGameCameraPos = new Vector3(0, 3.15f, -10);
-    [SerializeField] Vector3 QuizEndCameraPos = new Vector3(0, 1.2f, -10);
+    [SerializeField] Vector3 QuizFinishCameraPos = new Vector3(0, 1.2f, -10);
     [SerializeField] float CameraMoveSpeed = 10;//10
     #endregion
 
@@ -124,21 +128,27 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region Quiz Setting
     void QuizReadyCharacterSet()
     {
         GameObject.FindGameObjectWithTag("Character").transform.localScale = Vector3.one * QuizReadyAvatarSize;
+        GameObject.FindGameObjectWithTag("Character").transform.position = OriginAvatarPos;
         Camera.main.transform.position = QuizReadyCameraPos;
     }
     void QuizStartCharacterSet()
     {
         GameObject.FindGameObjectWithTag("Character").transform.localScale = Vector3.one * QuizGameAvatarSize;
+        GameObject.FindGameObjectWithTag("Character").transform.position = OriginAvatarPos;
         Camera.main.transform.position = QuizGameCameraPos;
     }
-    void QuizEndCharacterSet()
+    void QuizFinishCharacterSet()
     {
-        GameObject.FindGameObjectWithTag("Character").transform.localScale = Vector3.one * QuizEndAvatarSize;
-        Camera.main.transform.position = QuizEndCameraPos;
+        GameObject.FindGameObjectWithTag("Character").transform.localScale = Vector3.one * QuizFinishAvatarSize;
+        GameObject.FindGameObjectWithTag("Character").transform.position = QuizFinishAvatarPos;
+        Camera.main.transform.position = QuizFinishCameraPos;
     }
+    #endregion
+
     #endregion
 
     #region Singleton

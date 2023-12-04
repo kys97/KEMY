@@ -42,7 +42,7 @@ public class CsvManager
             string line = reader.ReadLine();
 
             var data = line.Split(',');
-            var temp = new Quiz { Korean = data[0], Pronunce = data[1], English = data[2], Rate = float.Parse(data[3]), SolveCnt = int.Parse(data[4]) };
+            var temp = new Quiz { Korean = data[0], Pronunce = data[1], English = data[2], Rate = float.Parse(data[3])/*, SolveCnt = int.Parse(data[4])*/ };
             weight_dic.Add(temp);
         }
 
@@ -50,15 +50,17 @@ public class CsvManager
     }
 }
 
-
+//TODO : 서버 연결 후 퀴즈 결과에 따른 오답률 수정
+[Serializable]
 public struct Quiz
 {
     public string Korean;
     public string Pronunce;
     public string English;
     public float Rate;
-    public int SolveCnt;
+    //public int SolveCnt;
 }
+
 public struct ItemWeight
 {
     public Define.item_type type;

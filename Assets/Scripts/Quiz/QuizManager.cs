@@ -5,33 +5,61 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 using static System.Net.Mime.MediaTypeNames;
 
 public class QuizManager : MonoBehaviour
 {
     [Header("Quiz Setting")]
     public int MaxLevel;//최대 난이도 레벨
+    public List<Quiz> QuizList;//전체 퀴즈 리스트
+
+    [Header("Level Setting")]
     public int QuizTotalCount;//총 퀴즈 문제 수
-    public int SolveCount;//푼 문제 수
     public float SolveTime;//한 문제 푸는데 걸리는 시간
-    public int Level;//현재 난이도 레벨
+    [SerializeField] private int level;//현재 난이도 레벨
+    public int Level
+    {
+        get { return level; }
+        set
+        {
+            level = value;
+
+            switch (level)
+            {
+                case 1:
+                    SolveTime = 9f;
+                    QuizTotalCount = 10;
+                    break;
+                case 2:
+                    SolveTime = 6f;
+                    QuizTotalCount = 20;
+                    break;
+                case 3:
+                    SolveTime = 3f;
+                    QuizTotalCount = 30;
+                    break;
+            }
+
+            repeated_index.Clear();
+            for (int i= LevelIndex[value - 1, 0]; i < LevelIndex[value - 1, 1]; i++)
+            {
+                repeated_index.Add(i);
+            }
+        }
+    }
 
     [Header("Quiz")]
-    public List<Quiz> QuizList;//전체 퀴즈 리스트
     public float[] DifficultLevelRate;//heart추가 지급하는 난이도 기준
     public int[,] LevelIndex;//퀴즈 난이도별 index범위
 
 
     [Header("Quiz Data")]
-    public int Score;//현재 점수
+    public int SolveCount;//푼 문제 수
+    public int Score;//현재 점수  : /10 = 얻은 코인 수
     public int Heart;//얻은 하트 수
-    public List<QuizResult> ResultPull;//퀴즈 결과 리스트
-    [Serializable]
-    public struct QuizResult
-    {
-        public bool Result;
-        public Quiz GetQuiz;
-    }
+    public Dictionary<Quiz, bool> ResultPull;//퀴즈 결과 리스트
+    public List<int> repeated_index;//안푼 문제 index
 
 
     #region Singleton
@@ -63,22 +91,12 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         QuizList = new CsvManager().Read_Quiz_Csv();
-        QuizList.Sort(compareQuizRate);
-
+        
         LevelIndex = new int[MaxLevel, 2];
         DifficultLevelRate = new float[MaxLevel];
 
-        int temp = 0;
-        for (int i=0; i < MaxLevel; i++)
-        {
-            int j = QuizList.Count / 3 * (i + 1);
-
-            LevelIndex[i,0] = GetStartIndex(temp);
-            LevelIndex[i,1] = GetEndIndex(j);
-            temp = j;
-
-            DifficultLevelRate[i] = QuizList[(j / 10) + LevelIndex[i, 0]].Rate;
-        }
+        ResultPull = new Dictionary<Quiz, bool>();
+        repeated_index = new List<int>();
 
         Init();
     }
@@ -100,7 +118,7 @@ public class QuizManager : MonoBehaviour
                 return prev;
         }
 
-        return prev;
+        return prev + 1;
     }
 
     int GetEndIndex(int i)
@@ -120,9 +138,28 @@ public class QuizManager : MonoBehaviour
 
     private void Init()
     {
+        QuizList.Sort(compareQuizRate);
+
         //변수 셋팅
         SolveCount = 0;
         Score = 0;
         Heart = 0;
+        ResultPull.Clear();
+        repeated_index.Clear();
+
+        //Level Set
+        int temp = 0;
+        for (int i = 0; i < MaxLevel; i++)
+        {
+            int j = QuizList.Count / 3 * (i + 1);
+
+            LevelIndex[i, 0] = GetStartIndex(temp);
+            LevelIndex[i, 1] = GetEndIndex(j);
+
+            temp = j;
+
+            DifficultLevelRate[i] = QuizList[(j / 10) + LevelIndex[i, 0]].Rate;
+        }
+        Level = 1;
     }
 }

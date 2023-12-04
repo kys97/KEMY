@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,24 +52,29 @@ public class QuizGameUI : MonoBehaviour
         }
         else
         {
+            QuizManager.Instance.ResultPull.Add(Answer, false);
+            QuizManager.Instance.SolveCount++;
+
             NextQuiz();
         }
     }
 
     void NextQuiz()
     {
+        SolveCnt_txt.text = QuizManager.Instance.SolveCount.ToString() + "/" + QuizManager.Instance.QuizTotalCount.ToString();
         currentTime = Timer_sld.maxValue;
         Timer_sld.value = Timer_sld.maxValue;
 
         if (QuizManager.Instance.SolveCount == QuizManager.Instance.QuizTotalCount)
         {
             //Quiz Finish
-            GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizResult);
+            GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizFinish);
         }
         else
         {
             //Get New Options
-            List<int> option_list = GetRandomQuiz();
+            answer_option_num = Random.Range(0, Options_txt.Length);
+            List<int> option_list = GetRandomQuiz(answer_option_num);
 
             //Set Option Text
             for(int i=0; i < Options_txt.Length; i++)
@@ -77,34 +83,42 @@ public class QuizGameUI : MonoBehaviour
             }
 
             //Set Quiz
-            answer_option_num = Random.Range(0, Options_txt.Length);
             Answer = QuizManager.Instance.QuizList[option_list[answer_option_num]];
             Quiz_txt.text = Answer.Korean;
             Pronunce_txt.text = Answer.Pronunce;
-
+            Debug.Log(option_list[answer_option_num] + ":" + Answer.Korean + ":" + Answer.Rate);
             //Heart Set
-            if(Answer.Rate < QuizManager.Instance.DifficultLevelRate[QuizManager.Instance.Level - 1])
+            if (Answer.Rate < QuizManager.Instance.DifficultLevelRate[QuizManager.Instance.Level - 1])
             {
                 Heart_obj.SetActive(true);
             }
         }
     }
 
-    List<int> GetRandomQuiz()
+    List<int> GetRandomQuiz(int answer)
     {
+        //TODO : 중복 제거 다 못함, 배열[]로 바꾸기
         List<int> list = new List<int>();
+        int[] templist = new int[4];
+        
 
-        int rand = Random.Range(QuizManager.Instance.LevelIndex[QuizManager.Instance.Level - 1, 0], QuizManager.Instance.LevelIndex[QuizManager.Instance.Level - 1, 1]);
+        int rand = Random.Range(0, QuizManager.Instance.repeated_index.Count);
 
         for (int i=0; i < 4; i++)
         {
             if (list.Contains(rand))
             {
                 i--;
-                rand = Random.Range(QuizManager.Instance.LevelIndex[QuizManager.Instance.Level - 1, 0], QuizManager.Instance.LevelIndex[QuizManager.Instance.Level - 1, 1]);
+                rand = Random.Range(0, QuizManager.Instance.repeated_index.Count);
             }
             else
             {
+                //Avoid duplication
+                if (i == answer)
+                {
+                    QuizManager.Instance.repeated_index.RemoveAt(rand);
+                }
+
                 list.Add(rand);
             }
         }
@@ -112,11 +126,10 @@ public class QuizGameUI : MonoBehaviour
         return list;
     }
 
-
     void OptionsBtn(int num)
     {
-        QuizManager.QuizResult temp_quiz = new QuizManager.QuizResult();
-        temp_quiz.GetQuiz = Answer;
+        Quiz temp_quiz = new Quiz();
+        temp_quiz = Answer;
 
         //선택지 결과 적용
         if (num == answer_option_num)
@@ -132,13 +145,11 @@ public class QuizGameUI : MonoBehaviour
             QuizManager.Instance.Score += 100 + (int)(currentTime * 100);
 
             //Result Pull
-            temp_quiz.Result = true;
-            QuizManager.Instance.ResultPull.Add(temp_quiz);
+            QuizManager.Instance.ResultPull.Add(temp_quiz, true);
         }
         else
         {
-            temp_quiz.Result = false;
-            QuizManager.Instance.ResultPull.Add(temp_quiz);
+            QuizManager.Instance.ResultPull.Add(temp_quiz, false);
         }
 
         QuizManager.Instance.SolveCount++;

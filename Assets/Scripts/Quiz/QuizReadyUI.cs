@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,14 +9,20 @@ public class QuizReadyUI : MonoBehaviour
 
     void Start()
     {
+        //Avatar Set
         GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(true);
 
+        //Go to Main Btn
         transform.GetChild(0).GetComponent<Button>().onClick.AddListener(GameManager.Instance.UImanager.Goto_Home);
 
+        //Level Text
         Level_txt = transform.GetChild(1).GetComponent<TMP_Text>();
 
+        //Level Btn
         transform.GetChild(2).GetComponent<Button>().onClick.AddListener(LevelDownBtn);
         transform.GetChild(3).GetComponent<Button>().onClick.AddListener(LevelUpBtn);
+        
+        //Quiz Start Btn
         transform.GetChild(4).GetComponent<Button>().onClick.AddListener(QuizStartBtn);
 
     }
