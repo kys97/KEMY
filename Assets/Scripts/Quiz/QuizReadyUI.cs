@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class QuizReadyUI : MonoBehaviour
 {
     TMP_Text Level_txt;
-    string Level1_color = "#717171", Level2_color = "#6483A6", Level3_color = "#4A90E2";
+    [SerializeField] string[] Level_color = new string[] { "#717171", "#798B9F", "#4A90E2" };
 
     void Start()
     {
@@ -28,8 +28,9 @@ public class QuizReadyUI : MonoBehaviour
         if(QuizManager.Instance.Level > 1)
         {
             QuizManager.Instance.Level --;
-            Level_txt.text = "Level " + QuizManager.Instance.Level.ToString();
+            SetTextColor();
         }
+        //TODO : 난이도에 따른 애니메이션 넣기
     }
 
     void LevelUpBtn()
@@ -37,14 +38,14 @@ public class QuizReadyUI : MonoBehaviour
         if (QuizManager.Instance.Level < QuizManager.Instance.MaxLevel)
         {
             QuizManager.Instance.Level++;
-            Level_txt.text = "Level " + QuizManager.Instance.Level.ToString();
+            SetTextColor();
         }
+        //TODO : 난이도에 따른 애니메이션 넣기
     }
 
-    void SetTextColor(string color)
+    void SetTextColor()
     {
-        //TODO
-        //Level_txt.color = 
+        Level_txt.text = "<color=" + Level_color[QuizManager.Instance.Level - 1] + ">" + "Level " + QuizManager.Instance.Level.ToString() + "</color>";
     }
 
     void QuizStartBtn()

@@ -1,201 +1,200 @@
-한글/발음/영어/오답률
-가방제조업자/ga-bang-je-jo-eop-ja/Bag Manufacturer/0.5
-가사/ga-sa/Housekeeper/0.5
-가수/ga-soo/Singer/0.5
-가정교사/ga-jeong-gyo-sa/Private Tutor/0.5
-간호사/gan-ho-sa/Nurse/0.5
-감독/gam-dok/Director/0.5
-감정평가사/gam-jeong-pyeong-ga-sa/Appraiser/0.5
-건축가/geon-chuk-ga/Architect/0.5
-검사/geom-sa/Prosecutor/0.5
-경마사/gyeong-ma-sa/Jockey/0.5
-경비/gyeong-bi/Security/0.5
-경영자/gyeong-yeong-ja/Manager/0.5
-경찰관/gyeong-chal-gwan/Police Officer/0.5
-계리사/gye-ri-sa/Accountant/0.5
-고용주/go-yong-ju/Employer/0.5
-공무원/gong-mu-won/Civil Servant/0.5
-과학자/gwa-hak-ja/Scientist/0.5
-관리인/gwan-ri-in/Administrator/0.5
-교사/gyo-sa/Teacher/0.5
-국회의원/guk-hoe-ui-won/Member of Parliament/0.5
-기사/gi-sa/Journalist/0.5
-기술자/gi-sul-ja/Technician/0.5
-기자/gi-ja/Reporter/0.5
-농부/nong-boo/Farmer/0.5
-디자이너/di-ja-i-neo/Designer/0.5
-리포터/ri-po-teo/Reporter/0.5
-매니저/mae-ni-jeo/Manager/0.5
-모델/mo-del/Model/0.5
-미용사/mi-yong-sa/Beautician/0.5
-백수/baek-su/Unemployed/0.5
-비서/bi-seo/Secretary/0.5
-사무직/sa-mu-jik/Office Worker/0.5
-상담원/sang-dam-won/Counselor/0.5
-선수/seon-su/Athlete/0.5
-소방관/so-bang-gwan/Firefighter/0.5
-승무원/seung-mu-won/Flight Attendant/0.5
-심판/sim-pan/Referee/0.5
-아나운서/a-na-un-seo/Announcer/0.5
-약사/yak-sa/Pharmacist/0.5
-언론인/eon-lon-in/Journalist/0.5
-여행가/yeo-haeng-ga/Traveler/0.5
-요리사/yo-ri-sa/Chef/0.5
-운동선수/un-dong-seon-su/Athlete/0.5
-운전기사/un-jeon-gi-sa/Driver/0.5
-의사/ui-sa/Doctor/0.5
-전문가/jeon-mun-ga/Specialist/0.5
-주부/ju-bu/Homemaker/0.5
-직장인/jik-jang-in/Employee/0.5
-코치/ko-chi/Coach/0.5
-회사원/hwe-sa-won/Office Worker/0.5
-가요/ga-yo/Popular song/0.5
-간식/gan-sik/Snack/0.5
-개그/gae-geu/Comedy/0.5
-공연/gong-yeon/Performance/0.5
-그림책/geu-rim-chaek/Picture book/0.5
-기념일/gi-nyeom-il/Anniversary/0.5
-노래/no-rae/Song/0.5
-대중문화/dae-jung-mun-hwa/Popular culture/0.5
-드라마/deu-ra-ma/Drama/0.5
-만화/man-hwa/Comic/0.5
-맛집/mat-jip/Good restaurant/0.5
-명절/myeong-jeol/Holiday/0.5
-무용/mu-yong/Dance/0.5
-미술/mi-sul/Art/0.5
-민속/min-sok/Folk/0.5
-뮤지컬/myu-ji-kul/Musical/0.5
-문학/mun-hak/Literature/0.5
-물놀이/mul-nol-i/Water play/0.5
-봉사/bong-sa/Volunteer work/0.5
-산책/san-chaek/Stroll/0.5
-서예/seo-ye/Calligraphy/0.5
-서평/seo-pyeong/Book review/0.5
-소설/so-seol/Novel/0.5
-스릴러/seu-ril-leo/Thriller/0.5
-스케치/seu-ke-chi/Sketch/0.5
-연극/yeon-geuk/Theater/0.5
-연말/yeon-mal/End of year/0.5
-영화/yeong-hwa/Movie/0.5
-우정/u-jeong/Friendship/0.5
-음악/eum-ak/Music/0.5
-음식/eum-sik/Food/0.5
-이야기/i-ya-gi/Story/0.5
-자연/ja-yeon/Nature/0.5
-전통/jeon-tong/Tradition/0.5
-정서/jeong-seo/Emotion/0.5
-조각/jo-gak/Sculpture/0.5
-책/chaek/Book/0.5
-체험/che-heom/Experience/0.5
-축제/chuk-je/Festival/0.5
-춤/chum/Dance/0.5
-취미/chwi-mi/Hobby/0.5
-친구/chin-gu/Friend/0.5
-테마파크/te-ma-pa-keu/Theme park/0.5
-패션/paesyeon/Fashion/0.5
-피크닉/pi-keu-nik/Picnic/0.5
-휴가/hyu-ga/Vacation/0.5
-가르치다/ga-reu-chi-da/Teach/0.7
-가다/ga-da/Go/0.3
-걸다/geol-da/Hang/0.5
-고르다/go-reu-da/Choose/0.6
-곱하다/goeb-ha-da/Multiply/0.7
-곱다/goeb-da/Be beautiful/0.7
-그리다/geu-ri-da/Draw/0.6
-기다리다/gi-da-ri-da/Wait/0.7
-깨뜨리다/gae-ttu-ri-da/Break/0.8
-나누다/na-nu-da/Divide/0.7
-나오다/na-o-da/Come out/0.4
-나타나다/na-ta-na-da/Appear/0.6
-나흘다/na-heul-da/Walk/0.5
-남기다/nam-gi-da/Leave/0.6
-내다/nae-da/Put/0.5
-넘기다/neom-gi-da/Pass/0.6
-놓다/no-da/Put down/0.5
-눕다/noob-da/Lie down/0.4
-다니다/da-ni-da/Go to/0.6
-닫다/dat-da/Close/0.5
-달다/dal-da/Put on/0.5
-대다/dae-da/Put on/0.5
-되다/doe-da/Become/0.4
-듣다/deut-da/Listen/0.4
-떨어지다/ddeo-reo-ji-da/Fall/0.8
-만나다/man-na-da/Meet/0.5
-맡기다/mat-gi-da/Entrust/0.6
-메다/me-da/Carry/0.5
-모으다/mo-eu-da/Gather/0.6
-모르다/mo-reu-da/Not know/0.4
-물다/mul-da/Ask/0.5
-믿다/mit-da/Believe/0.5
-밀다/mil-da/Push/0.5
-바라보다/ba-ra-bo-da/Look at/0.6
-보다/bo-da/See/0.4
-부르다/bu-reu-da/Call/0.5
-불다/bun-da/Blow/0.5
-붙다/but-da/Stick/0.5
-비다/bi-da/Pour/0.5
-삶다/sam-da/Fry/0.5
-쉬다/swi-da/Rest/0.4
-서두르다/seo-du-reu-da/Hurry/0.7
-서다/seo-da/Stand/0.4
-속이다/so-gi-da/Deceive/0.6
-숨다/sum-da/Hide/0.5
-실수하다/sil-su-ha-da/Make a mistake/0.7
-싸우다/ssa-u-da/Fight/0.6
-이루다/i-ru-da/Accomplish/0.6
-읽다/ilk-da/Read/0.4
-잃다/il-da/Lose/0.4
-잊다/it-da/Forget/0.4
-자르다/ja-reu-da/Cut/0.5
-가깝다/ga-ggaap-da/Close/0.5
-가르치다/ga-reu-chy-da/Teach/0.7
-가족/ga-jo다/Family/0.4
-가치/ga-chy/Value/0.4
-간단하다/gaan-daan-ha-da/Simple/0.5
-감사하다/gaam-sa-ha-da/Thankful/0.6
-개방하다/ghae-baang-ha-da/Open/0.6
-걱정하다/geok-jeong-ha-da/Worry/0.6
-경험/gyeong-hum/Experience/0.4
-고맙다/go-mat-da/Grateful/0.5
-고장나다/go-jang-na-da/Breakdown/0.6
-공부/gong-bu/Study/0.4
-공평하다/gong-pyeong-ha-da/Fair/0.6
-괜찮다/gwaen-chan-da/Okay/0.4
-기다리다/gi-da-ri-da/Wait/0.7
-기쁘다/ki-ppu-da/Happy/0.4
-나쁘다/na-bbu-da/Bad/0.4
-날씨/nal-ssi/Weather/0.4
-낮다/nat-da/Low/0.4
-내일/nae-il/Tomorrow/0.4
-느리다/neu-ri-da/Slow/0.5
-다양하다/da-yang-ha-da/Diverse/0.5
-달콤하다/dal-kom-ha-da/Sweet/0.6
-대답하다/dae-dap-ha-da/Answer/0.6
-되다/doe-da/Become/0.4
-되돌아보다/doe-dol-a-bo-da/Reflect/0.7
-들다/deul-da/Carry/0.5
-떠나다/tteo-na-da/Leave/0.6
-맛있다/ma-jit-da/Delicious/0.4
-멀다/meol-da/Far/0.4
-바쁘다/ba-beu-da/Busy/0.5
-보내다/bo-nae-da/Send/0.6
-분명하다/bun-myeong-ha-da/Clear/0.6
-비싸다/bi-ssa-da/Expensive/0.5
-빠르다/ppa-reu-da/Fast/0.5
-사랑/sa-rang/Love/0.4
-쉽다/swip-da/Easy/0.4
-슬프다/seul-peu-da/Sad/0.5
-싫다/sil-da/Dislike/0.4
-신뢰하다/shin-roi-ha-da/Trust/0.6
-싸다/ssa-da/Cheap/0.4
-아름답다/a-reum-dap-da/Beautiful/0.5
-아프다/a-peu-da/Hurt/0.4
-약속/yak-sok/Promise/0.4
-어렵다/eo-ryeop-da/Difficult/0.6
-여행/yeo-haeng/Travel/0.4
-예쁘다/ye-ppu-da/Pretty/0.4
-예상하다/ye-sang-ha-da/Expect/0.6
-예쁘다/ye-ppu-da/Pretty/0.4
-예약하다/ye-ak-ha-da/Reserve/0.6
-오랜/o-raen/Long/0.4
-외롭다/oel-lap-da/Lonely/0.5
+﻿한글 단어,발음,영어 단어,난이도,문제 푼 수 
+가방제조업자,ga-bang-je-jo-eob-ja,Bag Manufacturer,0.8,0
+가사,ga-sa,Household,0.3,0
+가수,ga-su,Singer,0.3,0
+가정교사,ga-jeong-gyo-sa,Private Tutor,0.7,0
+간호사,gan-ho-sa,Nurse,0.4,0
+감독,gam-dok,Director,0.4,0
+감정평가사,gam-jeong-pyeong-ga-sa,Appraiser,0.8,0
+건축가,geon-chuk-ga,Architect,0.5,0
+검사,geom-sa,Prosecutor,0.4,0
+경마사,gyeong-ma-sa,Jockey,0.5,0
+경비,gyeong-bi,Security,0.3,0
+경영자,gyeong-yeong-ja,Manager,0.5,0
+경찰관,gyeong-chal-gwan,Police Officer,0.5,0
+계리사,gye-ri-sa,Accountant,0.4,0
+고용주,go-yong-ju,Employer,0.4,0
+공무원,gong-mu-won,Civil Servant,0.4,0
+과학자,gwa-hak-ja,Scientist,0.4,0
+관리인,gwan-ri-in,Supervisor,0.4,0
+교사,gyo-sa,Teacher,0.3,0
+국회의원,guk-hoe-ui-won,Congressman,0.5,0
+기사,gi-sa,Reporter,0.3,0
+기술자,gi-sul-ja,Technician,0.4,0
+기자,gi-ja,Journalist,0.3,0
+농부,nong-bu,Farmer,0.3,0
+디자이너,di-ja-i-neo,Designer,0.4,0
+리포터,ri-po-teo,Reporter,0.3,0
+매니저,mae-ni-jeo,Manager,0.4,0
+모델,mo-del,Model,0.3,0
+미용사,mi-yong-sa,Beautician,0.4,0
+백수,baek-su,Unemployed,0.3,0
+비서,bi-seo,Secretary,0.3,0
+사무직,sa-mu-jik,Office Worker,0.4,0
+상담원,sang-dam-won,Counselor,0.4,0
+선수,seon-su,Athlete,0.3,0
+소방관,so-bang-gwan,Firefighter,0.4,0
+승무원,seung-mu-won,Flight Attendant,0.4,0
+심판,sim-pan,Referee,0.4,0
+아나운서,a-na-un-seo,Announcer,0.4,0
+약사,yak-sa,Pharmacist,0.3,0
+언론인,eon-ron-in,Journalist,0.4,0
+여행가,yeo-haeng-ga,Traveler,0.4,0
+요리사,yo-ri-sa,Chef,0.3,0
+운동선수,un-dong-seon-su,Athlete,0.4,0
+운전기사,un-jeon-gi-sa,Driver,0.4,0
+의사,ui-sa,Doctor,0.3,0
+전문가,jeon-mun-ga,Specialist,0.4,0
+주부,ju-bu,Housewife,0.3,0
+직장인,jig-jang-in,Office Worker,0.4,0
+코치,ko-chi,Coach,0.3,0
+회사원,hwe-sa-won,Company Employee,0.4,0
+가요,ga-yo,Song,0.3,0
+간식,gan-sik,Snack,0.3,0
+개그,gae-geu,Comedy,0.3,0
+공연,gong-yeon,Performance,0.3,0
+그림책,geu-rim-chaek,Picture Book,0.3,0
+기념일,gi-nyeom-il,Anniversary,0.3,0
+노래,no-rae,Song,0.3,0
+대중문화,dae-jung-mun-hwa,Pop Culture,0.4,0
+드라마,deu-ra-ma,Drama,0.3,0
+만화,man-hwa,Comic,0.3,0
+맛집,mat-jip,Good Restaurant,0.3,0
+명절,myeong-jeol,Holiday,0.3,0
+무용,mu-yong,Dance,0.3,0
+미술,mi-sul,Art,0.3,0
+민속,min-sok,Folk,0.3,0
+뮤지컬,myu-ji-keol,Musical,0.3,0
+문학,mun-hak,Literature,0.3,0
+물놀이,mul-nol-i,Water Play,0.4,0
+봉사,bong-sa,Volunteer,0.3,0
+산책,san-chaek,Stroll,0.3,0
+서예,seo-ye,Calligraphy,0.4,0
+서평,seo-pyeong,Book Review,0.4,0
+소설,so-seol,Novel,0.3,0
+스릴러,seu-ril-leo,Thriller,0.4,0
+스케치,seu-ke-chi,Sketch,0.4,0
+연극,yeon-geuk,Theater,0.3,0
+연말,yeon-mal,Year-End,0.3,0
+영화,yeong-hwa,Movie,0.3,0
+우정,u-jeong,Friendship,0.3,0
+음악,eum-ak,Music,0.3,0
+음식,eum-sik,Food,0.3,0
+이야기,i-ya-gi,Story,0.3,0
+자연,ja-yeon,Nature,0.3,0
+전통,jeon-tong,Tradition,0.3,0
+정서,jeong-seo,Emotion,0.3,0
+조각,jo-gak,Sculpture,0.3,0
+책,chaek,Book,0.2,0
+체험,che-heom,Experience,0.3,0
+축제,chuk-je,Festival,0.3,0
+춤,chum,Dance,0.2,0
+취미,chwi-mi,Hobby,0.3,0
+친구,chin-gu,Friend,0.3,0
+테마파크,te-ma-pa-keu,Theme Park,0.4,0
+패션,pae-syeon,Fashion,0.3,0
+피크닉,pi-keu-nik,Picnic,0.4,0
+휴가,hyu-ga,Vacation,0.3,0
+가르치다,ga-reu-chi-da,Teach,0.7,0
+가다,ga-da,Go,0.3,0
+걸다,geol-da,Hang,0.5,0
+고르다,go-reu-da,Choose,0.6,0
+곱다,gob-da,Multiply,0.7,0
+곱다,gob-da,Be beautiful,0.7,0
+그리다,geu-ri-da,Draw,0.6,0
+기다리다,gi-da-ri-da,Wait,0.7,0
+깨뜨리다,gae-ttu-ri-da,Break,0.8,0
+나누다,na-nu-da,Divide,0.7,0
+나오다,na-o-da,Come out,0.4,0
+나타나다,na-ta-na-da,Appear,0.6,0
+나흘다,na-heul-da,Walk,0.5,0
+남기다,nam-gi-da,Leave,0.6,0
+내다,nae-da,Put,0.5,0
+넘기다,neom-gi-da,Pass,0.6,0
+놓다,no-da,Put down,0.5,0
+눕다,noob-da,Lie down,0.4,0
+다니다,da-ni-da,Go to,0.6,0
+닫다,dat-da,Close,0.5,0
+달다,dal-da,Put on,0.5,0
+대다,dae-da,Put on,0.5,0
+되다,doe-da,Become,0.4,0
+듣다,deut-da,Listen,0.4,0
+떨어지다,tteo-reo-ji-da,Fall,0.8,0
+만나다,man-na-da,Meet,0.5,0
+맡기다,mat-gi-da,Entrust,0.6,0
+메다,me-da,Carry,0.5,0
+모으다,mo-eu-da,Gather,0.6,0
+모르다,mo-reu-da,Not know,0.4,0
+물다,mul-da,Ask,0.5,0
+믿다,mit-da,Believe,0.5,0
+밀다,mil-da,Push,0.5,0
+바라보다,ba-ra-bo-da,Look at,0.6,0
+보다,bo-da,See,0.4,0
+부르다,bu-reu-da,Call,0.5,0
+불다,bun-da,Blow,0.5,0
+붙다,but-da,Stick,0.5,0
+비다,bi-da,Pour,0.5,0
+삶다,sam-da,Fry,0.5,0
+쉬다,swi-da,Rest,0.4,0
+서두르다,seo-du-reu-da,Hurry,0.7,0
+서다,seo-da,Stand,0.4,0
+속이다,so-gi-da,Deceive,0.6,0
+숨다,sum-da,Hide,0.5,0
+실수하다,sil-su-ha-da,Make a mistake,0.7,0
+싸우다,ssa-u-da,Fight,0.6,0
+이루다,i-ru-da,Accomplish,0.6,0
+읽다,ilk-da,Read,0.4,0
+잃다,il-da,Lose,0.4,0
+잊다,it-da,Forget,0.4,0
+자르다,ja-reu-da,Cut,0.5,0
+가깝다,ga-ggip-da,Close,0.5,0
+가르치다,ga-reu-chi-da,Teach,0.7,0
+가족,ga-jok,Family,0.4,0
+가치,ga-chi,Value,0.4,0
+간단하다,gan-dan-ha-da,Simple,0.5,0
+감사하다,gam-sa-ha-da,Thankful,0.6,0
+개방하다,gae-bang-ha-da,Open,0.6,0
+걱정하다,geok-jeong-ha-da,Worry,0.6,0
+경험,gyeong-heom,Experience,0.4,0
+고맙다,go-mat-da,Grateful,0.5,0
+고장나다,go-jang-na-da,Breakdown,0.6,0
+공부,gong-bu,Study,0.4,0
+공평하다,gong-pyeong-ha-da,Fair,0.6,0
+괜찮다,gwaen-chan-da,Okay,0.4,0
+기다리다,gi-da-ri-da,Wait,0.7,0
+기쁘다,ki-ppu-da,Happy,0.4,0
+나쁘다,na-bbu-da,Bad,0.4,0
+날씨,nal-ssi,Weather,0.4,0
+낮다,nat-da,Low,0.4,0
+내일,nae-il,Tomorrow,0.4,0
+느리다,neu-ri-da,Slow,0.5,0
+다양하다,da-yang-ha-da,Diverse,0.5,0
+달콤하다,dal-kom-ha-da,Sweet,0.6,0
+대답하다,dae-dap-ha-da,Answer,0.6,0
+되다,doe-da,Become,0.4,0
+되돌아보다,doe-dol-a-bo-da,Reflect,0.7,0
+들다,deul-da,Carry,0.5,0
+떠나다,tteo-na-da,Leave,0.6,0
+맛있다,ma-jit-da,Delicious,0.4,0
+멀다,meol-da,Far,0.4,0
+바쁘다,ba-beu-da,Busy,0.5,0
+보내다,bo-nae-da,Send,0.6,0
+분명하다,bun-myeong-ha-da,Clear,0.6,0
+비싸다,bi-ssa-da,Expensive,0.5,0
+빠르다,ppa-reu-da,Fast,0.5,0
+사랑,sa-rang,Love,0.4,0
+쉽다,swip-da,Easy,0.4,0
+슬프다,seul-peu-da,Sad,0.5,0
+싫다,sil-da,Dislike,0.4,0
+신뢰하다,shin-roi-ha-da,Trust,0.6,0
+싸다,ssa-da,Cheap,0.4,0
+아름답다,a-reum-dap-da,Beautiful,0.5,0
+아프다,a-peu-da,Hurt,0.4,0
+약속,yak-sok,Promise,0.4,0
+어렵다,eo-ryeop-da,Difficult,0.6,0
+여행,yeo-haeng,Travel,0.4,0
+예쁘다,ye-ppu-da,Pretty,0.4,0
+예상하다,ye-sang-ha-da,Expect,0.6,0
+예약하다,ye-ak-ha-da,Reserve,0.6,0
+오랜,o-raen,Long,0.4,0
+외롭다,oel-lap-da,Lonely,0.5,0

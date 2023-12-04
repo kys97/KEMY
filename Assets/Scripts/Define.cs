@@ -43,6 +43,8 @@ public class Define
         chat_select,
         book,
         book_select,
+        quiz_answer,
+        quiz_wrong,
         Count
     }
 

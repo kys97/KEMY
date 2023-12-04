@@ -1,6 +1,6 @@
 {
     "info": {
-        "coin": 123456,
+        "coin": 123356,
         "heart": 0
     },
     "inven": {
@@ -15,11 +15,12 @@
             "Face07",
             "Face01",
             "Face19",
-            "Face05"
+            "Face05",
+            "Face08"
         ]
     },
     "avatar_info": {
         "skin": "Cat06",
-        "face": "Face05"
+        "face": "Face19"
     }
 }

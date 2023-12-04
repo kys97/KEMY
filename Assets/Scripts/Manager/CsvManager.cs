@@ -41,8 +41,8 @@ public class CsvManager
         {
             string line = reader.ReadLine();
 
-            var data = line.Split('/');
-            var temp = new Quiz { Korean = data[0], Pronunce = data[1], English = data[2], Rate = float.Parse(data[3]) };
+            var data = line.Split(',');
+            var temp = new Quiz { Korean = data[0], Pronunce = data[1], English = data[2], Rate = float.Parse(data[3]), SolveCnt = int.Parse(data[4]) };
             weight_dic.Add(temp);
         }
 
@@ -57,6 +57,7 @@ public struct Quiz
     public string Pronunce;
     public string English;
     public float Rate;
+    public int SolveCnt;
 }
 public struct ItemWeight
 {
