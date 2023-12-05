@@ -1,0 +1,26 @@
+{
+    "info": {
+        "coin": 125063,
+        "heart": 300
+    },
+    "inven": {
+        "skin": [
+            "Cat00",
+            "Cat06"
+        ],
+        "face": [
+            "Face00",
+            "Face22",
+            "Face25",
+            "Face07",
+            "Face01",
+            "Face19",
+            "Face05",
+            "Face08"
+        ]
+    },
+    "avatar_info": {
+        "skin": "Cat06",
+        "face": "Face19"
+    }
+}

@@ -1,9 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Define
 {
+    public enum scene
+    {
+        Home,
+        Kamp,
+        Quiz,
+        RunningGame,
+        Count
+    }
     public enum ui_level
     {
         Lev1 = 0,
@@ -14,17 +18,33 @@ public class Define
     public enum ui
     {
         //Login,
-        Main,
         Home,
+        Chat,
+        Game,
         Kamp,
         Inventory,
-        CountPanel,
-        WordHuntingGame,
+        Shop,
+        ShopResult,
+        QuizReady,
+        QuizStart,
+        QuizFinish,
         Count
     }
 
     public enum sprites
     {
+        item_egg,
+        cracked1,
+        cracked2,
+        cracked3,
+        home,
+        home_select,
+        chat,
+        chat_select,
+        book,
+        book_select,
+        quiz_answer,
+        quiz_wrong,
         Count
     }
 
@@ -44,10 +64,11 @@ public class Define
 
     public enum item_type
     {
+        none,
         Skin,
         Face,
-        //Head,
-        //Body,
+        //Deco,
+        //Wall,
         Count
     }
 

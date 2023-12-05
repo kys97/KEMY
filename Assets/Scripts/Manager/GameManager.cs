@@ -1,15 +1,157 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static Define;
 
 public class GameManager : MonoBehaviour
 {
-    [HideInInspector] public UIManager UImanager;
-    [HideInInspector] public ResourcesManager Resourcesmanager;
-    [HideInInspector] public DataClass Data;
+    [HideInInspector] public UIManager UImanager = null;
+    [HideInInspector] public ResourcesManager Resourcesmanager = null;
+    [HideInInspector] public DataClass Data = null;
 
-    public Define.ui TopUI;
+    [HideInInspector] public List<ItemWeight> ItemWeightDic = null;
+    [HideInInspector] public int TotWeight = 0;
 
+    JsonManager jsonmanager;
+
+    private ui past_ui = ui.Home;
+    [SerializeField] private ui top_ui;
+    public ui TopUI
+    {
+        get
+        {
+            return top_ui;
+        }
+        set
+        {
+            top_ui = value;
+
+            switch (value)
+            {
+                case ui.Home: HomeCoroutine(); break;
+                case ui.Inventory: InvenCoroutine(); break;
+                case ui.QuizReady: QuizReadyCharacterSet(); break;
+                case ui.QuizStart: QuizStartCharacterSet(); break;
+                case ui.QuizFinish: QuizFinishCharacterSet(); break;
+            }
+        }
+    }
+
+    #region 캐릭터 및 아바타 변수
+    [Space(10)]
+    [SerializeField] int HomeAvatarSize = 3;//3
+    [SerializeField] int InvenAvatarSize = 2;//2
+    [SerializeField] int QuizReadyAvatarSize = 2;
+    [SerializeField] float QuizGameAvatarSize = 1.5f;
+    [SerializeField] int QuizFinishAvatarSize = 1;
+    [SerializeField] float AvatarSizeSpeed = 1;//1
+    [Space(10)]
+    [SerializeField] Vector3 OriginAvatarPos = new Vector3 (0, 0, -1);
+    [SerializeField] Vector3 QuizFinishAvatarPos = new Vector3 (-0.85f, 0, -1);
+    [Space(10)]
+    [SerializeField] Vector3 HomeCameraPos = new Vector3(0, 4.5f, -12);//0, 4.5, -12
+    [SerializeField] Vector3 InvenCameraPos = new Vector3(0, 1, -14);//0, 1, -14
+    [SerializeField] Vector3 QuizReadyCameraPos = new Vector3(0, 1.7f, -10);
+    [SerializeField] Vector3 QuizGameCameraPos = new Vector3(0, 3.15f, -10);
+    [SerializeField] Vector3 QuizFinishCameraPos = new Vector3(0, 1.2f, -10);
+    [SerializeField] float CameraMoveSpeed = 10;//10
+    #endregion
+
+    #region 화면 이동 코루틴
+
+    #region Home Coroutine
+    void HomeCoroutine()
+    {
+        StopAllCoroutines();
+        StartCoroutine("HomeAvatarCoroutine");
+        StartCoroutine("HomeCameraCoroutine");
+    }
+    IEnumerator HomeAvatarCoroutine()
+    {
+        Transform avatar = GameObject.FindGameObjectWithTag("Character").transform;
+
+        if (avatar == null)
+        {
+            avatar = GameObject.FindGameObjectWithTag("Character").transform;
+        }
+
+        while (avatar.localScale.x < HomeAvatarSize)
+        {
+            avatar.localScale += Vector3.one * HomeAvatarSize * Time.fixedDeltaTime * AvatarSizeSpeed;
+            yield return new WaitForFixedUpdate();
+        }
+
+        yield return null;
+    }
+    IEnumerator HomeCameraCoroutine()
+    {
+        Transform camera = Camera.main.transform;
+        while (camera.position != HomeCameraPos)
+        {
+            camera.position = Vector3.Lerp(camera.position, HomeCameraPos, Time.fixedDeltaTime * CameraMoveSpeed);
+            yield return new WaitForFixedUpdate();
+        }
+
+        yield return null;
+    }
+    #endregion
+
+    #region Inven Coroutine
+    void InvenCoroutine()
+    {
+        StopAllCoroutines();
+        StartCoroutine("InvenAvatarCoroutine");
+        StartCoroutine("InvenCameraCoroutine");
+    }
+    IEnumerator InvenAvatarCoroutine()
+    {
+        Transform avatar = GameObject.FindGameObjectWithTag("Character").transform;
+        while (avatar.localScale.x > InvenAvatarSize)
+        {
+            avatar.localScale -= Vector3.one * InvenAvatarSize * Time.fixedDeltaTime * AvatarSizeSpeed;
+            yield return new WaitForFixedUpdate();
+        }
+
+        yield return null;
+    }
+    IEnumerator InvenCameraCoroutine()
+    {
+        Transform camera = Camera.main.transform;
+        while (camera.position != InvenCameraPos)
+        {
+            camera.position = Vector3.Lerp(camera.position, InvenCameraPos, Time.fixedDeltaTime * CameraMoveSpeed);
+            yield return new WaitForFixedUpdate();
+        }
+
+        yield return null;
+    }
+    #endregion
+
+    #region Quiz Setting
+    void QuizReadyCharacterSet()
+    {
+        GameObject.FindGameObjectWithTag("Character").transform.localScale = Vector3.one * QuizReadyAvatarSize;
+        GameObject.FindGameObjectWithTag("Character").transform.position = OriginAvatarPos;
+        Camera.main.transform.position = QuizReadyCameraPos;
+    }
+    void QuizStartCharacterSet()
+    {
+        GameObject.FindGameObjectWithTag("Character").transform.localScale = Vector3.one * QuizGameAvatarSize;
+        GameObject.FindGameObjectWithTag("Character").transform.position = OriginAvatarPos;
+        Camera.main.transform.position = QuizGameCameraPos;
+    }
+    void QuizFinishCharacterSet()
+    {
+        GameObject.FindGameObjectWithTag("Character").transform.localScale = Vector3.one * QuizFinishAvatarSize;
+        GameObject.FindGameObjectWithTag("Character").transform.position = QuizFinishAvatarPos;
+        Camera.main.transform.position = QuizFinishCameraPos;
+    }
+    #endregion
+
+    #endregion
+
+    #region Singleton
     private static GameManager instance = null;
     public static GameManager Instance
     {
@@ -33,33 +175,104 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+    #endregion
 
-        Data = new DataClass();
-
-        //데이터 불러오기
+    #region Data
+    public void Save()
+    {
+        jsonmanager.SaveJson(Data);
     }
 
-
-    
-    void Start()
+    public void Load()
     {
-        UImanager = GetComponent<UIManager>();
-        Resourcesmanager = GetComponent<ResourcesManager>();
+        Data = jsonmanager.LoadSaveData();
+    }
+    #endregion
 
-        UImanager.Init();
-        Resourcesmanager.Init();
-
-        //로그인 확인
-        //로그인 화면 Load
-        //UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Login);
-
-        //Home화면
-        UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Main);
-        //아바타 Setting
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void Update()
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        switch ((scene)System.Enum.Parse(typeof(scene), scene.name))
+        {
+            case Define.scene.Home: HomeSceneInit(); break;
+            case Define.scene.Quiz: QuizSceneInit(); break;
+        }
+    }
+
+    private void HomeSceneInit()
+    {
+        if(UImanager == null)
+        {
+            UImanager = GetComponent<UIManager>();
+            UImanager.Init();
+        }
+
+        if (Resourcesmanager == null)
+        {
+            Resourcesmanager = GetComponent<ResourcesManager>();
+            Resourcesmanager.Init();
+        }
+
+        if (Data == null)
+           Data = new DataClass();
         
+        if(jsonmanager == null)
+            jsonmanager = new JsonManager();
+        
+        if(ItemWeightDic == null)
+            ItemWeightDic = new CsvManager().Read_ItemWeight_Csv();
+
+
+        Load();
+
+        UImanager.UIsetting(ui_level.Lev1, past_ui);
+
+        MyAvatar();
+    }
+
+    private void QuizSceneInit()
+    {
+        UImanager.UIsetting(ui_level.Lev1, ui.QuizReady);
+
+        MyAvatar();
+    }
+
+    private void MyAvatar()
+    {
+        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
+
+        switch (TopUI)
+        {
+            case ui.Home:
+                parent.localScale = Vector3.one * HomeAvatarSize;
+                Camera.main.transform.position = HomeCameraPos;
+                break;
+            case ui.QuizReady:
+                parent.localScale = Vector3.one * QuizReadyAvatarSize;
+                Camera.main.transform.position = QuizReadyCameraPos;
+                break;
+            default: break;
+        }
+
+        GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/Cat"), parent);
+        Material[] skin = player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
+        skin[0] = Resourcesmanager.ItemMaterials[Data.avatar_info.skin];
+        skin[1] = Resourcesmanager.ItemMaterials[Data.avatar_info.face];
+        player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = skin;
+    }
+
+    public void SetPastUI()
+    {
+        past_ui = top_ui;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

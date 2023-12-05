@@ -7,7 +7,7 @@ using static Define;
 
 public class ItemSelectBtn : UIEventTrigger
 {
-    public Define.item_type type;
+    public item_type type;
     protected string item_name;
 
     [SerializeField] Image item_image;
@@ -40,16 +40,18 @@ public class ItemSelectBtn : UIEventTrigger
         switch (type)
         {
             case item_type.Skin:
-                Debug.Log(item_name);
-                GameObject.FindGameObjectWithTag("Skin").GetComponent<SkinnedMeshRenderer>().material = GameManager.Instance.Resourcesmanager.ItemMaterials[item_name]; 
+                GameObject.FindGameObjectWithTag("Skin").GetComponent<SkinnedMeshRenderer>().material = GameManager.Instance.Resourcesmanager.ItemMaterials[item_name];
+                GameManager.Instance.Data.avatar_info.skin = item_name;
                 break;
             case item_type.Face:
                 skin = GameObject.FindGameObjectWithTag("Skin").GetComponent<SkinnedMeshRenderer>().materials;
                 skin[1] = GameManager.Instance.Resourcesmanager.ItemMaterials[item_name];
                 GameObject.FindGameObjectWithTag("Skin").GetComponent<SkinnedMeshRenderer>().materials = skin;
+                GameManager.Instance.Data.avatar_info.face = item_name;
                 break;
         }
         
+        GameManager.Instance.Save();
     }
 
 
