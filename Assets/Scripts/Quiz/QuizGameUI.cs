@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -74,7 +75,7 @@ public class QuizGameUI : MonoBehaviour
         {
             //Get New Options
             answer_option_num = Random.Range(0, Options_txt.Length);
-            List<int> option_list = GetRandomQuiz(answer_option_num);
+            int[] option_list = GetRandomQuiz(answer_option_num);
 
             //Set Option Text
             for(int i=0; i < Options_txt.Length; i++)
@@ -86,7 +87,9 @@ public class QuizGameUI : MonoBehaviour
             Answer = QuizManager.Instance.QuizList[option_list[answer_option_num]];
             Quiz_txt.text = Answer.Korean;
             Pronunce_txt.text = Answer.Pronunce;
+
             Debug.Log(option_list[answer_option_num] + ":" + Answer.Korean + ":" + Answer.Rate);
+
             //Heart Set
             if (Answer.Rate < QuizManager.Instance.DifficultLevelRate[QuizManager.Instance.Level - 1])
             {
@@ -95,35 +98,38 @@ public class QuizGameUI : MonoBehaviour
         }
     }
 
-    List<int> GetRandomQuiz(int answer)
+    int[] GetRandomQuiz(int answer)
     {
-        //TODO : 중복 제거 다 못함, 배열[]로 바꾸기
-        List<int> list = new List<int>();
-        int[] templist = new int[4];
-        
+        int[] option_index = new int[4];
 
-        int rand = Random.Range(0, QuizManager.Instance.repeated_index.Count);
 
-        for (int i=0; i < 4; i++)
+        //Answer Set
+        int answer_rand = Random.Range(0, QuizManager.Instance.repeated_index.Count);
+        option_index[answer] = QuizManager.Instance.repeated_index[answer_rand];
+        QuizManager.Instance.repeated_index.RemoveAt(answer_rand);
+
+
+        //Option Set
+        int index_start = QuizManager.Instance.LevelIndex[QuizManager.Instance.Level - 1, 0];
+        int index_end = QuizManager.Instance.LevelIndex[QuizManager.Instance.Level - 1, 1];
+        int options_rand = Random.Range(index_start, index_end);
+
+        for (int i=0; i < option_index.Length; i++)
         {
-            if (list.Contains(rand))
+            if (i == answer)
+                continue;
+            else if (option_index.Contains(options_rand))
             {
                 i--;
-                rand = Random.Range(0, QuizManager.Instance.repeated_index.Count);
+                options_rand = Random.Range(index_start, index_end);
             }
             else
             {
-                //Avoid duplication
-                if (i == answer)
-                {
-                    QuizManager.Instance.repeated_index.RemoveAt(rand);
-                }
-
-                list.Add(rand);
+                option_index[i] = options_rand;
             }
         }
 
-        return list;
+        return option_index;
     }
 
     void OptionsBtn(int num)

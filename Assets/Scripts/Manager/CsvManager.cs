@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -51,7 +50,6 @@ public class CsvManager
 }
 
 //TODO : 서버 연결 후 퀴즈 결과에 따른 오답률 수정
-[Serializable]
 public struct Quiz
 {
     public string Korean;

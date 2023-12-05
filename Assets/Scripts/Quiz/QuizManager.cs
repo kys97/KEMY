@@ -136,7 +136,7 @@ public class QuizManager : MonoBehaviour
         return next;
     }
 
-    private void Init()
+    public void Init()
     {
         QuizList.Sort(compareQuizRate);
 

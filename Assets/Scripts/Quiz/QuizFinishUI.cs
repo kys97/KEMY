@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class QuizFinishUI : MonoBehaviour
 {
-    
-
     void Start()
     {
         //Score
@@ -25,7 +23,7 @@ public class QuizFinishUI : MonoBehaviour
         transform.GetChild(3).GetComponent<Button>().onClick.AddListener(GameManager.Instance.UImanager.Goto_Home);
         
         //Replay Btn
-        transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizReady));
+        transform.GetChild(4).GetComponent<Button>().onClick.AddListener(ReplayBtn);
 
         //Result Set
         Transform result_parent = transform.GetChild(2).GetChild(0).GetChild(0).transform;
@@ -47,4 +45,9 @@ public class QuizFinishUI : MonoBehaviour
         }
     }
 
+    void ReplayBtn()
+    {
+        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.QuizReady);
+        QuizManager.Instance.Init();
+    }
 }
