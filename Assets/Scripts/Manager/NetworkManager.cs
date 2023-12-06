@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class NetworkManager : MonoBehaviour
+
+public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        PhotonNetwork.ConnectUsingSettings();//서버 연결
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnConnectedToMaster()//서버 연결 후 callback으로 호출
     {
-        
+        //방만들기
+        PhotonNetwork.CreateRoom("KampName", new RoomOptions { MaxPlayers = 20 }, null);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
+        GameObject MyAvatar = PhotonNetwork.Instantiate("Prefabs/KampCat", parent.position, Quaternion.identity);
+        MyAvatar.transform.localScale = parent.localScale;
+        MyAvatar.transform.parent = parent;
     }
 }

@@ -2,51 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static Unity.VisualScripting.Member;
-using static UnityEngine.Rendering.DebugUI;
 
 public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public static bool IsMove;
+    public static Vector2 MoveDir;
+
     //Joystick
     [SerializeField] public RectTransform Lever;
     [SerializeField, Range(0f, 130f)] private float LeverRange;
-    private RectTransform RectTransform;
-    private Vector2 InputDir, ClampedDir;
+    private RectTransform rt;
 
-    
-    //Player
-    private Move CharacterMove;
+    private Vector2 InputDir, ClampedDir;
 
 
     void Start()
     {
-        RectTransform = GetComponent<RectTransform>();
-        CharacterMove = GameObject.FindWithTag("Player").GetComponent<Move>();
+        rt = GetComponent<RectTransform>();
 
         //조이스틱 우측 하단
-        //RectTransform.anchorMin = new Vector2(1, 0);
-        //RectTransform.anchorMax = new Vector2(1, 0);
-        //+ new Vector2(-1080, 0)
+        rt.anchorMin = new Vector2(1, 0);
+        rt.anchorMax = new Vector2(1, 0);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //JoyStick
-        InputDir = eventData.position - RectTransform.anchoredPosition;
-        ClampedDir = InputDir.magnitude < LeverRange ? InputDir : InputDir.normalized * LeverRange;
-        Lever.anchoredPosition = ClampedDir;
-
-        CharacterMove.IsMove = true;
+        IsMove = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         //JoyStick
-        InputDir = eventData.position - RectTransform.anchoredPosition;
+        InputDir = eventData.position - rt.anchoredPosition + new Vector2(-1080, 0);
         ClampedDir = InputDir.magnitude < LeverRange ? InputDir : InputDir.normalized * LeverRange;
         Lever.anchoredPosition = ClampedDir;
 
-        CharacterMove.SetMove(ClampedDir.normalized);
+        MoveDir = ClampedDir.normalized;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -54,6 +45,6 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         //JoyStick
         Lever.anchoredPosition = Vector2.zero;
 
-        CharacterMove.IsMove = false;
+        IsMove = false;
     }
 }
