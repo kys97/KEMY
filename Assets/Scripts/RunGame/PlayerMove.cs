@@ -11,10 +11,30 @@ public class PlayerMove : MonoBehaviour
     public bool comingDown = false;
     public GameObject playerObject;
 
-    private void Start()
+    public void Lbutton()
     {
-        
+        if (this.gameObject.transform.position.x > LevelBoundary.leftSide)
+        {
+            transform.Translate(-3,0,0);
+        }
     }
+    public void Rbutton()
+    {
+        if (this.gameObject.transform.position.x < LevelBoundary.rightSide)
+        {
+            transform.Translate(3,0,0);
+        }
+    }
+    public void Jbutton()
+    {
+        if (isJumping == false)
+        {
+            isJumping = true;
+            playerObject.GetComponent<Animator>().Play("Jump");
+            StartCoroutine(JumpSequence());
+        }
+    }
+
     void Update()
     {
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
@@ -44,7 +64,11 @@ public class PlayerMove : MonoBehaviour
                     StartCoroutine(JumpSequence());
                 }
             }
-            
+            if (canMove == false)
+            {
+                playerObject.GetComponent<Animator>().Play("IdleB");
+            }
+
         }
         if(isJumping == true)
         {
@@ -56,8 +80,13 @@ public class PlayerMove : MonoBehaviour
             {
                 transform.Translate(Vector3.up * Time.deltaTime * -10, Space.World);
             }
+            if (canMove == false)
+            {
+                playerObject.GetComponent<Animator>().Play("IdleB");
+            }
 
         }
+
         
     }
 

@@ -24,7 +24,7 @@ public class EndRunSequence : MonoBehaviour
         yield return new WaitForSeconds(3);
         fadeOut.SetActive(true);
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("RunMenu");
     }
 
 }

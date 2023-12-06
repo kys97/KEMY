@@ -7,21 +7,21 @@ public class MainMenuFunction : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("RunGame");
     }
 
     public void GameExplain()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("RunGameExplain");
     }
 
     public void QuitGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Home");
     }
 
     public void QuitExplain()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("RunMenu");
     }
 }

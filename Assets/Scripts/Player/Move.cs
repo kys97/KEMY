@@ -29,8 +29,8 @@ public class Move : MonoBehaviour
     {
         if (IsMove)
         {
-            ChPosition.position += new Vector3(MoveDir.x, transform.position.y, MoveDir.y) * Speed * Time.fixedDeltaTime;
-            ChCamera.position += new Vector3(MoveDir.x, transform.position.y, MoveDir.y) * Speed * Time.fixedDeltaTime;
+            ChPosition.position += new Vector3(MoveDir.x, 0, MoveDir.y) * Speed * Time.fixedDeltaTime;
+            ChCamera.position += new Vector3(MoveDir.x, 2, MoveDir.y) * Speed * Time.fixedDeltaTime;
             ChPosition.rotation = Quaternion.Euler(0f,Mathf.Atan2(MoveDir.x, MoveDir.y) * Mathf.Rad2Deg,0f);
         }
     }
