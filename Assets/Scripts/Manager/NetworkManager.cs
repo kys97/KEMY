@@ -15,7 +15,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()//서버 연결 후 callback으로 호출
     {
         //방만들기
-        PhotonNetwork.CreateRoom("KampName", new RoomOptions { MaxPlayers = 20 }, null);
+        PhotonNetwork.JoinOrCreateRoom("KampName", new RoomOptions { MaxPlayers = 20 }, null);
     }
 
     public override void OnJoinedRoom()
