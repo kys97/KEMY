@@ -12,6 +12,7 @@ TagManager:
   - Item
   - Skin
   - Bottom
+  - Cam
   layers:
   - Default
   - TransparentFX

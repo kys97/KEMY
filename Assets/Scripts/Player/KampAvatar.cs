@@ -4,35 +4,45 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UIElements;
+using static System.Net.WebRequestMethods;
 
 public class KampAvatar : MonoBehaviourPunCallbacks
 {
     private PhotonView pv;
-    private Vector2 move_dir;
 
-    public float Speed;
     
+    public float Speed;
+    private float DirY;
+    private float prev_rotation;
+
+    Transform cam;
+
 
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        cam = GameObject.FindGameObjectWithTag("Cam").transform;
+        
+        prev_rotation = transform.rotation.eulerAngles.y;
     }
 
     void Update()
     {
         if(pv.IsMine)
         {
-            if(JoyStick.IsMove)
+            if (JoyStick.IsMove)
                 pv.RPC("Move", RpcTarget.All, JoyStick.MoveDir);
-            
+            else
+                prev_rotation = transform.rotation.eulerAngles.y;
         }
     }
 
     [PunRPC]
     public void Move(Vector2 dir)
     {
-        transform.position += new Vector3(dir.x, 0, dir.y) * Speed * Time.deltaTime;
-        //ChCamera.position += new Vector3(MoveDir.x, transform.position.y, MoveDir.y) * Speed * Time.fixedDeltaTime;
-        transform.rotation = Quaternion.Euler(0f, Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg, 0f);
+        transform.position += transform.forward * Speed * Time.deltaTime;
+
+        DirY = (Mathf.Atan2(dir.y, dir.x) * 180 / Mathf.PI - 90) * -1f;
+        transform.rotation = Quaternion.Euler(0f, DirY + prev_rotation, 0f);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-
+using Cinemachine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -24,5 +24,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         GameObject MyAvatar = PhotonNetwork.Instantiate("Prefabs/KampCat", parent.position, Quaternion.identity);
         MyAvatar.transform.localScale = parent.localScale;
         MyAvatar.transform.parent = parent;
+
+        GameObject.FindGameObjectWithTag("Cam").GetComponent<CinemachineVirtualCamera>().Follow = MyAvatar.transform.GetChild(0).transform;
     }
 }
