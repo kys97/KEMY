@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static Define;
 
 public class UIManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class UIManager : MonoBehaviour
             UILoad();
 
         UILevelLoad();
+
+        
     }
 
     public void UILevelLoad()

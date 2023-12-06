@@ -33,7 +33,7 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnDrag(PointerEventData eventData)
     {
         //JoyStick
-        InputDir = eventData.position - rt.anchoredPosition + new Vector2(-1080, 0);
+        InputDir = eventData.position - rt.anchoredPosition + new Vector2(-1f * Screen.width, 0);
         ClampedDir = InputDir.magnitude < LeverRange ? InputDir : InputDir.normalized * LeverRange;
         Lever.anchoredPosition = ClampedDir;
 

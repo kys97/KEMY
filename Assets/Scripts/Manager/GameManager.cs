@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static Define;
 
 public class GameManager : MonoBehaviour
@@ -37,6 +38,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    [Header("화면 크기 조정")]
+    [SerializeField] float Width = 1080;
+    [SerializeField] float Height = 2340;
 
     #region 캐릭터 및 아바타 변수
     [Space(10)]
@@ -201,6 +206,7 @@ public class GameManager : MonoBehaviour
         {
             case Define.scene.Home: HomeSceneInit(); break;
             case Define.scene.Quiz: QuizSceneInit(); break;
+            default: CanvasFit(); break;
         }
     }
 
@@ -231,14 +237,14 @@ public class GameManager : MonoBehaviour
         Load();
 
         UImanager.UIsetting(ui_level.Lev1, past_ui);
-
+        CanvasFit();
         MyAvatar();
     }
 
     private void QuizSceneInit()
     {
         UImanager.UIsetting(ui_level.Lev1, ui.QuizReady);
-
+        CanvasFit();
         MyAvatar();
     }
 
@@ -269,6 +275,21 @@ public class GameManager : MonoBehaviour
     public void SetPastUI()
     {
         past_ui = top_ui;
+    }
+
+    private void CanvasFit()
+    {
+        GameObject canvas = GameObject.Find("Canvas").gameObject;
+        float rate = Height / Width;
+        Debug.Log(Screen.width + " / " + Screen.height);
+        if (rate * Screen.width > Screen.height)// 가로가 더 긴 상황 (새로에 맞춰야함)
+        {
+            canvas.GetComponent<CanvasScaler>().matchWidthOrHeight = 1;
+        }
+        else // 새로가 더 긴 상황 (가로에 맞춰야함)
+        {
+            canvas.GetComponent<CanvasScaler>().matchWidthOrHeight = 0;
+        }
     }
 
     private void OnDestroy()
