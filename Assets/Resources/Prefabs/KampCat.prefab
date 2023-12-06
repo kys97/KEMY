@@ -2459,7 +2459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeScale: 1
   m_UseLocal: 1
 --- !u!114 &2725828309371607792
 MonoBehaviour:
@@ -2473,10 +2473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89cdb8feeff3d1b46b7766155f01164f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
-  DirY: 0
-  prev_rotation: 0
-  prev_position: {x: 0, y: 0, z: 0}
+  Speed: 20
 --- !u!1 &5270033212172015568
 GameObject:
   m_ObjectHideFlags: 0
@@ -2787,6 +2784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8247839368879639088}
   - component: {fileID: 950000939787957315}
+  - component: {fileID: 1564885322852889519}
   m_Layer: 0
   m_Name: Chibi_Cat
   m_TagString: Skin
@@ -2953,6 +2951,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.50653994, y: -0.05716282, z: 0.00000008940697}
     m_Extent: {x: 0.89047134, y: 0.5877145, z: 0.9307356}
   m_DirtyAABB: 0
+--- !u!64 &1564885322852889519
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6140053118666193697}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8074449331674078912, guid: aed13fe5e6f76da4aa6149cd601c67cd, type: 3}
 --- !u!1 &6217876398533887864
 GameObject:
   m_ObjectHideFlags: 0

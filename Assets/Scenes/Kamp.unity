@@ -1087,6 +1087,7 @@ GameObject:
   - component: {fileID: 543450653466715017}
   - component: {fileID: 3469287837450988588}
   - component: {fileID: 1711813855803971814}
+  - component: {fileID: 3469287837450988589}
   m_Layer: 3
   m_Name: hanok
   m_TagString: Untagged
@@ -2197,6 +2198,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149261941043}
+  m_Mesh: {fileID: 2268601044873028218, guid: a9ce7b994b1482646a2ab03e8cb87813, type: 3}
+--- !u!64 &3469287837450988589
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149261941043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
   m_Mesh: {fileID: 2268601044873028218, guid: a9ce7b994b1482646a2ab03e8cb87813, type: 3}
 --- !u!1 &4829544706736356939
 GameObject:
