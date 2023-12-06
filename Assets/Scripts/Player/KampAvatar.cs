@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UIElements;
 using static System.Net.WebRequestMethods;
+using Cinemachine;
 
 public class KampAvatar : MonoBehaviourPunCallbacks
 {
@@ -20,9 +21,17 @@ public class KampAvatar : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
+        transform.position = parent.position;
+        transform.localScale = parent.localScale;
+        transform.parent = parent;
+
         pv = GetComponent<PhotonView>();
         cam = GameObject.FindGameObjectWithTag("Cam").transform;
         
+        if(pv.IsMine)
+            cam.GetComponent<CinemachineVirtualCamera>().Follow = transform.GetChild(0).transform;
+
         prev_rotation = transform.rotation.eulerAngles.y;
     }
 

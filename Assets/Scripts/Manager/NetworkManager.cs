@@ -20,11 +20,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
-        GameObject MyAvatar = PhotonNetwork.Instantiate("Prefabs/KampCat", parent.position, Quaternion.identity);
-        MyAvatar.transform.localScale = parent.localScale;
-        MyAvatar.transform.parent = parent;
-
-        GameObject.FindGameObjectWithTag("Cam").GetComponent<CinemachineVirtualCamera>().Follow = MyAvatar.transform.GetChild(0).transform;
+        PhotonNetwork.Instantiate("Prefabs/KampCat", Vector3.zero, Quaternion.identity);
     }
 }
