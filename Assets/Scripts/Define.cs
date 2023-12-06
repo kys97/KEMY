@@ -5,7 +5,9 @@ public class Define
         Home,
         Kamp,
         Quiz,
-        RunningGame,
+        RunMenu,
+        RunGameExplain,
+        RunGame,
         Count
     }
     public enum ui_level

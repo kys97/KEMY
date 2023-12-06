@@ -64,7 +64,11 @@ public class PlayerMove : MonoBehaviour
                     StartCoroutine(JumpSequence());
                 }
             }
-            
+            if (canMove == false)
+            {
+                playerObject.GetComponent<Animator>().Play("IdleB");
+            }
+
         }
         if(isJumping == true)
         {
@@ -76,8 +80,13 @@ public class PlayerMove : MonoBehaviour
             {
                 transform.Translate(Vector3.up * Time.deltaTime * -10, Space.World);
             }
+            if (canMove == false)
+            {
+                playerObject.GetComponent<Animator>().Play("IdleB");
+            }
 
         }
+
         
     }
 

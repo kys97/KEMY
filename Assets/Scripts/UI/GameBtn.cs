@@ -25,9 +25,9 @@ public class GameBtn : UIEventTrigger
             case scene.Quiz:
                 GameManager.Instance.UImanager.Goto_Quiz();
                 break;
-            case scene.RunningGame:
+            case scene.RunMenu:
                 //TODO
-                SceneManager.LoadScene(scene.RunningGame.ToString());
+                SceneManager.LoadScene("RunMenu");
                 break;
         }
     }
