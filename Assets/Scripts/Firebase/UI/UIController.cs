@@ -45,7 +45,7 @@ public class UIController : MonoBehaviour
     {
         string username = usernameInput.text;
         string message = messageInput.text;
-        firebase.SendChatMessage(username, message);
+        firebase.SendChatMessage(GameManager.Instance.Data.info.name, message);
     }
     public void AddChatMessage(string username, string message)
     {
