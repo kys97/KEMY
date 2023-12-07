@@ -19745,8 +19745,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f10dbcf84e0de468bf48d59d252b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinCountDisplay: {fileID: 1933910758}
-  coinEndDisplay: {fileID: 1749250585}
+  coinCountDisplay: {fileID: 0}
+  coinEndDisplay: {fileID: 0}
 --- !u!114 &1469956257
 MonoBehaviour:
   m_ObjectHideFlags: 0

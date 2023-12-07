@@ -21,6 +21,8 @@ public class EndRunSequence : MonoBehaviour
         liveCoins.SetActive(false);
         liveDis.SetActive(false);
         endScreen.SetActive(true);
+        GameManager.Instance.Data.info.coin += CollectableControl.coinCount;
+        GameManager.Instance.Save();
         yield return new WaitForSeconds(3);
         fadeOut.SetActive(true);
         yield return new WaitForSeconds(2);

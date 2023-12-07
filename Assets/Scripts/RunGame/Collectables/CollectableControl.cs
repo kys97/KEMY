@@ -10,6 +10,7 @@ public class CollectableControl : MonoBehaviour
     public GameObject coinCountDisplay ;
     public GameObject coinEndDisplay;
 
+
     void Update()
     {
         coinCountDisplay.GetComponent<TextMeshProUGUI>().text = "" + coinCount;
