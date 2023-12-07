@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 839612938}
   - component: {fileID: 839612940}
   - component: {fileID: 839612939}
+  - component: {fileID: 839612941}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -517,6 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d132ff03c5de64e8f01c662e207aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Netmanager: {fileID: 0}
   UImanager: {fileID: 0}
   Resourcesmanager: {fileID: 0}
   Data:
@@ -573,6 +575,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 406ecd15c36e2ea4ab1fd20eb788c62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &839612941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839612934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8330a384a9744a478ff982bc9a9e894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lobby_btn_list: []
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

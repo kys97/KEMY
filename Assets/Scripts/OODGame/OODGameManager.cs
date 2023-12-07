@@ -94,7 +94,7 @@ public class OODGameManager : MonoBehaviour
         }
 
         //TODO : UI Manager »ç¿ë
-        GameObject.Find("CountPanel").gameObject.active = false;
+        GameObject.Find("CountPanel").gameObject.SetActive(false);
         GameStart();
         yield return null;
     }

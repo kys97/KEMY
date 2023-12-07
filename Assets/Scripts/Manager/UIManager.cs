@@ -17,8 +17,6 @@ public class UIManager : MonoBehaviour
             UILoad();
 
         UILevelLoad();
-
-        
     }
 
     public void UILevelLoad()
@@ -26,6 +24,7 @@ public class UIManager : MonoBehaviour
         UILevels.Clear();
         for (int i = 0; i < (int)ui_level.Count; i++)
         {
+            GameObject.FindWithTag(((ui_level)i).ToString()).GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
             UILevels.Add(GameObject.FindWithTag(((ui_level)i).ToString()));
         }
     }

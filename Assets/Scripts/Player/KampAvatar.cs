@@ -21,16 +21,14 @@ public class KampAvatar : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
-        transform.position = parent.position;
-        transform.localScale = parent.localScale;
-        transform.parent = parent;
-
         pv = GetComponent<PhotonView>();
         cam = GameObject.FindGameObjectWithTag("Cam").transform;
-        
-        if(pv.IsMine)
+
+        if (pv.IsMine)
+        {
             cam.GetComponent<CinemachineVirtualCamera>().Follow = transform.GetChild(0).transform;
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+        }
 
         prev_rotation = transform.rotation.eulerAngles.y;
     }
