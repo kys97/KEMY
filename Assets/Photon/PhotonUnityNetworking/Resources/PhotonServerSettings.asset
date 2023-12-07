@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - Move
   - SetRoomText
+  - Walking
+  - WalkingAnim
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

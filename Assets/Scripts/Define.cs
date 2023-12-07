@@ -28,6 +28,7 @@ public class Define
         ShopResult,
         Lobby,
         CreateKamp,
+        NoHeartPop,
         FailedPop,
         Kamp,
         Game,

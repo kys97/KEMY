@@ -523,6 +523,8 @@ MonoBehaviour:
   Resourcesmanager: {fileID: 0}
   Data:
     info:
+      login: 0
+      name: 
       coin: 0
       heart: 0
     inven:
@@ -587,7 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8330a384a9744a478ff982bc9a9e894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobby_btn_list: []
+  lobby_name_list: []
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
