@@ -1813,6 +1813,7 @@ namespace Photon.Realtime
     /// <remarks>This directly maps to the fields in the Room class.</remarks>
     public class RoomOptions
     {
+        public string RoomName { get; set; }
         /// <summary>Defines if this room is listed in the lobby. If not, it also is not joined randomly.</summary>
         /// <remarks>
         /// A room that is not visible will be excluded from the room lists that are sent to the clients in lobbies.

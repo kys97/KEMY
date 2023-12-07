@@ -7,6 +7,7 @@ using static Define;
 
 public class GameManager : MonoBehaviour
 {
+    [HideInInspector] public NetworkManager Netmanager;
     [HideInInspector] public UIManager UImanager = null;
     [HideInInspector] public ResourcesManager Resourcesmanager = null;
     [HideInInspector] public DataClass Data = null;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
             {
                 case ui.Home: HomeCoroutine(); break;
                 case ui.Inventory: InvenCoroutine(); break;
+                case ui.Lobby: GetComponent<NetworkManager>().ChatOn(); break;
                 case ui.QuizReady: QuizReadyCharacterSet(); break;
                 case ui.QuizStart: QuizStartCharacterSet(); break;
                 case ui.QuizFinish: QuizFinishCharacterSet(); break;
@@ -212,6 +214,9 @@ public class GameManager : MonoBehaviour
 
     private void HomeSceneInit()
     {
+        if(Netmanager == null)
+            Netmanager = GetComponent<NetworkManager>();
+
         if(UImanager == null)
         {
             UImanager = GetComponent<UIManager>();
@@ -251,7 +256,7 @@ public class GameManager : MonoBehaviour
     private void MyAvatar()
     {
         Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
-
+        /*
         switch (TopUI)
         {
             case ui.Home:
@@ -264,7 +269,7 @@ public class GameManager : MonoBehaviour
                 break;
             default: break;
         }
-
+        */
         GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/Cat"), parent);
         Material[] skin = player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
         skin[0] = Resourcesmanager.ItemMaterials[Data.avatar_info.skin];
