@@ -204,9 +204,26 @@ public class GameManager : MonoBehaviour
     {
         switch ((scene)System.Enum.Parse(typeof(scene), scene.name))
         {
+            case Define.scene.Login: LoginSceneInit(); break;
             case Define.scene.Home: HomeSceneInit(); break;
             case Define.scene.Quiz: QuizSceneInit(); break;
             default: CanvasFit(); break;
+        }
+    }
+
+    private void LoginSceneInit()
+    {
+        if (Data == null)
+            Data = new DataClass();
+
+        if (jsonmanager == null)
+            jsonmanager = new JsonManager();
+
+        Load();
+
+        if (Data.info.login)
+        {
+            SceneManager.LoadScene("Home");
         }
     }
 

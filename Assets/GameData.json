@@ -1,26 +1,20 @@
 {
     "info": {
-        "coin": 125063,
-        "heart": 300
+        "login": true,
+        "name": "lolla",
+        "coin": 0,
+        "heart": 0
     },
     "inven": {
         "skin": [
-            "Cat00",
-            "Cat06"
+            "Cat00"
         ],
         "face": [
-            "Face00",
-            "Face22",
-            "Face25",
-            "Face07",
-            "Face01",
-            "Face19",
-            "Face05",
-            "Face08"
+            "Face00"
         ]
     },
     "avatar_info": {
-        "skin": "Cat06",
-        "face": "Face19"
+        "skin": "Cat00",
+        "face": "Face00"
     }
 }

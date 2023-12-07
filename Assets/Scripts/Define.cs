@@ -2,6 +2,8 @@ public class Define
 {
     public enum scene
     {
+        Login,
+        Name,
         Home,
         Kamp,
         Quiz,

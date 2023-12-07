@@ -12,8 +12,7 @@ public class HomeUI : MonoBehaviour
         GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(true);
 
         //User Name(=NickName) Setting
-        //Read User NickName
-        //transform.GetChild(2).GetComponent<TMP_Text>().text = (User NickName);
+        transform.GetChild(2).GetComponent<TMP_Text>().text = GameManager.Instance.Data.info.name;
 
         //Inven Btn Setting
         transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=> GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Inventory));

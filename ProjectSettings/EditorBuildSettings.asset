@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Quiz.unity
     guid: e31389385ca046248a9cdc276ff28acf
+  - enabled: 1
+    path: Assets/Scenes/Kamp.unity
+    guid: bb92ec2c73eeb444284cf5473c73604a
   m_configObjects: {}

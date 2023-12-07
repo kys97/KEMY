@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public class DataClass
@@ -29,17 +30,23 @@ public class DataClass
 
 [System.Serializable] public class MyInfo
 {
+    public bool login;
+    public string name;
     public int coin;
     public int heart;
 
-    public MyInfo(int coin, int heart)
+    public MyInfo(bool login, string name, int coin, int heart)
     {
+        this.login = login;
+        this.name = name;
         this.coin = coin;
         this.heart = heart;
     }
 
     public MyInfo() 
     {
+        login = false;
+        name = null;
         coin = 0;
         heart = 0;
     }
