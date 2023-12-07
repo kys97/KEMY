@@ -7,7 +7,10 @@ using Photon.Realtime;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public List<RoomInfo> lobby_list = new List<RoomInfo>();
-    public List<GameObject> lobby_btn_list = new List<GameObject>();
+    public List<string> lobby_name_list = new List<string>();
+
+    public static string RoomName;
+    public static int MaxCount;
 
     Transform parent;//Content transform
     GameObject lobby_prefab;//Lobby Btn Prefab
@@ -77,6 +80,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             GameObject kamp = Instantiate(lobby_prefab, parent);
             kamp.GetComponent<KampBtn>().Set(lobby_list[i].Name, lobby_list[i].PlayerCount, lobby_list[i].MaxPlayers);
+            lobby_name_list.Add(lobby_list[i].Name);
             //lobby_btn_list.Add (kamp);
         }
     }
@@ -86,10 +90,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateKamp(string name, int cnt)
     {
         //Kamp 생성
+        RoomName = name;
+        MaxCount = cnt;
         PhotonNetwork.CreateRoom(name, new RoomOptions { MaxPlayers = cnt });
     }
     public override void OnJoinedRoom()
     {
+        RoomName = PhotonNetwork.CurrentRoom.Name;
         GameManager.Instance.UImanager.Goto_KampScene();
 
         //Kamp 초기화 함수
@@ -111,7 +118,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void JoinKamp(string name)
     {
-        PhotonNetwork.JoinRoom(name);
+        RoomName = name;
+        GameManager.Instance.UImanager.Goto_KampScene();
     }
 
     
