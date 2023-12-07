@@ -68,7 +68,7 @@ public class FirebaseAuthManager : MonoBehaviour
     {
         if(isLonInComplete)
         {
-            SceneManager.LoadScene("Home");
+            SceneManager.LoadScene("Name");
         }
     }
     public void LogOut()
