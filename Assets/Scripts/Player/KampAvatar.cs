@@ -21,6 +21,11 @@ public class KampAvatar : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
+        transform.position = parent.position;
+        transform.localScale = parent.localScale;
+        transform.parent = parent;
+
         pv = GetComponent<PhotonView>();
         cam = GameObject.FindGameObjectWithTag("Cam").transform;
 

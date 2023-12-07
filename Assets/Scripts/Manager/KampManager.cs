@@ -2,11 +2,14 @@ using Photon.Pun;
 using Photon.Pun.Demo.Cockpit;
 using Photon.Realtime;
 using System.Resources;
+using TMPro;
 using UnityEngine;
 
 public class KampManager : MonoBehaviourPunCallbacks
 {
     public static int PlayerCount = 1;
+
+    TMP_Text count, name;
 
     private void Awake()
     {
@@ -17,6 +20,9 @@ public class KampManager : MonoBehaviourPunCallbacks
     {
         //UI Set
         GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Kamp);
+        name = GameObject.FindWithTag("Lev1").transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_Text>();
+        count = GameObject.FindWithTag("Lev1").transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TMP_Text>();
+
     }
 
     public override void OnJoinedRoom()
@@ -28,16 +34,18 @@ public class KampManager : MonoBehaviourPunCallbacks
         skin[0] = GameManager.Instance.Resourcesmanager.ItemMaterials[GameManager.Instance.Data.avatar_info.skin];
         skin[1] = GameManager.Instance.Resourcesmanager.ItemMaterials[GameManager.Instance.Data.avatar_info.face];
         MyAvatar.transform.GetChild(2).GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = skin;
-        //Transform Set
-        Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
-        MyAvatar.transform.parent = parent;
-        MyAvatar.transform.position = parent.position;
-        MyAvatar.transform.localScale = new Vector3(1, 1, 1);
-        //Name Set
+        SetRoomText();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        PlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        SetRoomText();
+    }
+
+    [PunRPC]
+    public void SetRoomText()
+    {
+        name.text = PhotonNetwork.CurrentRoom.Name;
+        count.text = "(<color=#4A90E2>" + PhotonNetwork.CurrentRoom.PlayerCount + "</color>/" + PhotonNetwork.CurrentRoom.MaxPlayers + ")";
     }
 }
