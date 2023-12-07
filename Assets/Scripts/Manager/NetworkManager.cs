@@ -92,8 +92,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //Kamp 생성
         RoomName = name;
         MaxCount = cnt;
-        PhotonNetwork.CreateRoom(name, new RoomOptions { MaxPlayers = cnt });
-    }
+        GameManager.Instance.UImanager.Goto_KampScene();
+    }/*
     public override void OnJoinedRoom()
     {
         RoomName = PhotonNetwork.CurrentRoom.Name;
@@ -109,12 +109,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         //Kamp 최대 인원
         //PhotonNetwork.CurrentRoom.MaxPlayers
-    }
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
-        GameObject.FindGameObjectWithTag("Lev2").transform.GetChild(0).GetComponent<CreateKampUI>().FailedCreateKamp();
-    }
-
+    }*/
 
     public void JoinKamp(string name)
     {

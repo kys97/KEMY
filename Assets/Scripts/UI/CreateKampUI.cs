@@ -44,10 +44,13 @@ public class CreateKampUI : MonoBehaviour
 
     void CreateKamp()
     {
-        GameManager.Instance.Netmanager.CreateKamp(name_txt.text, cnt);
+        if (GameManager.Instance.Netmanager.lobby_name_list.Contains(name_txt.text))
+            FailedCreateKamp();
+        else
+            GameManager.Instance.Netmanager.CreateKamp(name_txt.text, cnt);
     }
 
-    public void FailedCreateKamp()
+    private void FailedCreateKamp()
     {
         GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev3, Define.ui.FailedPop);
     }
