@@ -9,6 +9,7 @@ public class KampManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinOrCreateRoom(NetworkManager.RoomName, new RoomOptions { MaxPlayers = NetworkManager.MaxCount}, null);
     }
+
     private void Start()
     {
         //UI Set
