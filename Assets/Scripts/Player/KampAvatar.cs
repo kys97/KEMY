@@ -18,9 +18,13 @@ public class KampAvatar : MonoBehaviourPunCallbacks
 
     Transform cam;
 
+    Animator animator;
+    bool move = false;
 
     void Start()
     {
+        animator = transform.GetChild(2).GetComponent<Animator>();
+
         Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
         transform.position = parent.position;
         transform.localScale = parent.localScale;
@@ -43,9 +47,23 @@ public class KampAvatar : MonoBehaviourPunCallbacks
         if(pv.IsMine)
         {
             if (JoyStick.IsMove)
+            {
                 pv.RPC("Move", RpcTarget.All, JoyStick.MoveDir);
+                if(!move && JoyStick.IsMove)
+                {
+                    move = true;
+                    pv.RPC("WalkingAnim", RpcTarget.All, move);
+                }
+            }
             else
+            {
                 prev_rotation = transform.rotation.eulerAngles.y;
+                if (move && !JoyStick.IsMove)
+                {
+                    move = false;
+                    pv.RPC("WalkingAnim", RpcTarget.All, move);
+                }
+            }
         }
     }
 
@@ -56,5 +74,11 @@ public class KampAvatar : MonoBehaviourPunCallbacks
 
         DirY = (Mathf.Atan2(dir.y, dir.x) * 180 / Mathf.PI - 90) * -1f;
         transform.rotation = Quaternion.Euler(0f, DirY + prev_rotation, 0f);
+    }
+
+    [PunRPC]
+    public void WalkingAnim(bool move)
+    {
+        animator.SetBool("move", move);
     }
 }
