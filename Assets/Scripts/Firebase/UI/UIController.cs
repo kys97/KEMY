@@ -8,8 +8,8 @@ public class UIController : MonoBehaviour
 {
     public FirebaseController firebase;
 
-    public Button signInBtn;
-    public Button signOutBtn;
+    //public Button signInBtn;
+    //public Button signOutBtn;
     public TextMeshProUGUI userIDLabel;
 
     public TMP_InputField usernameInput;
@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour
     public MessageBox messageBoxPrefab;
     public Transform messageContentTrans;
 
-    void Start()
+    /*void Start()
     {
         // 처음 켰을 때 아직 로그인이 안된 상태를 가정
         UpdateUserInfo(false);
@@ -40,7 +40,7 @@ public class UIController : MonoBehaviour
             userIDLabel.text = "SignOut... ";
         }
     }
-
+    */
     public void SendChat()
     {
         string username = usernameInput.text;

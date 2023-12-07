@@ -32,14 +32,14 @@ public class FirebaseController : MonoBehaviour
     private void FirebaseInit()
     {
         auth = FirebaseAuth.DefaultInstance;
-        auth.StateChanged += AuthStateChanged;
+        //auth.StateChanged += AuthStateChanged;
 
         DatabaseReference chatDB = FirebaseDatabase.DefaultInstance.GetReference("ChatMessage");
         chatDB.OrderByChild("timestamp").LimitToLast(1).ValueChanged += ReceiveMessage;
     }
 
     // firebase 상태 변경 시
-    private void AuthStateChanged(object sender, EventArgs e)
+    /*private void AuthStateChanged(object sender, EventArgs e)
     {
         FirebaseAuth senderAuth = sender as FirebaseAuth;
         if (senderAuth != null)
@@ -54,7 +54,7 @@ public class FirebaseController : MonoBehaviour
             }
         }
         // 익명으로 로그인 기능
-    }
+    }*/
     public void SignIn()
     {
         SigninAnonymous();
@@ -75,11 +75,11 @@ public class FirebaseController : MonoBehaviour
             }
             );
     }
-    public void SignOut()
+    /*public void SignOut()
     {
         auth.SignOut();
         uiController.UpdateUserInfo(false);
-    }
+    }*/
 
     //data에 접근해서 값을 가져옴. 메세지 읽어오기
     public void ReadChatMessage()
