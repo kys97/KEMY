@@ -16,4 +16,9 @@ public class LobbyUI : MonoBehaviour
 
         transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=>GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev2, Define.ui.CreateKamp));
     }
+
+    private void Update()
+    {
+        
+    }
 }

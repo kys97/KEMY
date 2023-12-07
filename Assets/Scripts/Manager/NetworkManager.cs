@@ -71,7 +71,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void LobbyListUpdate()
     {
+        //lobby_btn_list.Clear();
 
+        for (int i=0; i < lobby_list.Count; i++)
+        {
+            GameObject kamp = Instantiate(lobby_prefab, parent);
+            kamp.GetComponent<KampBtn>().Set(lobby_list[i].Name, lobby_list[i].PlayerCount, lobby_list[i].MaxPlayers);
+            //lobby_btn_list.Add (kamp);
+        }
     }
 
 
