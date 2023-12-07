@@ -16,10 +16,10 @@ public class HomeUI : MonoBehaviour
         //transform.GetChild(2).GetComponent<TMP_Text>().text = (User NickName);
 
         //Inven Btn Setting
-        transform.GetChild(3).GetComponent<Button>().onClick.AddListener(()=> GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Inventory));
+        transform.GetChild(1).GetComponent<Button>().onClick.AddListener(()=> GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Inventory));
 
         //Shop Btn Setting
-        transform.GetChild(4).GetComponent<Button>().onClick.AddListener(OpenShopBtn);
+        transform.GetChild(2).GetComponent<Button>().onClick.AddListener(OpenShopBtn);
     }
 
 

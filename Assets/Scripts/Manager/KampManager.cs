@@ -1,10 +1,13 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using Photon.Realtime;
 using System.Resources;
 using UnityEngine;
 
 public class KampManager : MonoBehaviourPunCallbacks
 {
+    public static int PlayerCount = 1;
+
     private void Awake()
     {
         PhotonNetwork.JoinOrCreateRoom(NetworkManager.RoomName, new RoomOptions { MaxPlayers = NetworkManager.MaxCount}, null);
@@ -31,5 +34,10 @@ public class KampManager : MonoBehaviourPunCallbacks
         MyAvatar.transform.position = parent.position;
         MyAvatar.transform.localScale = new Vector3(1, 1, 1);
         //Name Set
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        PlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
     }
 }

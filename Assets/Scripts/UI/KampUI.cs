@@ -19,6 +19,6 @@ public class KampUI : MonoBehaviour
     
     public void NewPlayer()
     {
-        transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = "(< color =#4A90E2>" + PhotonNetwork.CurrentRoom.PlayerCount + "</color>/" + NetworkManager.MaxCount + ")";
+        transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = "(<color=#4A90E2>" + KampManager.PlayerCount + "</color>/" + NetworkManager.MaxCount + ")";
     }
 }
