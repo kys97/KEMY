@@ -11,18 +11,14 @@ public class KampManager : MonoBehaviourPunCallbacks
 
     TMP_Text count, name;
 
-    private void Awake()
-    {
-        PhotonNetwork.JoinOrCreateRoom(NetworkManager.RoomName, new RoomOptions { MaxPlayers = NetworkManager.MaxCount}, null);
-    }
-
     private void Start()
     {
+        PhotonNetwork.JoinOrCreateRoom(NetworkManager.RoomName, new RoomOptions { MaxPlayers = NetworkManager.MaxCount }, null);
+
         //UI Set
         GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Kamp);
         name = GameObject.FindWithTag("Lev1").transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_Text>();
         count = GameObject.FindWithTag("Lev1").transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TMP_Text>();
-
     }
 
     public override void OnJoinedRoom()

@@ -50,11 +50,13 @@ public class CreateKampUI : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.Data.info.heart -= 100;
             if (GameManager.Instance.Netmanager.lobby_name_list.Contains(name_txt.text))
                 FailedCreateKamp();
             else
+            {
+                GameManager.Instance.Data.info.heart -= 100;
                 GameManager.Instance.Netmanager.CreateKamp(name_txt.text, cnt);
+            }
         }
     }
 

@@ -298,12 +298,16 @@ public class GameManager : MonoBehaviour
     {
         past_ui = top_ui;
     }
+    public void SetPastUI(ui ui)
+    {
+        past_ui = ui;
+    }
 
     private void CanvasFit()
     {
         GameObject canvas = GameObject.Find("Canvas").gameObject;
         float rate = Height / Width;
-        Debug.Log(Screen.width + " / " + Screen.height);
+
         if (rate * Screen.width > Screen.height)// 가로가 더 긴 상황 (새로에 맞춰야함)
         {
             canvas.GetComponent<CanvasScaler>().matchWidthOrHeight = 1;

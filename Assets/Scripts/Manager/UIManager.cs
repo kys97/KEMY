@@ -81,6 +81,8 @@ public class UIManager : MonoBehaviour
 
     public void Goto_KampScene()
     {
+        //GameManager.Instance.UImanager.UIdelete(ui_level.Lev2);
+        GameManager.Instance.SetPastUI(ui.Lobby);
         SceneManager.LoadScene("Kamp");
     }
 

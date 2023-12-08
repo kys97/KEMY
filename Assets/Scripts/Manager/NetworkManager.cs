@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if(parent == null)
             parent = GameObject.FindGameObjectWithTag("Lev1").transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0);
 
-
+        Debug.Log("로비 입장");
         LobbyListUpdate();
     }
 

@@ -12,9 +12,7 @@ public class KampUI : MonoBehaviour
     {
         Screen.SetResolution(2340 * (Screen.height / Screen.width), 2340, true);
 
-        //KampNameSet
-        //transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = NetworkManager.RoomName;
-        //NewPlayer();
+        transform.GetChild(3).GetComponent<Button>().onClick.AddListener(GameManager.Instance.UImanager.Goto_Home);
     }
     
     public void NewPlayer()
