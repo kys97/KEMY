@@ -9,6 +9,9 @@ public class QuizReadyUI : MonoBehaviour
 
     void Start()
     {
+        //UI Size Set
+        GetComponent<RectTransform>().sizeDelta = transform.parent.GetComponent<RectTransform>().sizeDelta;
+
         //Avatar Set
         GameObject.FindGameObjectWithTag("Character").transform.GetChild(0).gameObject.SetActive(true);
 

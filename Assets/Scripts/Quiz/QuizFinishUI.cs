@@ -7,6 +7,9 @@ public class QuizFinishUI : MonoBehaviour
 {
     void Start()
     {
+        //UI Size Set
+        GetComponent<RectTransform>().sizeDelta = transform.parent.GetComponent<RectTransform>().sizeDelta;
+
         //Score
         transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = QuizManager.Instance.Score.ToString();
 

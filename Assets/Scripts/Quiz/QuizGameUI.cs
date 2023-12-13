@@ -19,6 +19,10 @@ public class QuizGameUI : MonoBehaviour
 
     void Start()
     {
+        //UI Size Set
+        GetComponent<RectTransform>().sizeDelta = transform.parent.GetComponent<RectTransform>().sizeDelta;
+
+
         SolveCnt_txt = transform.GetChild(0).GetComponent<TMP_Text>();
         Timer_sld = transform.GetChild(1).GetComponent<Slider>();
 

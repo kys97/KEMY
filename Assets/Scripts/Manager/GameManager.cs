@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Device;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Define;
@@ -40,10 +41,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    [Header("화면 크기 조정")]
-    [SerializeField] float Width = 1080;
-    [SerializeField] float Height = 2340;
 
     #region 캐릭터 및 아바타 변수
     [Space(10)]
@@ -209,10 +206,18 @@ public class GameManager : MonoBehaviour
             case Define.scene.Login: LoginSceneInit(); break;
             case Define.scene.Home: HomeSceneInit(); break;
             case Define.scene.Quiz: QuizSceneInit(); break;
-            default: CanvasFit(); break;
+            case Define.scene.Kamp: KampSceneInit(); break;
+            default:
+                UImanager = GetComponent<UIManager>();
+                UImanager.Init();
+                break;
         }
     }
-
+    private void KampSceneInit()
+    {
+        UImanager = GetComponent<UIManager>();
+        UImanager.Init();
+    }
     private void LoginSceneInit()
     {
         if (Data == null)
@@ -259,34 +264,19 @@ public class GameManager : MonoBehaviour
         Load();
 
         UImanager.UIsetting(ui_level.Lev1, past_ui);
-        CanvasFit();
         MyAvatar();
     }
 
     private void QuizSceneInit()
     {
         UImanager.UIsetting(ui_level.Lev1, ui.QuizReady);
-        CanvasFit();
         MyAvatar();
     }
 
     private void MyAvatar()
     {
         Transform parent = GameObject.FindGameObjectWithTag("Character").transform;
-        /*
-        switch (TopUI)
-        {
-            case ui.Home:
-                parent.localScale = Vector3.one * HomeAvatarSize;
-                Camera.main.transform.position = HomeCameraPos;
-                break;
-            case ui.QuizReady:
-                parent.localScale = Vector3.one * QuizReadyAvatarSize;
-                Camera.main.transform.position = QuizReadyCameraPos;
-                break;
-            default: break;
-        }
-        */
+
         GameObject player = Instantiate(Resources.Load<GameObject>("Prefabs/Cat"), parent);
         Material[] skin = player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
         skin[0] = Resourcesmanager.ItemMaterials[Data.avatar_info.skin];
@@ -301,21 +291,6 @@ public class GameManager : MonoBehaviour
     public void SetPastUI(ui ui)
     {
         past_ui = ui;
-    }
-
-    private void CanvasFit()
-    {
-        GameObject canvas = GameObject.Find("Canvas").gameObject;
-        float rate = Height / Width;
-
-        if (rate * Screen.width > Screen.height)// 가로가 더 긴 상황 (새로에 맞춰야함)
-        {
-            canvas.GetComponent<CanvasScaler>().matchWidthOrHeight = 1;
-        }
-        else // 새로가 더 긴 상황 (가로에 맞춰야함)
-        {
-            canvas.GetComponent<CanvasScaler>().matchWidthOrHeight = 0;
-        }
     }
 
     private void OnDestroy()

@@ -11,6 +11,7 @@ public class CreateKampUI : MonoBehaviour
 
     void Start()
     {
+        GetComponent<RectTransform>().sizeDelta = transform.parent.GetComponent<RectTransform>().sizeDelta;
         cnt = 1;
 
         name_txt = transform.GetChild(1).GetComponent<TMP_InputField>();
@@ -55,6 +56,7 @@ public class CreateKampUI : MonoBehaviour
             else
             {
                 GameManager.Instance.Data.info.heart -= 100;
+                GameManager.Instance.Save();
                 GameManager.Instance.Netmanager.CreateKamp(name_txt.text, cnt);
             }
         }

@@ -16,6 +16,10 @@ public class ShopUI : MonoBehaviour
 
     void Start()
     {
+        //UI Size Set
+        GetComponent<RectTransform>().sizeDelta = transform.parent.GetComponent<RectTransform>().sizeDelta;
+
+
         transform.GetChild(0).GetComponent<Button>().onClick.AddListener(CloseShop);
         EggImage = transform.GetChild(1).GetChild(0).GetComponent<Image>();
         transform.GetChild(2).GetComponent<Button>().onClick.AddListener(EggOpen);

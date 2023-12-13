@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,14 @@ public class UIManager : MonoBehaviour
 
     Dictionary<string, GameObject> UILayout = null;
 
+    private float width, height;
+
     public void Init()
     {
-        if(UILayout == null)
+        width = GameObject.Find("Canvas").GetComponent<CanvasScaler>().referenceResolution.x;
+        height = GameObject.Find("Canvas").GetComponent<CanvasScaler>().referenceResolution.y;
+
+        if (UILayout == null)
             UILoad();
 
         UILevelLoad();
@@ -22,9 +28,13 @@ public class UIManager : MonoBehaviour
     public void UILevelLoad()
     {
         UILevels.Clear();
+
+        float new_width = (float)Screen.width * height / Screen.height;
+        Vector2 full_screen = new Vector2(new_width, height);
+
         for (int i = 0; i < (int)ui_level.Count; i++)
         {
-            GameObject.FindWithTag(((ui_level)i).ToString()).GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
+            GameObject.FindWithTag(((ui_level)i).ToString()).GetComponent<RectTransform>().sizeDelta = full_screen;
             UILevels.Add(GameObject.FindWithTag(((ui_level)i).ToString()));
         }
     }

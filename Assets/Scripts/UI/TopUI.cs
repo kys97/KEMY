@@ -9,6 +9,7 @@ public class TopUI : MonoBehaviour
 
     void Start()
     {
+
         coin_txt = transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
         heart_txt = transform.GetChild(1).GetChild(2).GetComponent<TMP_Text>();
     }
