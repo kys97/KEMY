@@ -537,8 +537,6 @@ MonoBehaviour:
       face: Face00
   TotWeight: 0
   top_ui: 0
-  Width: 1080
-  Height: 2340
   HomeAvatarSize: 3
   InvenAvatarSize: 2
   QuizReadyAvatarSize: 2

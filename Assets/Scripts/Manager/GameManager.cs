@@ -201,6 +201,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log(scene.name + " Load");
         switch ((scene)System.Enum.Parse(typeof(scene), scene.name))
         {
             case Define.scene.Login: LoginSceneInit(); break;
@@ -225,6 +226,9 @@ public class GameManager : MonoBehaviour
 
         if (jsonmanager == null)
             jsonmanager = new JsonManager();
+
+        UImanager = GetComponent<UIManager>();
+        UImanager.Init();
 
         Load();
 

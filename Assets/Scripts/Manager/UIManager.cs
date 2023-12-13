@@ -16,9 +16,11 @@ public class UIManager : MonoBehaviour
 
     public void Init()
     {
+        Debug.Log("UI Manager Init()");
         width = GameObject.Find("Canvas").GetComponent<CanvasScaler>().referenceResolution.x;
         height = GameObject.Find("Canvas").GetComponent<CanvasScaler>().referenceResolution.y;
 
+        Debug.Log("Init : width = " + width + " / height = " + height);
         if (UILayout == null)
             UILoad();
 
@@ -28,10 +30,12 @@ public class UIManager : MonoBehaviour
     public void UILevelLoad()
     {
         UILevels.Clear();
-
+        Debug.Log("width = " + width + " / height = " + height);
+        Debug.Log("Screen Size : " + Screen.width + " / " + Screen.height);
         float new_width = (float)Screen.width * height / Screen.height;
+        
         Vector2 full_screen = new Vector2(new_width, height);
-
+        Debug.Log("full_Screen : " + full_screen);
         for (int i = 0; i < (int)ui_level.Count; i++)
         {
             GameObject.FindWithTag(((ui_level)i).ToString()).GetComponent<RectTransform>().sizeDelta = full_screen;
