@@ -21,7 +21,8 @@ public class Define
     }
     public enum ui
     {
-        //Login,
+        Login,
+        SetName,
         Home,
         Inventory,
         Shop,

@@ -55,6 +55,7 @@ public class FirebaseController : MonoBehaviour
         }
         // 익명으로 로그인 기능
     }*/
+
     public void SignIn()
     {
         SigninAnonymous();
@@ -75,6 +76,7 @@ public class FirebaseController : MonoBehaviour
             }
             );
     }
+
     /*public void SignOut()
     {
         auth.SignOut();
@@ -109,6 +111,7 @@ public class FirebaseController : MonoBehaviour
             }
             );
     }
+
     //메세지 보내기
     public void SendChatMessage(string username, string message)
     {

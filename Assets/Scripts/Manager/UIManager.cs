@@ -12,15 +12,12 @@ public class UIManager : MonoBehaviour
 
     Dictionary<string, GameObject> UILayout = null;
 
-    private float width, height;
+    private float height;
 
     public void Init()
     {
-        Debug.Log("UI Manager Init()");
-        width = GameObject.Find("Canvas").GetComponent<CanvasScaler>().referenceResolution.x;
         height = GameObject.Find("Canvas").GetComponent<CanvasScaler>().referenceResolution.y;
 
-        Debug.Log("Init : width = " + width + " / height = " + height);
         if (UILayout == null)
             UILoad();
 
@@ -30,12 +27,10 @@ public class UIManager : MonoBehaviour
     public void UILevelLoad()
     {
         UILevels.Clear();
-        Debug.Log("width = " + width + " / height = " + height);
-        Debug.Log("Screen Size : " + Screen.width + " / " + Screen.height);
+
         float new_width = (float)Screen.width * height / Screen.height;
-        
         Vector2 full_screen = new Vector2(new_width, height);
-        Debug.Log("full_Screen : " + full_screen);
+
         for (int i = 0; i < (int)ui_level.Count; i++)
         {
             GameObject.FindWithTag(((ui_level)i).ToString()).GetComponent<RectTransform>().sizeDelta = full_screen;
@@ -67,14 +62,15 @@ public class UIManager : MonoBehaviour
             for (int i = 1; i < childList.Length; i++)
             {
                 if (childList[i] != UILevels[(int)level].transform) //UI Level 자체 삭제 제외
+                {
                     Destroy(childList[i].gameObject);
+                }
             }
         }
 
         //New UI Load
         GameManager.Instance.TopUI = ui;
         Instantiate(UILayout[ui.ToString()], UILayout[ui.ToString()].transform.position, Quaternion.identity).transform.SetParent(UILevels[(int)level].transform, false);
-        
     }
 
     public void UIdelete(ui_level level)

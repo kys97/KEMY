@@ -31,13 +31,15 @@ public class DataClass
 [System.Serializable] public class MyInfo
 {
     public bool login;
+    public string uid;
     public string name;
     public int coin;
     public int heart;
 
-    public MyInfo(bool login, string name, int coin, int heart)
+    public MyInfo(bool login, string uid, string name, int coin, int heart)
     {
         this.login = login;
+        this.uid = uid;
         this.name = name;
         this.coin = coin;
         this.heart = heart;
@@ -46,6 +48,7 @@ public class DataClass
     public MyInfo() 
     {
         login = false;
+        uid = null;
         name = null;
         coin = 0;
         heart = 0;

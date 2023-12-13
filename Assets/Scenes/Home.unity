@@ -524,6 +524,7 @@ MonoBehaviour:
   Data:
     info:
       login: 0
+      uid: 
       name: 
       coin: 0
       heart: 0

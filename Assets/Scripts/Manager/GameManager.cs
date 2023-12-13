@@ -1,3 +1,6 @@
+using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +15,16 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public UIManager UImanager = null;
     [HideInInspector] public ResourcesManager Resourcesmanager = null;
     [HideInInspector] public DataClass Data = null;
+    [HideInInspector] public FirebaseAuth auth;
+    [HideInInspector] public DatabaseReference userDB;
+
 
     [HideInInspector] public List<ItemWeight> ItemWeightDic = null;
     [HideInInspector] public int TotWeight = 0;
 
+
     JsonManager jsonmanager;
+    
 
     private ui past_ui = ui.Home;
     [SerializeField] private ui top_ui;
@@ -29,7 +37,7 @@ public class GameManager : MonoBehaviour
         set
         {
             top_ui = value;
-
+            Debug.Log("TopUI : " + top_ui);
             switch (value)
             {
                 case ui.Home: HomeCoroutine(); break;
@@ -38,6 +46,7 @@ public class GameManager : MonoBehaviour
                 case ui.QuizReady: QuizReadyCharacterSet(); break;
                 case ui.QuizStart: QuizStartCharacterSet(); break;
                 case ui.QuizFinish: QuizFinishCharacterSet(); break;
+                default: break;
             }
         }
     }
@@ -186,6 +195,35 @@ public class GameManager : MonoBehaviour
     public void Save()
     {
         jsonmanager.SaveJson(Data);
+        SaveData_into_Firebase();
+        Debug.Log("데이터 저장");
+    }
+    void SaveData_into_Firebase()
+    {
+        string uid = Data.info.uid;
+        userDB.Child(uid).GetValueAsync().ContinueWithOnMainThread(
+            task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Debug.LogError("ReadErr");
+                }
+                else if (task.IsCompleted)
+                {
+                    DataSnapshot snapshot = task.Result;
+
+                    userDB.Child(uid).Child("name").SetValueAsync(Data.info.name);
+                    userDB.Child(uid).Child("coin").SetValueAsync(Data.info.coin);
+                    userDB.Child(uid).Child("heart").SetValueAsync(Data.info.heart);
+
+                    userDB.Child(uid).Child("skinSet").SetValueAsync(Data.avatar_info.skin);
+                    userDB.Child(uid).Child("faceSet").SetValueAsync(Data.avatar_info.face);
+
+                    userDB.Child(uid).Child("skinList").SetValueAsync(string.Join(",", Data.inven.skin));
+                    userDB.Child(uid).Child("faceList").SetValueAsync(string.Join(",", Data.inven.face));
+                }
+            }
+        );
     }
 
     public void Load()
@@ -207,25 +245,23 @@ public class GameManager : MonoBehaviour
             case Define.scene.Login: LoginSceneInit(); break;
             case Define.scene.Home: HomeSceneInit(); break;
             case Define.scene.Quiz: QuizSceneInit(); break;
-            case Define.scene.Kamp: KampSceneInit(); break;
             default:
                 UImanager = GetComponent<UIManager>();
                 UImanager.Init();
                 break;
         }
     }
-    private void KampSceneInit()
-    {
-        UImanager = GetComponent<UIManager>();
-        UImanager.Init();
-    }
     private void LoginSceneInit()
     {
         if (Data == null)
+        {
             Data = new DataClass();
+        }
 
         if (jsonmanager == null)
+        {
             jsonmanager = new JsonManager();
+        }
 
         UImanager = GetComponent<UIManager>();
         UImanager.Init();
@@ -240,7 +276,11 @@ public class GameManager : MonoBehaviour
 
     private void HomeSceneInit()
     {
-        if(Netmanager == null)
+        //firebase Set
+        auth = FirebaseAuth.DefaultInstance;
+        userDB = FirebaseDatabase.DefaultInstance.GetReference("UserInfo");
+
+        if (Netmanager == null)
             Netmanager = GetComponent<NetworkManager>();
 
         if(UImanager == null)
@@ -267,7 +307,19 @@ public class GameManager : MonoBehaviour
 
         Load();
 
-        UImanager.UIsetting(ui_level.Lev1, past_ui);
+        if (Data.info.login)
+        {
+            switch (past_ui)
+            {
+                case ui.Home: UImanager.UIsetting(ui_level.Lev1, ui.Home); break;
+                default: UImanager.UIsetting(ui_level.Lev1, past_ui); break;
+            }
+        }
+        else
+        {
+            UImanager.UIsetting(ui_level.Lev1, ui.Login);
+        }
+        
         MyAvatar();
     }
 
