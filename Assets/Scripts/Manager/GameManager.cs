@@ -245,6 +245,9 @@ public class GameManager : MonoBehaviour
             case Define.scene.Login: LoginSceneInit(); break;
             case Define.scene.Home: HomeSceneInit(); break;
             case Define.scene.Quiz: QuizSceneInit(); break;
+            case Define.scene.RunMenu:
+            case Define.scene.RunGameExplain:
+            case Define.scene.RunGame: break;
             default:
                 UImanager = GetComponent<UIManager>();
                 UImanager.Init();
@@ -325,6 +328,9 @@ public class GameManager : MonoBehaviour
 
     private void QuizSceneInit()
     {
+        UImanager = GetComponent<UIManager>();
+        UImanager.Init();
+
         UImanager.UIsetting(ui_level.Lev1, ui.QuizReady);
         MyAvatar();
     }
