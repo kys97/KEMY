@@ -91,11 +91,11 @@ public class KampManager : MonoBehaviourPunCallbacks
 
     public void SendBtnClick(string text)
     {
-        PV.RPC("SendMessageRPC", RpcTarget.All, text);
+        PV.RPC("SendMessageRPC", RpcTarget.All, GameManager.Instance.Data.info.name, text);
     }
 
     [PunRPC]
-    public void SendMessageRPC(string text)
+    public void SendMessageRPC(string user, string text)
     {
         GameObject new_message;
 
@@ -110,7 +110,7 @@ public class KampManager : MonoBehaviourPunCallbacks
         }
 
         new_message.transform.GetChild(0).GetComponent<TMP_Text>().text = text;
-        new_message.transform.GetChild(1).GetComponent<TMP_Text>().text = GameManager.Instance.Data.info.name;
+        new_message.transform.GetChild(1).GetComponent<TMP_Text>().text = user;
         new_message.transform.parent = MessageParent;
         new_message.GetComponent<RectTransform>().localScale = Vector3.one;
         MessageQueue.Enqueue(new_message);
