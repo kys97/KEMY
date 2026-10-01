@@ -22,6 +22,7 @@ public class Define
     public enum ui
     {
         Login,
+        Join,
         SetName,
         Home,
         Inventory,

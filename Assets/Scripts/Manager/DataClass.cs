@@ -32,14 +32,18 @@ public class DataClass
 {
     public bool login;
     public string uid;
+    public string loginId;
+    public string email;
     public string name;
     public int coin;
     public int heart;
 
-    public MyInfo(bool login, string uid, string name, int coin, int heart)
+    public MyInfo(bool login, string uid, string loginId, string email, string name, int coin, int heart)
     {
         this.login = login;
         this.uid = uid;
+        this.loginId = loginId;
+        this.email = email;
         this.name = name;
         this.coin = coin;
         this.heart = heart;
@@ -49,6 +53,8 @@ public class DataClass
     {
         login = false;
         uid = null;
+        loginId = null;
+        email = null;
         name = null;
         coin = 0;
         heart = 0;
@@ -78,7 +84,7 @@ public class Inventory
         //head_item = new List<string>();
         //body_item = new List<string>();
 
-        //±‚∫ª æ∆¿Ã≈€
+        //Í∏∞Î≥∏ ÏïÑÏù¥ÌÖú
         skin.Add("Cat00");
         face.Add("Face00");
     }

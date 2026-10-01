@@ -1,6 +1,5 @@
-using Firebase.Auth;
-using Firebase.Database;
-using Firebase.Extensions;
+using System;
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +14,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public UIManager UImanager = null;
     [HideInInspector] public ResourcesManager Resourcesmanager = null;
     [HideInInspector] public DataClass Data = null;
-    [HideInInspector] public FirebaseAuth auth;
-    [HideInInspector] public DatabaseReference userDB;
+    public FirebaseAccountService AccountService { get; private set; }
+    public string AuthenticationMessage { get; private set; }
 
 
     [HideInInspector] public List<ItemWeight> ItemWeightDic = null;
@@ -51,7 +50,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #region ĳ���� �� �ƹ�Ÿ ����
+    #region 캐릭터 및 아바타 변수
     [Space(10)]
     [SerializeField] int HomeAvatarSize = 3;//3
     [SerializeField] int InvenAvatarSize = 2;//2
@@ -71,7 +70,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float CameraMoveSpeed = 10;//10
     #endregion
 
-    #region ȭ�� �̵� �ڷ�ƾ
+    #region 화면 이동 코루틴
 
     #region Home Coroutine
     void HomeCoroutine()
@@ -182,6 +181,7 @@ public class GameManager : MonoBehaviour
         if (null == instance)
         {
             instance = this;
+            AccountService = new FirebaseAccountService();
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -192,44 +192,69 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Data
-    public void Save()
+    public async void Save()
     {
-        jsonmanager.SaveJson(Data);
-        SaveData_into_Firebase();
-        Debug.Log("������ ����");
-    }
-    void SaveData_into_Firebase()
-    {
-        string uid = Data.info.uid;
-        userDB.Child(uid).GetValueAsync().ContinueWithOnMainThread(
-            task =>
-            {
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("ReadErr");
-                }
-                else if (task.IsCompleted)
-                {
-                    DataSnapshot snapshot = task.Result;
-
-                    userDB.Child(uid).Child("name").SetValueAsync(Data.info.name);
-                    userDB.Child(uid).Child("coin").SetValueAsync(Data.info.coin);
-                    userDB.Child(uid).Child("heart").SetValueAsync(Data.info.heart);
-
-                    userDB.Child(uid).Child("skinSet").SetValueAsync(Data.avatar_info.skin);
-                    userDB.Child(uid).Child("faceSet").SetValueAsync(Data.avatar_info.face);
-
-                    userDB.Child(uid).Child("skinList").SetValueAsync(string.Join(",", Data.inven.skin));
-                    userDB.Child(uid).Child("faceList").SetValueAsync(string.Join(",", Data.inven.face));
-                }
-            }
-        );
+        if (!HasMatchingAuthenticatedUser()) return;
+        jsonmanager.SaveJson(Data, Data.info.uid);
+        try { await AccountService.SaveProfileAsync(Data.info.uid, Data); }
+        catch (Exception exception) { Debug.LogError("사용자 데이터 저장 실패: " + exception.GetType().Name); }
     }
 
-    public void Load()
+    public void Load(string uid)
     {
-        Data = jsonmanager.LoadSaveData();
+        Data = jsonmanager.LoadSaveData(uid);
     }
+
+    public async Task<UserProfileLoadResult> RefreshAuthenticatedUserAsync()
+    {
+        if (AccountService == null || !AccountService.IsReady || AccountService.CurrentUser == null)
+            return UserProfileLoadResult.Failed(new InvalidOperationException("인증된 사용자가 없습니다."));
+
+        string uid = AccountService.CurrentUser.UserId;
+        UserProfileLoadResult result = await AccountService.LoadProfileAsync(uid);
+        if (result.Status == UserProfileLoadStatus.Found)
+        {
+            Data = result.Data;
+            jsonmanager.SaveJson(Data, uid);
+        }
+        else if (result.Status == UserProfileLoadStatus.Missing)
+        {
+            Data = new DataClass();
+            Data.info.uid = uid;
+        }
+        return result;
+    }
+
+    public async Task<bool> CompleteRegistrationAsync(string nickname)
+    {
+        if (!HasAuthenticatedUser()) return false;
+        string uid = AccountService.CurrentUser.UserId;
+        DataClass initialData = new DataClass();
+        initialData.info.uid = uid;
+        initialData.info.name = nickname;
+        initialData.info.login = true;
+
+        bool created = await AccountService.CreateProfileIfMissingAsync(uid, initialData);
+        if (created)
+        {
+            Data = initialData;
+            jsonmanager.SaveJson(Data, uid);
+            return true;
+        }
+
+        UserProfileLoadResult existing = await RefreshAuthenticatedUserAsync();
+        return existing.Status == UserProfileLoadStatus.Found;
+    }
+
+    public void Logout()
+    {
+        if (AccountService != null && AccountService.IsReady) AccountService.SignOut();
+        Data = new DataClass();
+        UImanager.UIsetting(ui_level.Lev1, ui.Login);
+    }
+
+    private bool HasAuthenticatedUser() => AccountService != null && AccountService.IsReady && AccountService.CurrentUser != null;
+    private bool HasMatchingAuthenticatedUser() => HasAuthenticatedUser() && Data != null && Data.info.uid == AccountService.CurrentUser.UserId;
     #endregion
 
     private void OnEnable()
@@ -256,33 +281,12 @@ public class GameManager : MonoBehaviour
     }
     private void LoginSceneInit()
     {
-        if (Data == null)
-        {
-            Data = new DataClass();
-        }
-
-        if (jsonmanager == null)
-        {
-            jsonmanager = new JsonManager();
-        }
-
-        UImanager = GetComponent<UIManager>();
-        UImanager.Init();
-
-        Load();
-
-        if (Data.info.login)
-        {
-            SceneManager.LoadScene("Home");
-        }
+        // Home is the composition root and the only enabled startup scene.
+        SceneManager.LoadScene("Home");
     }
 
-    private void HomeSceneInit()
+    private async void HomeSceneInit()
     {
-        //firebase Set
-        auth = FirebaseAuth.DefaultInstance;
-        userDB = FirebaseDatabase.DefaultInstance.GetReference("UserInfo");
-
         if (Netmanager == null)
             Netmanager = GetComponent<NetworkManager>();
 
@@ -308,21 +312,41 @@ public class GameManager : MonoBehaviour
             ItemWeightDic = new CsvManager().Read_ItemWeight_Csv();
 
 
-        Load();
-
-        if (Data.info.login)
+        AuthenticationMessage = null;
+        try
         {
-            switch (past_ui)
+            await AccountService.InitializeAsync();
+            if (AccountService.CurrentUser == null)
             {
-                case ui.Home: UImanager.UIsetting(ui_level.Lev1, ui.Home); break;
-                default: UImanager.UIsetting(ui_level.Lev1, past_ui); break;
+                Data = new DataClass();
+                UImanager.UIsetting(ui_level.Lev1, ui.Login);
+            }
+            else
+            {
+                UserProfileLoadResult result = await RefreshAuthenticatedUserAsync();
+                if (result.Status == UserProfileLoadStatus.Found)
+                    UImanager.UIsetting(ui_level.Lev1, past_ui == ui.Home ? ui.Home : past_ui);
+                else if (result.Status == UserProfileLoadStatus.Missing)
+                {
+                    AccountService.SignOut();
+                    Data = new DataClass();
+                    AuthenticationMessage = "가입이 완료되지 않은 계정입니다. 이메일 인증 가입을 완료해 주세요.";
+                    UImanager.UIsetting(ui_level.Lev1, ui.Login);
+                }
+                else
+                {
+                    AuthenticationMessage = "사용자 데이터를 불러오지 못했습니다. 네트워크를 확인하고 다시 로그인해 주세요.";
+                    UImanager.UIsetting(ui_level.Lev1, ui.Login);
+                }
             }
         }
-        else
+        catch (Exception exception)
         {
+            AuthenticationMessage = "Firebase 초기화에 실패했습니다. 네트워크와 앱 설정을 확인해 주세요.";
+            Debug.LogError("Firebase initialization failed: " + exception.GetType().Name);
             UImanager.UIsetting(ui_level.Lev1, ui.Login);
         }
-        
+
         MyAvatar();
     }
 

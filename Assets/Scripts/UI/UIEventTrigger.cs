@@ -1,45 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIEventTrigger : MonoBehaviour
+public class UIEventTrigger : MonoBehaviour, IInitializePotentialDragHandler, IPointerDownHandler, IPointerUpHandler,
+    IBeginDragHandler, IDragHandler, IEndDragHandler, IScrollHandler, IPointerClickHandler
 {
-    EventTrigger eventTrigger;
+    bool initialized;
+    protected void init() { initialized = true; }
+    void EnsureInitialized() { if (!initialized) init(); }
 
-    protected void init()
-    {
-        eventTrigger = gameObject.GetComponent<EventTrigger>();
+    void IInitializePotentialDragHandler.OnInitializePotentialDrag(PointerEventData data) { EnsureInitialized(); OnInitializePotentialDrag(data); }
+    void IPointerDownHandler.OnPointerDown(PointerEventData data) { EnsureInitialized(); OnPointerDown(data); }
+    void IPointerUpHandler.OnPointerUp(PointerEventData data) { EnsureInitialized(); OnPointerUp(data); }
+    void IBeginDragHandler.OnBeginDrag(PointerEventData data) { EnsureInitialized(); OnBeginDrag(data); }
+    void IDragHandler.OnDrag(PointerEventData data) { EnsureInitialized(); OnDrag(data); }
+    void IEndDragHandler.OnEndDrag(PointerEventData data) { EnsureInitialized(); OnEndDrag(data); }
+    void IScrollHandler.OnScroll(PointerEventData data) { EnsureInitialized(); OnScroll(data); }
+    void IPointerClickHandler.OnPointerClick(PointerEventData data) { EnsureInitialized(); OnPointerClick(data); }
 
-        EventTrigger.Entry entry_PointerDown = new EventTrigger.Entry();
-        entry_PointerDown.eventID = EventTriggerType.PointerDown;
-        entry_PointerDown.callback.AddListener((data) => { OnPointerDown((PointerEventData)data); });
-        eventTrigger.triggers.Add(entry_PointerDown);
-
-        EventTrigger.Entry entry_Drag = new EventTrigger.Entry();
-        entry_Drag.eventID = EventTriggerType.Drag;
-        entry_Drag.callback.AddListener((data) => { OnDrag((PointerEventData)data); });
-        eventTrigger.triggers.Add(entry_Drag);
-
-        EventTrigger.Entry entry_EndDrag = new EventTrigger.Entry();
-        entry_EndDrag.eventID = EventTriggerType.EndDrag;
-        entry_EndDrag.callback.AddListener((data) => { OnEndDrag((PointerEventData)data); });
-        eventTrigger.triggers.Add(entry_EndDrag);
-
-        EventTrigger.Entry entry_Click = new EventTrigger.Entry();
-        entry_Click.eventID = EventTriggerType.PointerClick;
-        entry_Click.callback.AddListener((data) => { OnPointerClick((PointerEventData)data); });
-        eventTrigger.triggers.Add(entry_Click);
-
-        EventTrigger.Entry entry_BeginDrag = new EventTrigger.Entry();
-        entry_BeginDrag.eventID = EventTriggerType.BeginDrag;
-        entry_BeginDrag.callback.AddListener((data) => { OnBeginDrag((PointerEventData)data); });
-        eventTrigger.triggers.Add(entry_BeginDrag);
-
-    }
+    protected virtual void OnInitializePotentialDrag(PointerEventData data) { }
     protected virtual void OnPointerDown(PointerEventData data) { }
+    protected virtual void OnPointerUp(PointerEventData data) { }
+    protected virtual void OnBeginDrag(PointerEventData data) { }
     protected virtual void OnDrag(PointerEventData data) { }
     protected virtual void OnEndDrag(PointerEventData data) { }
+    protected virtual void OnScroll(PointerEventData data) { }
     protected virtual void OnPointerClick(PointerEventData data) { }
-    protected virtual void OnBeginDrag(PointerEventData data) { }
 }

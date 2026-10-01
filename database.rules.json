@@ -1,0 +1,23 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "UserInfo": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid && data.exists()",
+        ".write": "auth != null && auth.uid === $uid && data.exists() && newData.exists()",
+        "loginId": {
+          ".validate": "newData.val() === data.val()"
+        },
+        "name": { ".validate": "newData.val() === data.val()" },
+        "coin": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "heart": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "skinSet": { ".validate": "newData.isString()" },
+        "faceSet": { ".validate": "newData.isString()" },
+        "skinList": { ".validate": "newData.isString()" },
+        "faceList": { ".validate": "newData.isString()" }
+      }
+    },
+    "serverOnly": { ".read": false, ".write": false }
+  }
+}

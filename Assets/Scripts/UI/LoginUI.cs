@@ -1,128 +1,107 @@
+using System;
+using System.Net.Mail;
 using Firebase;
-using Firebase.Database;
 using Firebase.Auth;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Firebase.Extensions;
-using System.Collections.Generic;
 
 public class LoginUI : MonoBehaviour
 {
-    private string uid = null;
+    [Header("Account server")]
+    [SerializeField] string accountApiBaseUrl;
+    [Header("Login")]
+    [SerializeField] TMP_InputField emailInput;
+    [SerializeField] TMP_InputField passwordInput;
+    [SerializeField] Button joinButton;
+    [SerializeField] Button loginButton;
+    [SerializeField] Button resetPasswordButton;
+    [SerializeField] TMP_Text statusText;
+    bool busy;
 
     void Start()
     {
-        //Join Btn Set
-        transform.GetChild(6).GetComponent<Button>().onClick.AddListener(delegate
-        {
-            string email = transform.GetChild(3).GetComponent<TMP_InputField>().text;
-            string pw = transform.GetChild(5).GetComponent<TMP_InputField>().text;
-            UserJoin(email, pw);
-        });
-
-        //Login Btn Set
-        transform.GetChild(7).GetComponent<Button>().onClick.AddListener(delegate
-        {
-            UserLogin(transform.GetChild(3).GetComponent<TMP_InputField>().text,
-                transform.GetChild(5).GetComponent<TMP_InputField>().text);
-        });
+        if (!ValidateReferences()) { enabled = false; return; }
+        string baseUrl = accountApiBaseUrl;
+        if (string.IsNullOrWhiteSpace(baseUrl))
+            baseUrl = "https://asia-northeast3-" + FirebaseApp.DefaultInstance.Options.ProjectId + ".cloudfunctions.net";
+        GameManager.Instance.AccountService.ConfigureAccountServer(baseUrl);
+        joinButton.onClick.AddListener(OpenJoin);
+        loginButton.onClick.AddListener(Login);
+        resetPasswordButton.onClick.AddListener(ResetPassword);
+        SetStatus(GameManager.Instance.AuthenticationMessage);
     }
 
-    void UserJoin(string email, string pw)
+    void OnDestroy()
     {
-        GameManager.Instance.auth.CreateUserWithEmailAndPasswordAsync(email, pw).ContinueWith(task =>
-        {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("È¸¿ø°¡ÀÔ Ãë¼Ò");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                //½ÇÆĞÀÌÀ¯ > ÀÌ¸ŞÀÏÀÌ ºñÁ¤»ó, ºñ¹Ğ¹øÈ£ ³Ê¹« °£´Ü, ÀÌ¹Ì °¡ÀÔµÈ ÀÌ¸ŞÀÏ
-                Debug.LogError("È¸¿ø°¡ÀÔ ½ÇÆĞ");
-                return;
-            }
-            Debug.Log("È¸¿ø°¡ÀÔ ¿Ï·á");
-        });
+        if (joinButton != null) joinButton.onClick.RemoveListener(OpenJoin);
+        if (loginButton != null) loginButton.onClick.RemoveListener(Login);
+        if (resetPasswordButton != null) resetPasswordButton.onClick.RemoveListener(ResetPassword);
     }
 
-    void UserLogin(string email, string pw)
+    void OpenJoin()
     {
-        GameManager.Instance.auth.SignInWithEmailAndPasswordAsync(email, pw).ContinueWith(task =>
-        {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("·Î±×ÀÎ Ãë¼Ò");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("·Î±×ÀÎ ½ÇÆĞ");
-                return;
-            }
-
-            uid = task.Result.User.UserId;
-        });
+        if (!busy) GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Join);
     }
 
-    private void Update()
+    async void Login()
     {
-        if(uid != null)
+        string email = NormalizeEmail(emailInput.text);
+        string password = passwordInput.text;
+        if (!IsValidEmail(email)) { SetStatus("ì˜¬ë°”ë¥¸ ì´ë©”ì¼ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”."); return; }
+        if (string.IsNullOrEmpty(password)) { SetStatus("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”."); return; }
+        if (!Begin("ë¡œê·¸ì¸ ì¤‘...")) return;
+        try
         {
-            GetUserInfo();
+            AuthResult authResult = await GameManager.Instance.AccountService.SignInAsync(email, password);
+            if (authResult.User == null) throw new InvalidOperationException();
+            UserProfileLoadResult profile = await GameManager.Instance.RefreshAuthenticatedUserAsync();
+            if (profile.Status != UserProfileLoadStatus.Found)
+                throw new InvalidOperationException("ê°€ì…ì´ ì™„ë£Œëœ ì‚¬ìš©ì ë°ì´í„°ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+            GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Home);
         }
+        catch (Exception exception) { SetStatus(ToUserMessage(exception, "ë¡œê·¸ì¸ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.")); }
+        finally { End(); }
     }
 
-    void GetUserInfo()
+    async void ResetPassword()
     {
-        string uid = this.uid;
-        this.uid = null;
+        string email = NormalizeEmail(emailInput.text);
+        if (!IsValidEmail(email)) { SetStatus("ë¹„ë°€ë²ˆí˜¸ ì¬ì„¤ì •ì—ëŠ” ê°€ì… ì´ë©”ì¼ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”."); return; }
+        if (!Begin("ë¹„ë°€ë²ˆí˜¸ ì¬ì„¤ì • ë©”ì¼ì„ ë³´ë‚´ëŠ” ì¤‘...")) return;
+        try { await GameManager.Instance.AccountService.SendPasswordResetEmailAsync(email); SetStatus("ë¹„ë°€ë²ˆí˜¸ ì¬ì„¤ì • ë©”ì¼ì„ ë³´ëƒˆìŠµë‹ˆë‹¤."); }
+        catch (Exception exception) { SetStatus(ToUserMessage(exception, "ì¬ì„¤ì • ë©”ì¼ ì „ì†¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.")); }
+        finally { End(); }
+    }
 
-        GameManager.Instance.userDB.Child(uid).GetValueAsync().ContinueWithOnMainThread(
-            task =>
-            {
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("ReadErr");
-                }
-                else if (task.IsCompleted)
-                {
-                    Debug.Log("·Î±×ÀÎ Á¤º¸ ÀÖÀ½");
-                    DataSnapshot snapshot = task.Result;
-
-                    if (snapshot.Exists)
-                    {
-                        Debug.Log("User Á¤º¸ ÀÖÀ½");
-                        GameManager.Instance.Data.info.login = true;
-                        GameManager.Instance.Data.info.uid = uid;
-                        foreach (var data in snapshot.Children)
-                        {
-                            switch (data.Key.ToString())
-                            {
-                                case "name": GameManager.Instance.Data.info.name = data.Value.ToString(); break;
-                                case "coin": GameManager.Instance.Data.info.coin = int.Parse(data.Value.ToString()); break;
-                                case "heart": GameManager.Instance.Data.info.heart = int.Parse(data.Value.ToString()); break;
-
-                                case "skinSet": GameManager.Instance.Data.avatar_info.skin = data.Value.ToString(); break;
-                                case "faceSet": GameManager.Instance.Data.avatar_info.face = data.Value.ToString(); break;
-
-                                case "skinList": GameManager.Instance.Data.inven.skin = new List<string>(data.Value.ToString().Split(",")); break;
-                                case "faceList": GameManager.Instance.Data.inven.face = new List<string>(data.Value.ToString().Split(",")); break;
-                            }
-                        }
-
-                        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.Home);
-                    }
-                    else
-                    {
-                        Debug.Log("User Á¤º¸ ¾øÀ½");
-                        GameManager.Instance.Data.info.uid = uid;
-                        GameManager.Instance.UImanager.UIsetting(Define.ui_level.Lev1, Define.ui.SetName);
-                    }
-                }
-            }
-        );
+    bool Begin(string message)
+    {
+        if (busy) return false;
+        busy = true; SetInteractable(false); SetStatus(message); return true;
+    }
+    void End() { busy = false; SetInteractable(true); }
+    void SetInteractable(bool value) { joinButton.interactable = value; loginButton.interactable = value; resetPasswordButton.interactable = value; }
+    void SetStatus(string message) { statusText.text = message ?? string.Empty; statusText.gameObject.SetActive(!string.IsNullOrEmpty(message)); }
+    bool ValidateReferences()
+    {
+        bool valid = emailInput != null && passwordInput != null && joinButton != null && loginButton != null && resetPasswordButton != null && statusText != null;
+        if (!valid) Debug.LogError("LoginUI Inspector ì°¸ì¡°ë¥¼ ëª¨ë‘ ì„¤ì •í•´ ì£¼ì„¸ìš”.", this);
+        return valid;
+    }
+    public static string NormalizeEmail(string value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim().ToLowerInvariant();
+    public static bool IsValidEmail(string email) { try { return !string.IsNullOrWhiteSpace(email) && new MailAddress(email).Address == email; } catch { return false; } }
+    public static string ToUserMessage(Exception exception, string fallback)
+    {
+        while (exception is AggregateException && exception.InnerException != null) exception = exception.InnerException;
+        if (exception is AccountServerException server) return server.Message;
+        if (!(exception is FirebaseException firebase)) return fallback;
+        switch ((AuthError)firebase.ErrorCode)
+        {
+            case AuthError.WrongPassword:
+            case AuthError.UserNotFound: return "ì´ë©”ì¼ ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.";
+            case AuthError.NetworkRequestFailed: return "ë„¤íŠ¸ì›Œí¬ ì—°ê²°ì„ í™•ì¸í•´ ì£¼ì„¸ìš”.";
+            case AuthError.TooManyRequests: return "ìš”ì²­ì´ ë„ˆë¬´ ë§ìŠµë‹ˆë‹¤. ì ì‹œ í›„ ë‹¤ì‹œ ì‹œë„í•´ ì£¼ì„¸ìš”.";
+            default: return fallback;
+        }
     }
 }

@@ -6,51 +6,33 @@ using UnityEngine;
 
 public class JsonManager
 { 
-    public void SaveJson(DataClass savedata) // 데이터를 저장하는 함수
+    public void SaveJson(DataClass savedata, string uid)
     {
-        string jsonText;
-#if UNITY_EDITOR_WIN
-        string DataPath = Application.dataPath + "/GameData.json";
-#elif UNITY_ANDROID
-        string DataPath = Application.persistentDataPath + "/GameData.json";
-#endif
-
-        jsonText = JsonUtility.ToJson(savedata, true);
-        FileStream fileStream = new FileStream(DataPath, FileMode.Create);
-        byte[] bytes = Encoding.UTF8.GetBytes(jsonText);
-        fileStream.Write(bytes, 0, bytes.Length);
-        fileStream.Close();
+        Directory.CreateDirectory(Application.persistentDataPath);
+        File.WriteAllText(GetAccountPath(uid), JsonUtility.ToJson(savedata, true), Encoding.UTF8);
     }
 
-    public DataClass LoadSaveData()
+    public DataClass LoadSaveData(string uid)
     {
-        DataClass gameData;
-
-#if UNITY_EDITOR_WIN
-        string DataPath = Application.dataPath + "/GameData.json";
-#elif UNITY_ANDROID
-        string DataPath = Application.persistentDataPath + "/GameData.json";
-#endif
-
-        if (!Directory.Exists(DataPath))
+        string dataPath = GetAccountPath(uid);
+        if (File.Exists(dataPath))
         {
-            Directory.CreateDirectory(Application.persistentDataPath);
+            DataClass gameData = JsonUtility.FromJson<DataClass>(File.ReadAllText(dataPath, Encoding.UTF8));
+            if (gameData != null && gameData.info != null && gameData.info.uid == uid) return gameData;
         }
 
-        if (File.Exists(DataPath))
+        string legacyPath = Path.Combine(Application.persistentDataPath, "GameData.json");
+        if (File.Exists(legacyPath))
         {
-            FileStream stream = new FileStream(DataPath, FileMode.Open);
-            byte[] bytes = new byte[stream.Length];
-            stream.Read(bytes, 0, bytes.Length);
-            stream.Close();
-            string jsonData = Encoding.UTF8.GetString(bytes);
-            gameData = JsonUtility.FromJson<DataClass>(jsonData);
+            DataClass legacy = JsonUtility.FromJson<DataClass>(File.ReadAllText(legacyPath, Encoding.UTF8));
+            if (legacy != null && legacy.info != null && legacy.info.uid == uid) return legacy;
         }
-        else
-        {
-            gameData = new DataClass();
-        }
+        return new DataClass();
+    }
 
-        return gameData;
+    private static string GetAccountPath(string uid)
+    {
+        if (string.IsNullOrEmpty(uid)) throw new System.ArgumentException("A Firebase uid is required.", nameof(uid));
+        return Path.Combine(Application.persistentDataPath, "GameData_" + uid + ".json");
     }
 }
