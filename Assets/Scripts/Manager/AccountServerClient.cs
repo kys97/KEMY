@@ -56,12 +56,28 @@ public sealed class AccountServerClient
             {
                 AccountApiError error = null;
                 try { error = JsonUtility.FromJson<AccountApiError>(responseText); } catch { }
-                throw new AccountServerException(error != null ? error.error : "NETWORK_ERROR",
+                string errorCode = SafeDiagnosticCode(error != null ? error.error : "NETWORK_ERROR");
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                Debug.LogWarning($"Account API failure function={endpoint} http={request.responseCode} code={errorCode}");
+#endif
+                throw new AccountServerException(errorCode,
                     error != null && !string.IsNullOrEmpty(error.message) ? error.message : "계정 서버 요청에 실패했습니다.",
                     error != null ? error.retryAfterSeconds : 0);
             }
             return JsonUtility.FromJson<TResponse>(responseText);
         }
+    }
+
+    static string SafeDiagnosticCode(string value)
+    {
+        if (string.IsNullOrEmpty(value) || value.Length > 64) return "UNSAFE_ERROR_CODE";
+        for (int i = 0; i < value.Length; i++)
+        {
+            char character = value[i];
+            if (!((character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9') || character == '_'))
+                return "UNSAFE_ERROR_CODE";
+        }
+        return value;
     }
 
     static Task SendAsync(UnityWebRequest request)

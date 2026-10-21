@@ -1,12 +1,15 @@
-import { randomInt, randomUUID, randomBytes } from "node:crypto";
+import { randomInt, randomUUID } from "node:crypto";
 import { initializeApp } from "firebase-admin/app";
 import { getAppCheck } from "firebase-admin/app-check";
 import { getAuth } from "firebase-admin/auth";
 import { getDatabase } from "firebase-admin/database";
 import { defineSecret, defineString } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
+import { error as logError, info as logInfo } from "firebase-functions/logger";
 import { Resend } from "resend";
+import { RegistrationStage, safeRegistrationCause, safeSdkErrorCode } from "./registration-diagnostics";
 import { hmac, nicknameKey, normalizeEmail, normalizeNickname, normalizePhone, registrationUid, safeEqualHex, validEmail, validNickname, validPassword } from "./security";
+import { VerificationSession, verifySessionTransaction } from "./verification";
 
 initializeApp();
 
@@ -19,15 +22,10 @@ const codeLifetimeMs = 5 * 60 * 1000;
 const resendDelayMs = 60 * 1000;
 const grantLifetimeMs = 10 * 60 * 1000;
 const secrets = [resendApiKey, codeHmacSecret];
+const verifyCodeBuildId = "verify-code-20261017-cold-cache-v3";
+const completeRegistrationBuildId = "complete-registration-20261017-diagnostics-v1";
 
 type Json = Record<string, unknown>;
-type VerificationSession = {
-  purpose: "signup"; email: string; emailKey: string; codeHash: string; expiresAt: number;
-  resendAvailableAt: number; attempts: number; verified: boolean; revoked: boolean;
-  grantHash?: string; grantExpiresAt?: number; used?: boolean; createdAt: number; ipKey: string;
-  accountExists?: boolean;
-};
-
 class ApiError extends Error {
   constructor(public status: number, public code: string, message: string, public retryAfterSeconds = 0) { super(message); }
 }
@@ -179,6 +177,10 @@ export const sendVerificationCode = onRequest(handlerOptions, async (req, res) =
 });
 
 export const verifyVerificationCode = onRequest(handlerOptions, async (req, res) => {
+  const traceId = randomUUID();
+  let committed = false;
+  let diagnostic = "REQUEST_INVALID";
+  logInfo("verification-code.enter", { traceId, failure: "PENDING", committed, buildId: verifyCodeBuildId });
   try {
     assertPost(req); await assertAppCheck(req);
     const email = normalizeEmail(req.body?.email);
@@ -188,29 +190,28 @@ export const verifyVerificationCode = onRequest(handlerOptions, async (req, res)
     const ref = getDatabase().ref(`serverOnly/verificationSessions/${sessionId}`);
     const now = Date.now();
     const secret = codeHmacSecret.value();
-    let outcome = "INVALID";
-    let grant = "";
-    await ref.transaction((raw) => {
-      const session = raw as VerificationSession | null;
-      if (!session || session.purpose !== "signup" || session.email !== email || session.revoked || session.accountExists) { outcome = "INVALID"; return; }
-      if (now > session.expiresAt) { outcome = "EXPIRED"; return { ...session, revoked: true }; }
-      if (session.attempts >= 5) { outcome = "LOCKED"; return { ...session, revoked: true }; }
-      const candidate = hmac(secret, "signup", email, sessionId, code, session.expiresAt);
-      if (!safeEqualHex(candidate, session.codeHash)) {
-        const attempts = session.attempts + 1; outcome = attempts >= 5 ? "LOCKED" : "INVALID";
-        return { ...session, attempts, revoked: attempts >= 5 };
-      }
-      grant = randomBytes(32).toString("base64url"); outcome = "OK";
-      return { ...session, verified: true, codeHash: "", grantHash: hmac(secret, "grant", email, sessionId, grant), grantExpiresAt: now + grantLifetimeMs };
-    }, undefined, false);
-    if (outcome === "EXPIRED") throw new ApiError(410, "CODE_EXPIRED", "인증코드가 만료되었습니다.");
-    if (outcome === "LOCKED") throw new ApiError(429, "CODE_LOCKED", "인증코드 입력 횟수를 초과했습니다. 새 코드를 요청해 주세요.");
-    if (outcome !== "OK") throw new ApiError(400, "INVALID_CODE", "인증코드가 올바르지 않습니다.");
-    ok(res, { signupGrant: grant, expiresInSeconds: 600 });
-  } catch (error) { fail(res, error); }
+    const result = await verifySessionTransaction({ ref, email, sessionId, code, secret, now, grantLifetimeMs });
+    committed = result.committed;
+    diagnostic = result.diagnostic;
+    if (result.outcome === "EXPIRED") throw new ApiError(410, "CODE_EXPIRED", "인증코드가 만료되었습니다.");
+    if (result.outcome === "LOCKED") throw new ApiError(429, "CODE_LOCKED", "인증코드 입력 횟수를 초과했습니다. 새 코드를 요청해 주세요.");
+    if (result.outcome !== "OK" || !result.grant) throw new ApiError(400, "INVALID_CODE", "인증코드가 올바르지 않습니다.");
+    logInfo("verification-code.result", { traceId, failure: "NONE", committed, buildId: verifyCodeBuildId });
+    ok(res, { signupGrant: result.grant, expiresInSeconds: 600 });
+  } catch (error) {
+    if (!(error instanceof ApiError)) diagnostic = "INTERNAL";
+    logInfo("verification-code.result", { traceId, failure: diagnostic, committed, buildId: verifyCodeBuildId });
+    fail(res, error);
+  }
 });
 
 export const completeRegistration = onRequest(handlerOptions, async (req, res) => {
+  const traceId = randomUUID();
+  let stage: RegistrationStage = "REQUEST_VALIDATION";
+  const stepSucceeded = (): void => {
+    logInfo("registration.step", { traceId, stage, buildId: completeRegistrationBuildId, sdkCode: "NONE", cause: "SUCCEEDED" });
+  };
+  logInfo("registration.enter", { traceId, stage, buildId: completeRegistrationBuildId, sdkCode: "NONE", cause: "STARTED" });
   try {
     assertPost(req); await assertAppCheck(req);
     const email = normalizeEmail(req.body?.email);
@@ -221,7 +222,9 @@ export const completeRegistration = onRequest(handlerOptions, async (req, res) =
     const grant = String(req.body?.signupGrant ?? "");
     if (!validEmail(email) || !validNickname(nickname) || !phone || !validPassword(password) || !sessionId || !grant)
       throw new ApiError(400, "INVALID_SIGNUP", "가입 정보를 확인해 주세요.");
+    stepSucceeded();
 
+    stage = "GRANT_VALIDATION";
     const secret = codeHmacSecret.value();
     const sessionRef = getDatabase().ref(`serverOnly/verificationSessions/${sessionId}`);
     const session = (await sessionRef.get()).val() as VerificationSession | null;
@@ -233,7 +236,9 @@ export const completeRegistration = onRequest(handlerOptions, async (req, res) =
 
     const activeSession = String((await getDatabase().ref(`serverOnly/activeVerification/${session.emailKey}`).get()).val() ?? "");
     if (activeSession !== sessionId) throw new ApiError(403, "SIGNUP_GRANT_REVOKED", "새로 발급된 인증코드를 사용해 주세요.");
+    stepSucceeded();
 
+    stage = "INDEX_RESERVATION";
     const uid = registrationUid(secret, sessionId, email);
     const nicknameHash = nicknameIndexKey(secret, nickname);
     const phoneHash = phoneIndexKey(secret, phone);
@@ -255,6 +260,7 @@ export const completeRegistration = onRequest(handlerOptions, async (req, res) =
     }, undefined, false);
     if (conflict.value === "nickname") throw new ApiError(409, "NICKNAME_TAKEN", "이미 사용 중인 닉네임입니다.");
     if (conflict.value === "phone") throw new ApiError(409, "PHONE_TAKEN", "이미 등록된 휴대폰 번호입니다.");
+    stepSucceeded();
     const releasePendingIndexes = async (): Promise<void> => {
       await indexesRef.transaction((raw) => {
         if (!raw) return raw;
@@ -266,6 +272,7 @@ export const completeRegistration = onRequest(handlerOptions, async (req, res) =
       }, undefined, false);
     };
 
+    stage = "AUTH_ACCOUNT";
     let user;
     try {
       user = await getAuth().getUser(uid);
@@ -286,7 +293,9 @@ export const completeRegistration = onRequest(handlerOptions, async (req, res) =
         throw createError;
       }
     }
+    stepSucceeded();
 
+    stage = "PROFILE_WRITE";
     const profileRef = getDatabase().ref(`UserInfo/${uid}`);
     const existingProfile = await profileRef.get();
     if (existingProfile.exists()) {
@@ -302,7 +311,22 @@ export const completeRegistration = onRequest(handlerOptions, async (req, res) =
         [`serverOnly/verificationSessions/${sessionId}/used`]: true,
       });
     }
+    stepSucceeded();
+    stage = "CUSTOM_CLAIMS";
     await getAuth().setCustomUserClaims(uid, { registrationComplete: true });
-    ok(res, { customToken: await getAuth().createCustomToken(uid, { registrationComplete: true }) });
-  } catch (error) { fail(res, error); }
+    stepSucceeded();
+    stage = "CUSTOM_TOKEN";
+    const customToken = await getAuth().createCustomToken(uid, { registrationComplete: true });
+    stepSucceeded();
+    ok(res, { customToken });
+  } catch (error) {
+    logError("registration.failure", {
+      traceId,
+      stage,
+      buildId: completeRegistrationBuildId,
+      sdkCode: error instanceof ApiError ? error.code : safeSdkErrorCode(error),
+      cause: error instanceof ApiError ? "EXPECTED_API_REJECTION" : safeRegistrationCause(error),
+    });
+    fail(res, error);
+  }
 });
